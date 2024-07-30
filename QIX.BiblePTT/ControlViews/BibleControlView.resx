@@ -117,13 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="openFileDialogBackgroud.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="menuStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>207, 17</value>
-  </metadata>
-  <metadata name="menuStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>207, 17</value>
-  </metadata>
+  <data name="richTextBoxContentSection.Text" xml:space="preserve">
+    <value>1. Thaum chivkeeb Vajtswv tsim lub ntuj thiab lub ntiajteb. 
+2. Lub ntiajteb tsis tau muaj dabtsi thiab nyob do dus, tsaus ntuj nti thoob plaws saum nplaim dej hiavtxwv, thiab Vajtswv tus ntsujplig yuj mus yuj los saum nplaim dej. 
+3. Vajtswv hais tias, “Cia li muaj qhov pom kev,” ces txawm pom kev kaj nrig tuaj. 
+4. Vajtswv txaus siab heev rau qhov pom kev ntawd. Ces Vajtswv thiaj muab qhov pom kev cais tawm ntawm qhov tsaus ntuj,
+5. Vajtswv tis npe rau qhov pom kev hu ua “Nruab hnub” thiab qhov tsaus ntuj hu ua “Hmo ntuj.” Muaj caij tsaus ntuj thiab muaj caij kaj ntug, yog hnub ib.
+6-7. Vajtswv hais tias, “Cia li muaj lub ntuj los quas dej thiab muab cais kom nyias nyob muaj nyias chaw,” yog li ntawd, Vajtswv thiaj tsim lub ntuj, thiab muab tej dej nyob hauv qab ntuj thiab tej dej saum nruab ntug cais nyias nyob nyias. Ces txawm muaj li Vajtswv hais.
+8. Vajtswv tis npe rau txheej saud hu ua “Ntuj.” Muaj caij tsaus ntuj thiab muaj caij kaj ntug, yog hnub ob.
+9. Vajtswv hais tias, “Tej dej uas nyob hauv qab ntuj cia li sib sau los nyob ib qhov chaw ua ke, kom av tawm tuaj,” ces txawm muaj li Vajtswv hais. 
+10. Vajtswv tis npe rau cov av hu ua “Ntiajteb,” thiab cov dej uas los sib sau ua ke ntawd hu ua “Hiavtxwv.” Thiab Vajtswv pom tej uas nws tsim tau los ntawd nws txaus siab heev. 
+11. Ces Vajtswv hais tais, “Lub ntiajteb cia li tuaj txhua yam nroj tsuag, qoobloo thiab tej xyoob ntoo, kom tawg paj txi txiv raws li nyias yam,” ces txawm muaj raws li Vajtswv hais.
+12. Yog li ntawd, lub ntiajteb thiaj muaj txhua yam xyoob ntoo nroj tsuag, thiab qoobloo uas txawj tawg paj txi txiv, Vajtswv pom tej uas nws tsim tau los ntawd, mas nws txaus siab heev.</value>
+  </data>
 </root>
