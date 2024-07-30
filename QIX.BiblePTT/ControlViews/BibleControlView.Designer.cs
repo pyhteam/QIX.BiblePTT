@@ -46,7 +46,8 @@
             button4 = new Button();
             button5 = new Button();
             panelChooseVerb = new Panel();
-            button6 = new Button();
+            btnShowPTT = new Button();
+            btnFilterVerb = new Button();
             txtVerbTo = new AntdUI.InputNumber();
             labelToVerb = new AntdUI.Label();
             txtVerbFrom = new AntdUI.InputNumber();
@@ -131,7 +132,8 @@
             selectBible.Name = "selectBible";
             selectBible.Size = new Size(194, 36);
             selectBible.TabIndex = 2;
-            selectBible.Text = "Choose Bible";
+            selectBible.Text = "Hom Phoo Ntawv";
+            selectBible.SelectedValueChanged += selectBible_SelectedValueChanged;
             // 
             // panelContentSection
             // 
@@ -227,7 +229,8 @@
             // 
             panelChooseVerb.BackColor = Color.White;
             panelChooseVerb.BorderStyle = BorderStyle.FixedSingle;
-            panelChooseVerb.Controls.Add(button6);
+            panelChooseVerb.Controls.Add(btnShowPTT);
+            panelChooseVerb.Controls.Add(btnFilterVerb);
             panelChooseVerb.Controls.Add(txtVerbTo);
             panelChooseVerb.Controls.Add(labelToVerb);
             panelChooseVerb.Controls.Add(txtVerbFrom);
@@ -238,15 +241,26 @@
             panelChooseVerb.Size = new Size(711, 34);
             panelChooseVerb.TabIndex = 4;
             // 
-            // button6
+            // btnShowPTT
             // 
-            button6.Dock = DockStyle.Left;
-            button6.Location = new Point(285, 0);
-            button6.Name = "button6";
-            button6.Size = new Size(81, 32);
-            button6.TabIndex = 4;
-            button6.Text = "Apply";
-            button6.UseVisualStyleBackColor = true;
+            btnShowPTT.Dock = DockStyle.Left;
+            btnShowPTT.Location = new Point(366, 0);
+            btnShowPTT.Name = "btnShowPTT";
+            btnShowPTT.Size = new Size(81, 32);
+            btnShowPTT.TabIndex = 5;
+            btnShowPTT.Text = "Apply";
+            btnShowPTT.UseVisualStyleBackColor = true;
+            // 
+            // btnFilterVerb
+            // 
+            btnFilterVerb.Dock = DockStyle.Left;
+            btnFilterVerb.Location = new Point(285, 0);
+            btnFilterVerb.Name = "btnFilterVerb";
+            btnFilterVerb.Size = new Size(81, 32);
+            btnFilterVerb.TabIndex = 4;
+            btnFilterVerb.Text = "Filter";
+            btnFilterVerb.UseVisualStyleBackColor = true;
+            btnFilterVerb.Click += btnFilterVerb_Click;
             // 
             // txtVerbTo
             // 
@@ -491,6 +505,7 @@
             Controls.Add(panelSilde);
             Name = "BibleControlView";
             Size = new Size(907, 627);
+            Load += BibleControlView_Load;
             panelSilde.ResumeLayout(false);
             panelContentSection.ResumeLayout(false);
             flowLayoutPanelSection.ResumeLayout(false);
@@ -518,7 +533,7 @@
         private Button button4;
         private Button button5;
         private Panel panelChooseVerb;
-        private Button button6;
+        private Button btnFilterVerb;
         private AntdUI.InputNumber txtVerbTo;
         private AntdUI.Label labelToVerb;
         private AntdUI.InputNumber txtVerbFrom;
@@ -543,5 +558,6 @@
         private AntdUI.Label labelFont;
         private AntdUI.Select selectTextAlign;
         private AntdUI.Select selectFont;
+        private Button btnShowPTT;
     }
 }
