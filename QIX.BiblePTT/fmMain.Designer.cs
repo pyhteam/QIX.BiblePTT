@@ -54,10 +54,33 @@
             labelChooseVerb = new AntdUI.Label();
             panelBottom = new Panel();
             panelConfig = new Panel();
+            panelConfigRight = new Panel();
+            pictureBoxBackground = new PictureBox();
+            panelConfigLeft = new Panel();
+            linkLabelChooseImage = new LinkLabel();
+            btnSaveConfig = new Button();
+            radioBold = new AntdUI.Radio();
+            radioItalic = new AntdUI.Radio();
+            radioUnderLine = new AntdUI.Radio();
+            colorPickerTextColor = new AntdUI.ColorPicker();
+            txtFontSize = new AntdUI.InputNumber();
+            labelBackground = new AntdUI.Label();
+            labelTextType = new AntdUI.Label();
+            labelTextAlign = new AntdUI.Label();
+            labelColor = new AntdUI.Label();
+            labelFontSize = new AntdUI.Label();
+            labelFont = new AntdUI.Label();
+            selectTextAlign = new AntdUI.Select();
+            selectFont = new AntdUI.Select();
+            openFileDialogBackgroud = new OpenFileDialog();
             panelSilde.SuspendLayout();
             panelContentSection.SuspendLayout();
             flowLayoutPanelSection.SuspendLayout();
             panelChooseVerb.SuspendLayout();
+            panelConfig.SuspendLayout();
+            panelConfigRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxBackground).BeginInit();
+            panelConfigLeft.SuspendLayout();
             SuspendLayout();
             // 
             // windowBarApp
@@ -69,7 +92,7 @@
             windowBarApp.Icon = Properties.Resources.open_book_icon_png;
             windowBarApp.Location = new Point(0, 0);
             windowBarApp.Name = "windowBarApp";
-            windowBarApp.Size = new Size(833, 39);
+            windowBarApp.Size = new Size(896, 39);
             windowBarApp.TabIndex = 0;
             windowBarApp.Text = "Bible PPT";
             // 
@@ -83,7 +106,7 @@
             panelSilde.Dock = DockStyle.Left;
             panelSilde.Location = new Point(0, 39);
             panelSilde.Name = "panelSilde";
-            panelSilde.Size = new Size(196, 462);
+            panelSilde.Size = new Size(196, 567);
             panelSilde.TabIndex = 1;
             // 
             // menuBooks
@@ -102,7 +125,7 @@
             menuBooks.Items.Add(menuItem3);
             menuBooks.Location = new Point(0, 71);
             menuBooks.Name = "menuBooks";
-            menuBooks.Size = new Size(194, 389);
+            menuBooks.Size = new Size(194, 494);
             menuBooks.TabIndex = 2;
             menuBooks.Text = "menuBook";
             // 
@@ -135,7 +158,7 @@
             panelContentSection.Dock = DockStyle.Top;
             panelContentSection.Location = new Point(196, 39);
             panelContentSection.Name = "panelContentSection";
-            panelContentSection.Size = new Size(637, 179);
+            panelContentSection.Size = new Size(700, 179);
             panelContentSection.TabIndex = 2;
             // 
             // richTextBoxContentSection
@@ -144,7 +167,7 @@
             richTextBoxContentSection.Dock = DockStyle.Fill;
             richTextBoxContentSection.Location = new Point(212, 0);
             richTextBoxContentSection.Name = "richTextBoxContentSection";
-            richTextBoxContentSection.Size = new Size(423, 177);
+            richTextBoxContentSection.Size = new Size(486, 177);
             richTextBoxContentSection.TabIndex = 3;
             richTextBoxContentSection.Text = resources.GetString("richTextBoxContentSection.Text");
             // 
@@ -227,7 +250,7 @@
             panelChooseVerb.Dock = DockStyle.Top;
             panelChooseVerb.Location = new Point(196, 218);
             panelChooseVerb.Name = "panelChooseVerb";
-            panelChooseVerb.Size = new Size(637, 34);
+            panelChooseVerb.Size = new Size(700, 34);
             panelChooseVerb.TabIndex = 3;
             // 
             // button6
@@ -284,27 +307,204 @@
             panelBottom.BackColor = Color.White;
             panelBottom.BorderStyle = BorderStyle.FixedSingle;
             panelBottom.Dock = DockStyle.Bottom;
-            panelBottom.Location = new Point(196, 471);
+            panelBottom.Location = new Point(196, 568);
             panelBottom.Name = "panelBottom";
-            panelBottom.Size = new Size(637, 30);
+            panelBottom.Size = new Size(700, 38);
             panelBottom.TabIndex = 4;
             // 
             // panelConfig
             // 
             panelConfig.BackColor = Color.White;
             panelConfig.BorderStyle = BorderStyle.FixedSingle;
+            panelConfig.Controls.Add(panelConfigRight);
+            panelConfig.Controls.Add(panelConfigLeft);
             panelConfig.Dock = DockStyle.Fill;
             panelConfig.Location = new Point(196, 252);
             panelConfig.Name = "panelConfig";
-            panelConfig.Size = new Size(637, 219);
+            panelConfig.Size = new Size(700, 316);
             panelConfig.TabIndex = 7;
+            // 
+            // panelConfigRight
+            // 
+            panelConfigRight.BorderStyle = BorderStyle.FixedSingle;
+            panelConfigRight.Controls.Add(pictureBoxBackground);
+            panelConfigRight.Dock = DockStyle.Fill;
+            panelConfigRight.Location = new Point(319, 0);
+            panelConfigRight.Name = "panelConfigRight";
+            panelConfigRight.Size = new Size(379, 314);
+            panelConfigRight.TabIndex = 2;
+            // 
+            // pictureBoxBackground
+            // 
+            pictureBoxBackground.Dock = DockStyle.Fill;
+            pictureBoxBackground.Location = new Point(0, 0);
+            pictureBoxBackground.Name = "pictureBoxBackground";
+            pictureBoxBackground.Size = new Size(377, 312);
+            pictureBoxBackground.TabIndex = 0;
+            pictureBoxBackground.TabStop = false;
+            // 
+            // panelConfigLeft
+            // 
+            panelConfigLeft.Controls.Add(linkLabelChooseImage);
+            panelConfigLeft.Controls.Add(btnSaveConfig);
+            panelConfigLeft.Controls.Add(radioBold);
+            panelConfigLeft.Controls.Add(radioItalic);
+            panelConfigLeft.Controls.Add(radioUnderLine);
+            panelConfigLeft.Controls.Add(colorPickerTextColor);
+            panelConfigLeft.Controls.Add(txtFontSize);
+            panelConfigLeft.Controls.Add(labelBackground);
+            panelConfigLeft.Controls.Add(labelTextType);
+            panelConfigLeft.Controls.Add(labelTextAlign);
+            panelConfigLeft.Controls.Add(labelColor);
+            panelConfigLeft.Controls.Add(labelFontSize);
+            panelConfigLeft.Controls.Add(labelFont);
+            panelConfigLeft.Controls.Add(selectTextAlign);
+            panelConfigLeft.Controls.Add(selectFont);
+            panelConfigLeft.Dock = DockStyle.Left;
+            panelConfigLeft.Location = new Point(0, 0);
+            panelConfigLeft.Name = "panelConfigLeft";
+            panelConfigLeft.Size = new Size(319, 314);
+            panelConfigLeft.TabIndex = 1;
+            // 
+            // linkLabelChooseImage
+            // 
+            linkLabelChooseImage.AutoSize = true;
+            linkLabelChooseImage.Location = new Point(123, 203);
+            linkLabelChooseImage.Name = "linkLabelChooseImage";
+            linkLabelChooseImage.Size = new Size(83, 15);
+            linkLabelChooseImage.TabIndex = 15;
+            linkLabelChooseImage.TabStop = true;
+            linkLabelChooseImage.Text = "Choose Image";
+            // 
+            // btnSaveConfig
+            // 
+            btnSaveConfig.Location = new Point(123, 226);
+            btnSaveConfig.Name = "btnSaveConfig";
+            btnSaveConfig.Size = new Size(71, 27);
+            btnSaveConfig.TabIndex = 14;
+            btnSaveConfig.Text = "Save";
+            btnSaveConfig.UseVisualStyleBackColor = true;
+            // 
+            // radioBold
+            // 
+            radioBold.AutoCheck = true;
+            radioBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            radioBold.Location = new Point(219, 166);
+            radioBold.Name = "radioBold";
+            radioBold.Size = new Size(42, 23);
+            radioBold.TabIndex = 13;
+            radioBold.Text = "B";
+            // 
+            // radioItalic
+            // 
+            radioItalic.AutoCheck = true;
+            radioItalic.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
+            radioItalic.Location = new Point(171, 166);
+            radioItalic.Name = "radioItalic";
+            radioItalic.Size = new Size(42, 23);
+            radioItalic.TabIndex = 13;
+            radioItalic.Text = "I";
+            // 
+            // radioUnderLine
+            // 
+            radioUnderLine.AutoCheck = true;
+            radioUnderLine.Font = new Font("Segoe UI Semilight", 9F, FontStyle.Underline, GraphicsUnit.Point);
+            radioUnderLine.Location = new Point(123, 166);
+            radioUnderLine.Name = "radioUnderLine";
+            radioUnderLine.Size = new Size(42, 23);
+            radioUnderLine.TabIndex = 13;
+            radioUnderLine.Text = "U";
+            // 
+            // colorPickerTextColor
+            // 
+            colorPickerTextColor.Location = new Point(123, 80);
+            colorPickerTextColor.Name = "colorPickerTextColor";
+            colorPickerTextColor.Size = new Size(75, 31);
+            colorPickerTextColor.TabIndex = 11;
+            colorPickerTextColor.Text = "colorPicker1";
+            colorPickerTextColor.Value = Color.FromArgb(22, 119, 255);
+            // 
+            // txtFontSize
+            // 
+            txtFontSize.Location = new Point(120, 40);
+            txtFontSize.Name = "txtFontSize";
+            txtFontSize.Size = new Size(78, 34);
+            txtFontSize.TabIndex = 10;
+            txtFontSize.Text = "0";
+            // 
+            // labelBackground
+            // 
+            labelBackground.Location = new Point(3, 203);
+            labelBackground.Name = "labelBackground";
+            labelBackground.Size = new Size(111, 23);
+            labelBackground.TabIndex = 5;
+            labelBackground.Text = "Background";
+            // 
+            // labelTextType
+            // 
+            labelTextType.Location = new Point(3, 166);
+            labelTextType.Name = "labelTextType";
+            labelTextType.Size = new Size(111, 23);
+            labelTextType.TabIndex = 5;
+            labelTextType.Text = "Text Type";
+            // 
+            // labelTextAlign
+            // 
+            labelTextAlign.Location = new Point(3, 117);
+            labelTextAlign.Name = "labelTextAlign";
+            labelTextAlign.Size = new Size(111, 34);
+            labelTextAlign.TabIndex = 6;
+            labelTextAlign.Text = "Text Align";
+            // 
+            // labelColor
+            // 
+            labelColor.Location = new Point(3, 80);
+            labelColor.Name = "labelColor";
+            labelColor.Size = new Size(111, 23);
+            labelColor.TabIndex = 7;
+            labelColor.Text = "Color";
+            // 
+            // labelFontSize
+            // 
+            labelFontSize.Location = new Point(3, 40);
+            labelFontSize.Name = "labelFontSize";
+            labelFontSize.Size = new Size(111, 34);
+            labelFontSize.TabIndex = 8;
+            labelFontSize.Text = "Font Size";
+            // 
+            // labelFont
+            // 
+            labelFont.Location = new Point(3, 9);
+            labelFont.Name = "labelFont";
+            labelFont.Size = new Size(111, 28);
+            labelFont.TabIndex = 9;
+            labelFont.Text = "Font";
+            // 
+            // selectTextAlign
+            // 
+            selectTextAlign.Items.AddRange(new object[] { "Left", "Center", "Right" });
+            selectTextAlign.Location = new Point(120, 117);
+            selectTextAlign.Name = "selectTextAlign";
+            selectTextAlign.Size = new Size(193, 34);
+            selectTextAlign.TabIndex = 4;
+            // 
+            // selectFont
+            // 
+            selectFont.Location = new Point(120, 3);
+            selectFont.Name = "selectFont";
+            selectFont.Size = new Size(193, 34);
+            selectFont.TabIndex = 4;
+            // 
+            // openFileDialogBackgroud
+            // 
+            openFileDialogBackgroud.FileName = "openFileDialog1";
             // 
             // fmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(207, 205, 212);
-            ClientSize = new Size(833, 501);
+            ClientSize = new Size(896, 606);
             Controls.Add(panelConfig);
             Controls.Add(panelBottom);
             Controls.Add(panelChooseVerb);
@@ -319,6 +519,11 @@
             panelContentSection.ResumeLayout(false);
             flowLayoutPanelSection.ResumeLayout(false);
             panelChooseVerb.ResumeLayout(false);
+            panelConfig.ResumeLayout(false);
+            panelConfigRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxBackground).EndInit();
+            panelConfigLeft.ResumeLayout(false);
+            panelConfigLeft.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -346,5 +551,24 @@
         private Button button6;
         private Panel panelBottom;
         private Panel panelConfig;
+        private Panel panelConfigLeft;
+        private AntdUI.ColorPicker colorPickerTextColor;
+        private AntdUI.InputNumber txtFontSize;
+        private AntdUI.Label labelTextType;
+        private AntdUI.Label labelTextAlign;
+        private AntdUI.Label labelColor;
+        private AntdUI.Label labelFontSize;
+        private AntdUI.Label labelFont;
+        private AntdUI.Select selectTextAlign;
+        private AntdUI.Select selectFont;
+        private AntdUI.Radio radioUnderLine;
+        private Button btnSaveConfig;
+        private AntdUI.Radio radioBold;
+        private AntdUI.Radio radioItalic;
+        private AntdUI.Label labelBackground;
+        private OpenFileDialog openFileDialogBackgroud;
+        private LinkLabel linkLabelChooseImage;
+        private Panel panelConfigRight;
+        private PictureBox pictureBoxBackground;
     }
 }
