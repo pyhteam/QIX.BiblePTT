@@ -24,14 +24,19 @@ namespace QIX.BiblePTT.ControlViews
             var result = await _bibleService.GetBibles("mww", "all");
             if (result.Success)
             {
-                // get json parse to dynamic
-                dynamic data = JsonSerializer.Deserialize<dynamic>(result.Data);
-                if (data.response.code == 200)
+                // Deserialize JSON to JsonElement
+                JsonElement root = JsonSerializer.Deserialize<JsonElement>(result.Data);
+                // Access properties
+                if (root.GetProperty("response").GetProperty("code").GetInt32() == 200)
                 {
-                    // get data
-                    var bibles = data.data;
-                    // bind data to combobox
-                    selectBible.Items.AddRange(bibles.versions);
+                    // Get data
+                    JsonElement versions = root.GetProperty("response").GetProperty("data").GetProperty("versions");
+
+                    // Bind data to combobox
+                    foreach (JsonElement version in versions.EnumerateArray())
+                    {
+                        selectBible.Items.Add(version.GetProperty("local_title").GetString());
+                    }
                 }
             }
         }
