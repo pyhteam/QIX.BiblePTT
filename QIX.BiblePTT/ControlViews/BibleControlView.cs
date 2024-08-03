@@ -1,17 +1,18 @@
 ﻿
-
 using QIX.BiblePTT.Services;
-using System.Text.Json;
+using QIX.BiblePTT.Services.Interface;
 
 namespace QIX.BiblePTT.ControlViews
 {
     public partial class BibleControlView : UserControl
     {
         private readonly IBibleService _bibleService;
-        public BibleControlView(IBibleService bibleService)
+        private readonly IBookService _bookService;
+        public BibleControlView(IBibleService bibleService, IBookService bookService)
         {
             InitializeComponent();
             _bibleService = bibleService;
+            _bookService = bookService;
         }
 
         private void btnFilterVerb_Click(object sender, EventArgs e)
@@ -19,36 +20,52 @@ namespace QIX.BiblePTT.ControlViews
 
         }
 
-        private async void LoadBiBle()
+        private async void LoadBiBle(string filter)
         {
-            var result = await _bibleService.GetBibles("mww", "all");
-            if (result.Success)
-            {
-                // Deserialize JSON to JsonElement
-                JsonElement root = JsonSerializer.Deserialize<JsonElement>(result.Data);
-                // Access properties
-                if (root.GetProperty("response").GetProperty("code").GetInt32() == 200)
-                {
-                    // Get data
-                    JsonElement versions = root.GetProperty("response").GetProperty("data").GetProperty("versions");
+            var result = await _bibleService.GetAll(filter);
+            // convert the result to a list of objects
+            var bibleItems = result
+            .Select(x => x.Code + " - " + x.Name)
+            .ToArray();
+            selectBible.Items.AddRange(bibleItems);
+        }
 
-                    // Bind data to combobox
-                    foreach (JsonElement version in versions.EnumerateArray())
-                    {
-                        selectBible.Items.Add(version.GetProperty("local_title").GetString());
-                    }
-                }
+        private async void selectBible_SelectedValueChanged(object sender, object value)
+        {
+            var selectedBible = selectBible.SelectedValue.ToString();
+            var bibleCode = selectedBible.Split('-')[0].Trim();
+            var books = await _bookService.GetAll(bibleCode, txtSearchBook.Text);
+            // update the book list with the new filtered books
+            menuBooks.Items.Clear();
+            foreach (var book in books)
+            {
+                var item = new AntdUI.MenuItem(book.Code + " - " + book.Name);
+                // send book code to the event handler
+                item.Tag = book.Code;
+                menuBooks.Items.Add(item);
             }
         }
 
-        private void selectBible_SelectedValueChanged(object sender, object value)
+        private void book_Click(object? sender, EventArgs e)
         {
-
+            var menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+            {
+                var bookCode = menuItem.Tag.ToString();
+                // Use the bookCode as needed
+            }
         }
 
         private void BibleControlView_Load(object sender, EventArgs e)
         {
-            this.LoadBiBle();
+            this.LoadBiBle(txtSearchBook.Text);
+        }
+
+        private void selectBible_MouseHover(object sender, EventArgs e)
+        {
+            // tooltip full text
+            var tooltip = new ToolTip();
+            tooltip.SetToolTip(selectBible, selectBible.Text);
         }
     }
 }

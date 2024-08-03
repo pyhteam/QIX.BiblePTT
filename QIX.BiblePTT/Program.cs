@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using QIX.BiblePTT.ControlViews;
 using QIX.BiblePTT.Services;
+using QIX.BiblePTT.Services.Interface;
 
 namespace QIX.BiblePTT
 {
@@ -31,8 +32,9 @@ namespace QIX.BiblePTT
                 {
                     services.AddHttpClient(); // Register HttpClient
                     services.AddTransient<IBibleService, BibleService>(); // Register your BibleService
+                    services.AddTransient<IBookService, BookService>(); // Register your BibleService
                     services.AddSingleton<fmMain>(); // Register your main form
-                    services.AddTransient<BibleControlView>(); // Register your BibleControlView
+                    services.AddSingleton<BibleControlView>(); // Register your BibleControlView
                 });
         }
     }

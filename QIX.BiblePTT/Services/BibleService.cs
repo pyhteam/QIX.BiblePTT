@@ -1,42 +1,52 @@
 
-
-using QIX.BiblePTT.Common;
+using Newtonsoft.Json;
+using QIX.BiblePTT.Models;
+using QIX.BiblePTT.Services.Interface;
 
 namespace QIX.BiblePTT.Services
 {
     public class BibleService : IBibleService
     {
-        private HttpClient _client;
-        public BibleService(HttpClient client)
+        private string dataFolder;
+        private List<Bible> Bibles { get; set; }
+        public BibleService()
         {
-            _client = client ?? new HttpClient();
+            Bibles = new List<Bible>();
+            // get path Resource from Src.Resources
+            dataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Resources", "Data", "Bibles");
+
+            // Load bibles from JSON files
+            var files = Directory.GetFiles(dataFolder, "*.json");
+            if (files.Length == 0)
+            {
+                throw new Exception("No Bible data files found.");
+            }
+            Bibles = files
+                .Select(file => System.Text.Json.JsonSerializer.Deserialize<Bible>(File.ReadAllText(file)))
+                .ToList();
         }
-        public async Task<ApiResponse> GetBibles(string language_tag, string type)
+
+        public Task<List<Bible>> GetAll(string filter = null)
         {
-            var result = new ApiResponse();
-            try
-            {
-                var url = $"{ConstBibleAPI.Host}{ConstBibleAPI.GetBible}?language_tag={language_tag}&type={type}";
-                var response = await _client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result.Success = true;
-                    result.Data = content;
-                    return result;
-                }
-                result.Success = false;
-                result.Message = response.ReasonPhrase;
-                return result;
+            var data = Bibles
+                .Where(bible => filter == null ||
+                     bible.Code.Contains(filter)
+                    || bible.Name.Contains(filter)
+                    || bible.NameEn.Contains(filter))
+                .ToList();
+            return Task.FromResult(data);
+        }
 
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-                return result;
-            }
+        public Task<Bible> GetByCode(string code)
+        {
+            var data = Bibles.FirstOrDefault(bible => bible.Code == code);
+            return Task.FromResult(data);
+        }
 
+        public Task<Bible> GetById(int id)
+        {
+            var data = Bibles.FirstOrDefault(bible => bible.Id == id);
+            return Task.FromResult(data);
         }
     }
 }

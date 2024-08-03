@@ -38,6 +38,7 @@
             lusSibDhoToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             updateToolStripMenuItem = new ToolStripMenuItem();
+            panel1 = new Panel();
             panelMain.SuspendLayout();
             menuStripMain.SuspendLayout();
             SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             // panelMain
             // 
+            panelMain.Controls.Add(panel1);
             panelMain.Controls.Add(menuStripMain);
             panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(0, 39);
@@ -88,19 +90,19 @@
             // vajLusKubToolStripMenuItem
             // 
             vajLusKubToolStripMenuItem.Name = "vajLusKubToolStripMenuItem";
-            vajLusKubToolStripMenuItem.Size = new Size(180, 22);
+            vajLusKubToolStripMenuItem.Size = new Size(136, 22);
             vajLusKubToolStripMenuItem.Text = "Vaj Lus Kub";
             // 
             // phooNkaujToolStripMenuItem
             // 
             phooNkaujToolStripMenuItem.Name = "phooNkaujToolStripMenuItem";
-            phooNkaujToolStripMenuItem.Size = new Size(180, 22);
+            phooNkaujToolStripMenuItem.Size = new Size(136, 22);
             phooNkaujToolStripMenuItem.Text = "Phoo Nkauj";
             // 
             // lusSibDhoToolStripMenuItem
             // 
             lusSibDhoToolStripMenuItem.Name = "lusSibDhoToolStripMenuItem";
-            lusSibDhoToolStripMenuItem.Size = new Size(180, 22);
+            lusSibDhoToolStripMenuItem.Size = new Size(136, 22);
             lusSibDhoToolStripMenuItem.Text = "Lus Sib Dho";
             // 
             // aboutToolStripMenuItem
@@ -114,6 +116,14 @@
             updateToolStripMenuItem.Name = "updateToolStripMenuItem";
             updateToolStripMenuItem.Size = new Size(57, 20);
             updateToolStripMenuItem.Text = "Update";
+            // 
+            // panel1
+            // 
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 538);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(896, 5);
+            panel1.TabIndex = 1;
             // 
             // fmMain
             // 
@@ -148,5 +158,6 @@
         private ToolStripMenuItem lusSibDhoToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem updateToolStripMenuItem;
+        private Panel panel1;
     }
 }

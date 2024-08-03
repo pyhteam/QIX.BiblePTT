@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            AntdUI.MenuItem menuItem1 = new AntdUI.MenuItem();
-            AntdUI.MenuItem menuItem2 = new AntdUI.MenuItem();
-            AntdUI.MenuItem menuItem3 = new AntdUI.MenuItem();
+            AntdUI.MenuItem menuItem4 = new AntdUI.MenuItem();
+            AntdUI.MenuItem menuItem5 = new AntdUI.MenuItem();
+            AntdUI.MenuItem menuItem6 = new AntdUI.MenuItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BibleControlView));
             panelSilde = new Panel();
             menuBooks = new AntdUI.Menu();
@@ -100,15 +100,15 @@
             menuBooks.BackActive = SystemColors.ActiveCaption;
             menuBooks.BackColor = Color.White;
             menuBooks.Dock = DockStyle.Fill;
-            menuItem1.Select = false;
-            menuItem1.Text = "Chiv keeb";
-            menuItem2.Select = false;
-            menuItem2.Text = "Khiav dim";
-            menuItem3.Select = false;
-            menuItem3.Text = "Levis Kevcai";
-            menuBooks.Items.Add(menuItem1);
-            menuBooks.Items.Add(menuItem2);
-            menuBooks.Items.Add(menuItem3);
+            menuItem4.Select = false;
+            menuItem4.Text = "Chiv keeb";
+            menuItem5.Select = false;
+            menuItem5.Text = "Khiav dim";
+            menuItem6.Select = false;
+            menuItem6.Text = "Levis Kevcai";
+            menuBooks.Items.Add(menuItem4);
+            menuBooks.Items.Add(menuItem5);
+            menuBooks.Items.Add(menuItem6);
             menuBooks.Location = new Point(0, 71);
             menuBooks.Name = "menuBooks";
             menuBooks.Size = new Size(194, 554);
@@ -127,13 +127,14 @@
             // selectBible
             // 
             selectBible.Dock = DockStyle.Top;
-            selectBible.Items.AddRange(new object[] { "HMOWSV", "BD2011", "VIE1925" });
+            selectBible.List = true;
             selectBible.Location = new Point(0, 0);
             selectBible.Name = "selectBible";
             selectBible.Size = new Size(194, 36);
             selectBible.TabIndex = 2;
-            selectBible.Text = "Hom Phoo Ntawv";
+            selectBible.Text = "Choose Vaj Lus Kub";
             selectBible.SelectedValueChanged += selectBible_SelectedValueChanged;
+            selectBible.MouseHover += selectBible_MouseHover;
             // 
             // panelContentSection
             // 
