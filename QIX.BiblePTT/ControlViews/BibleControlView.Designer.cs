@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            AntdUI.MenuItem menuItem4 = new AntdUI.MenuItem();
-            AntdUI.MenuItem menuItem5 = new AntdUI.MenuItem();
-            AntdUI.MenuItem menuItem6 = new AntdUI.MenuItem();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BibleControlView));
             panelSilde = new Panel();
             menuBooks = new AntdUI.Menu();
             txtSearchBook = new AntdUI.Input();
@@ -40,11 +36,6 @@
             richTextBoxContentSection = new RichTextBox();
             panelChooseSection = new Panel();
             flowLayoutPanelSection = new AntdUI.In.FlowLayoutPanel();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
             panelChooseVerb = new Panel();
             btnShowPTT = new Button();
             btnFilterVerb = new Button();
@@ -74,7 +65,6 @@
             selectFont = new AntdUI.Select();
             panelSilde.SuspendLayout();
             panelContentSection.SuspendLayout();
-            flowLayoutPanelSection.SuspendLayout();
             panelChooseVerb.SuspendLayout();
             panelConfig.SuspendLayout();
             panelConfigRight.SuspendLayout();
@@ -100,20 +90,12 @@
             menuBooks.BackActive = SystemColors.ActiveCaption;
             menuBooks.BackColor = Color.White;
             menuBooks.Dock = DockStyle.Fill;
-            menuItem4.Select = false;
-            menuItem4.Text = "Chiv keeb";
-            menuItem5.Select = false;
-            menuItem5.Text = "Khiav dim";
-            menuItem6.Select = false;
-            menuItem6.Text = "Levis Kevcai";
-            menuBooks.Items.Add(menuItem4);
-            menuBooks.Items.Add(menuItem5);
-            menuBooks.Items.Add(menuItem6);
             menuBooks.Location = new Point(0, 71);
             menuBooks.Name = "menuBooks";
             menuBooks.Size = new Size(194, 554);
             menuBooks.TabIndex = 2;
             menuBooks.Text = "menuBook";
+            menuBooks.SelectChanged += menuBooks_SelectChanged;
             // 
             // txtSearchBook
             // 
@@ -123,12 +105,15 @@
             txtSearchBook.Name = "txtSearchBook";
             txtSearchBook.Size = new Size(194, 35);
             txtSearchBook.TabIndex = 3;
+            txtSearchBook.KeyPress += txtSearchBook_KeyPress;
             // 
             // selectBible
             // 
             selectBible.Dock = DockStyle.Top;
             selectBible.List = true;
+            selectBible.ListAutoWidth = true;
             selectBible.Location = new Point(0, 0);
+            selectBible.Multiline = true;
             selectBible.Name = "selectBible";
             selectBible.Size = new Size(194, 36);
             selectBible.TabIndex = 2;
@@ -146,7 +131,7 @@
             panelContentSection.Dock = DockStyle.Top;
             panelContentSection.Location = new Point(196, 0);
             panelContentSection.Name = "panelContentSection";
-            panelContentSection.Size = new Size(711, 179);
+            panelContentSection.Size = new Size(711, 266);
             panelContentSection.TabIndex = 3;
             // 
             // richTextBoxContentSection
@@ -155,9 +140,9 @@
             richTextBoxContentSection.Dock = DockStyle.Fill;
             richTextBoxContentSection.Location = new Point(212, 0);
             richTextBoxContentSection.Name = "richTextBoxContentSection";
-            richTextBoxContentSection.Size = new Size(497, 177);
+            richTextBoxContentSection.Size = new Size(497, 264);
             richTextBoxContentSection.TabIndex = 3;
-            richTextBoxContentSection.Text = resources.GetString("richTextBoxContentSection.Text");
+            richTextBoxContentSection.Text = "";
             // 
             // panelChooseSection
             // 
@@ -165,66 +150,18 @@
             panelChooseSection.Dock = DockStyle.Left;
             panelChooseSection.Location = new Point(209, 0);
             panelChooseSection.Name = "panelChooseSection";
-            panelChooseSection.Size = new Size(3, 177);
+            panelChooseSection.Size = new Size(3, 264);
             panelChooseSection.TabIndex = 1;
             // 
             // flowLayoutPanelSection
             // 
-            flowLayoutPanelSection.Controls.Add(button1);
-            flowLayoutPanelSection.Controls.Add(button2);
-            flowLayoutPanelSection.Controls.Add(button3);
-            flowLayoutPanelSection.Controls.Add(button4);
-            flowLayoutPanelSection.Controls.Add(button5);
+            flowLayoutPanelSection.AllowDrop = true;
+            flowLayoutPanelSection.AutoScroll = true;
             flowLayoutPanelSection.Dock = DockStyle.Left;
             flowLayoutPanelSection.Location = new Point(0, 0);
             flowLayoutPanelSection.Name = "flowLayoutPanelSection";
-            flowLayoutPanelSection.Size = new Size(209, 177);
+            flowLayoutPanelSection.Size = new Size(209, 264);
             flowLayoutPanelSection.TabIndex = 0;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(3, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(35, 33);
-            button1.TabIndex = 0;
-            button1.Text = "1";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(44, 3);
-            button2.Name = "button2";
-            button2.Size = new Size(35, 33);
-            button2.TabIndex = 0;
-            button2.Text = "2";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(85, 3);
-            button3.Name = "button3";
-            button3.Size = new Size(35, 33);
-            button3.TabIndex = 0;
-            button3.Text = "3";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(126, 3);
-            button4.Name = "button4";
-            button4.Size = new Size(35, 33);
-            button4.TabIndex = 0;
-            button4.Text = "4";
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(167, 3);
-            button5.Name = "button5";
-            button5.Size = new Size(35, 33);
-            button5.TabIndex = 0;
-            button5.Text = "5";
-            button5.UseVisualStyleBackColor = true;
             // 
             // panelChooseVerb
             // 
@@ -237,7 +174,7 @@
             panelChooseVerb.Controls.Add(txtVerbFrom);
             panelChooseVerb.Controls.Add(labelChooseVerb);
             panelChooseVerb.Dock = DockStyle.Top;
-            panelChooseVerb.Location = new Point(196, 179);
+            panelChooseVerb.Location = new Point(196, 266);
             panelChooseVerb.Name = "panelChooseVerb";
             panelChooseVerb.Size = new Size(711, 34);
             panelChooseVerb.TabIndex = 4;
@@ -245,28 +182,29 @@
             // btnShowPTT
             // 
             btnShowPTT.Dock = DockStyle.Left;
-            btnShowPTT.Location = new Point(366, 0);
+            btnShowPTT.Location = new Point(373, 0);
             btnShowPTT.Name = "btnShowPTT";
-            btnShowPTT.Size = new Size(81, 32);
+            btnShowPTT.Size = new Size(130, 32);
             btnShowPTT.TabIndex = 5;
-            btnShowPTT.Text = "Apply";
+            btnShowPTT.Text = "Qhib PowerPoint";
             btnShowPTT.UseVisualStyleBackColor = true;
+            btnShowPTT.Click += btnShowPTT_Click;
             // 
             // btnFilterVerb
             // 
             btnFilterVerb.Dock = DockStyle.Left;
-            btnFilterVerb.Location = new Point(285, 0);
+            btnFilterVerb.Location = new Point(298, 0);
             btnFilterVerb.Name = "btnFilterVerb";
-            btnFilterVerb.Size = new Size(81, 32);
+            btnFilterVerb.Size = new Size(75, 32);
             btnFilterVerb.TabIndex = 4;
-            btnFilterVerb.Text = "Filter";
+            btnFilterVerb.Text = "Nrhiav";
             btnFilterVerb.UseVisualStyleBackColor = true;
             btnFilterVerb.Click += btnFilterVerb_Click;
             // 
             // txtVerbTo
             // 
             txtVerbTo.Dock = DockStyle.Left;
-            txtVerbTo.Location = new Point(200, 0);
+            txtVerbTo.Location = new Point(213, 0);
             txtVerbTo.Name = "txtVerbTo";
             txtVerbTo.Size = new Size(85, 32);
             txtVerbTo.TabIndex = 3;
@@ -278,9 +216,9 @@
             labelToVerb.Dock = DockStyle.Left;
             labelToVerb.Location = new Point(180, 0);
             labelToVerb.Name = "labelToVerb";
-            labelToVerb.Size = new Size(20, 32);
+            labelToVerb.Size = new Size(33, 32);
             labelToVerb.TabIndex = 2;
-            labelToVerb.Text = "To";
+            labelToVerb.Text = "Txog";
             // 
             // txtVerbFrom
             // 
@@ -300,7 +238,7 @@
             labelChooseVerb.Name = "labelChooseVerb";
             labelChooseVerb.Size = new Size(93, 32);
             labelChooseVerb.TabIndex = 0;
-            labelChooseVerb.Text = "Choose Verb";
+            labelChooseVerb.Text = "Nrhiav Nqi";
             // 
             // panelBottom
             // 
@@ -319,9 +257,9 @@
             panelConfig.Controls.Add(panelConfigRight);
             panelConfig.Controls.Add(panelConfigLeft);
             panelConfig.Dock = DockStyle.Fill;
-            panelConfig.Location = new Point(196, 213);
+            panelConfig.Location = new Point(196, 300);
             panelConfig.Name = "panelConfig";
-            panelConfig.Size = new Size(711, 376);
+            panelConfig.Size = new Size(711, 289);
             panelConfig.TabIndex = 8;
             // 
             // panelConfigRight
@@ -331,7 +269,7 @@
             panelConfigRight.Dock = DockStyle.Fill;
             panelConfigRight.Location = new Point(319, 0);
             panelConfigRight.Name = "panelConfigRight";
-            panelConfigRight.Size = new Size(390, 374);
+            panelConfigRight.Size = new Size(390, 287);
             panelConfigRight.TabIndex = 2;
             // 
             // pictureBoxBackground
@@ -339,7 +277,7 @@
             pictureBoxBackground.Dock = DockStyle.Fill;
             pictureBoxBackground.Location = new Point(0, 0);
             pictureBoxBackground.Name = "pictureBoxBackground";
-            pictureBoxBackground.Size = new Size(388, 372);
+            pictureBoxBackground.Size = new Size(388, 285);
             pictureBoxBackground.TabIndex = 0;
             pictureBoxBackground.TabStop = false;
             // 
@@ -363,7 +301,7 @@
             panelConfigLeft.Dock = DockStyle.Left;
             panelConfigLeft.Location = new Point(0, 0);
             panelConfigLeft.Name = "panelConfigLeft";
-            panelConfigLeft.Size = new Size(319, 374);
+            panelConfigLeft.Size = new Size(319, 287);
             panelConfigLeft.TabIndex = 1;
             // 
             // linkLabelChooseImage
@@ -509,7 +447,6 @@
             Load += BibleControlView_Load;
             panelSilde.ResumeLayout(false);
             panelContentSection.ResumeLayout(false);
-            flowLayoutPanelSection.ResumeLayout(false);
             panelChooseVerb.ResumeLayout(false);
             panelConfig.ResumeLayout(false);
             panelConfigRight.ResumeLayout(false);
@@ -528,11 +465,6 @@
         private RichTextBox richTextBoxContentSection;
         private Panel panelChooseSection;
         private AntdUI.In.FlowLayoutPanel flowLayoutPanelSection;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private Button button5;
         private Panel panelChooseVerb;
         private Button btnFilterVerb;
         private AntdUI.InputNumber txtVerbTo;

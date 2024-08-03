@@ -31,10 +31,11 @@ namespace QIX.BiblePTT
                 .ConfigureServices((context, services) =>
                 {
                     services.AddHttpClient(); // Register HttpClient
-                    services.AddTransient<IBibleService, BibleService>(); // Register your BibleService
-                    services.AddTransient<IBookService, BookService>(); // Register your BibleService
-                    services.AddSingleton<fmMain>(); // Register your main form
-                    services.AddSingleton<BibleControlView>(); // Register your BibleControlView
+                    services.AddTransient<IBibleService, BibleService>(); 
+                    services.AddTransient<IBookService, BookService>(); 
+                    services.AddTransient<IVerseService, VerseService>();
+                    services.AddSingleton<fmMain>();
+                    services.AddSingleton<BibleControlView>(); 
                 });
         }
     }

@@ -30,17 +30,17 @@
         {
             windowBarApp = new AntdUI.WindowBar();
             openFileDialogBackgroud = new OpenFileDialog();
-            panelMain = new Panel();
-            menuStripMain = new MenuStrip();
-            phooNtawvToolStripMenuItem = new ToolStripMenuItem();
+            menuStrip1 = new MenuStrip();
+            phooNtawToolStripMenuItem = new ToolStripMenuItem();
             vajLusKubToolStripMenuItem = new ToolStripMenuItem();
             phooNkaujToolStripMenuItem = new ToolStripMenuItem();
             lusSibDhoToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             updateToolStripMenuItem = new ToolStripMenuItem();
-            panel1 = new Panel();
-            panelMain.SuspendLayout();
-            menuStripMain.SuspendLayout();
+            updateToolStripMenuItem1 = new ToolStripMenuItem();
+            docToolStripMenuItem = new ToolStripMenuItem();
+            panelMain = new Panel();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // windowBarApp
@@ -60,49 +60,39 @@
             // 
             openFileDialogBackgroud.FileName = "openFileDialog1";
             // 
-            // panelMain
+            // menuStrip1
             // 
-            panelMain.Controls.Add(panel1);
-            panelMain.Controls.Add(menuStripMain);
-            panelMain.Dock = DockStyle.Fill;
-            panelMain.Location = new Point(0, 39);
-            panelMain.Name = "panelMain";
-            panelMain.Size = new Size(896, 567);
-            panelMain.TabIndex = 1;
+            menuStrip1.Dock = DockStyle.Bottom;
+            menuStrip1.Items.AddRange(new ToolStripItem[] { phooNtawToolStripMenuItem, aboutToolStripMenuItem, updateToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 582);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(896, 24);
+            menuStrip1.TabIndex = 1;
+            menuStrip1.Text = "menuStrip1";
             // 
-            // menuStripMain
+            // phooNtawToolStripMenuItem
             // 
-            menuStripMain.Dock = DockStyle.Bottom;
-            menuStripMain.Items.AddRange(new ToolStripItem[] { phooNtawvToolStripMenuItem, aboutToolStripMenuItem, updateToolStripMenuItem });
-            menuStripMain.Location = new Point(0, 543);
-            menuStripMain.Name = "menuStripMain";
-            menuStripMain.Size = new Size(896, 24);
-            menuStripMain.TabIndex = 0;
-            menuStripMain.Text = "menuStrip1";
-            // 
-            // phooNtawvToolStripMenuItem
-            // 
-            phooNtawvToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { vajLusKubToolStripMenuItem, phooNkaujToolStripMenuItem, lusSibDhoToolStripMenuItem });
-            phooNtawvToolStripMenuItem.Name = "phooNtawvToolStripMenuItem";
-            phooNtawvToolStripMenuItem.Size = new Size(84, 20);
-            phooNtawvToolStripMenuItem.Text = "Phoo Ntawv";
+            phooNtawToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { lusSibDhoToolStripMenuItem, phooNkaujToolStripMenuItem, vajLusKubToolStripMenuItem });
+            phooNtawToolStripMenuItem.Name = "phooNtawToolStripMenuItem";
+            phooNtawToolStripMenuItem.Size = new Size(78, 20);
+            phooNtawToolStripMenuItem.Text = "Phoo Ntaw";
             // 
             // vajLusKubToolStripMenuItem
             // 
             vajLusKubToolStripMenuItem.Name = "vajLusKubToolStripMenuItem";
-            vajLusKubToolStripMenuItem.Size = new Size(136, 22);
+            vajLusKubToolStripMenuItem.Size = new Size(180, 22);
             vajLusKubToolStripMenuItem.Text = "Vaj Lus Kub";
             // 
             // phooNkaujToolStripMenuItem
             // 
             phooNkaujToolStripMenuItem.Name = "phooNkaujToolStripMenuItem";
-            phooNkaujToolStripMenuItem.Size = new Size(136, 22);
+            phooNkaujToolStripMenuItem.Size = new Size(180, 22);
             phooNkaujToolStripMenuItem.Text = "Phoo Nkauj";
             // 
             // lusSibDhoToolStripMenuItem
             // 
             lusSibDhoToolStripMenuItem.Name = "lusSibDhoToolStripMenuItem";
-            lusSibDhoToolStripMenuItem.Size = new Size(136, 22);
+            lusSibDhoToolStripMenuItem.Size = new Size(180, 22);
             lusSibDhoToolStripMenuItem.Text = "Lus Sib Dho";
             // 
             // aboutToolStripMenuItem
@@ -113,17 +103,30 @@
             // 
             // updateToolStripMenuItem
             // 
+            updateToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { docToolStripMenuItem, updateToolStripMenuItem1 });
             updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            updateToolStripMenuItem.Size = new Size(57, 20);
-            updateToolStripMenuItem.Text = "Update";
+            updateToolStripMenuItem.Size = new Size(44, 20);
+            updateToolStripMenuItem.Text = "Help";
             // 
-            // panel1
+            // updateToolStripMenuItem1
             // 
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 538);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(896, 5);
-            panel1.TabIndex = 1;
+            updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
+            updateToolStripMenuItem1.Size = new Size(180, 22);
+            updateToolStripMenuItem1.Text = "Update";
+            // 
+            // docToolStripMenuItem
+            // 
+            docToolStripMenuItem.Name = "docToolStripMenuItem";
+            docToolStripMenuItem.Size = new Size(180, 22);
+            docToolStripMenuItem.Text = "Qhia siv";
+            // 
+            // panelMain
+            // 
+            panelMain.Dock = DockStyle.Fill;
+            panelMain.Location = new Point(0, 39);
+            panelMain.Name = "panelMain";
+            panelMain.Size = new Size(896, 543);
+            panelMain.TabIndex = 2;
             // 
             // fmMain
             // 
@@ -133,31 +136,31 @@
             ClientSize = new Size(896, 606);
             Controls.Add(panelMain);
             Controls.Add(windowBarApp);
+            Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.None;
-            MainMenuStrip = menuStripMain;
             Name = "fmMain";
             Opacity = 0.97D;
             Text = "Bible To PPT";
             Load += fmMain_Load;
-            panelMain.ResumeLayout(false);
-            panelMain.PerformLayout();
-            menuStripMain.ResumeLayout(false);
-            menuStripMain.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private AntdUI.WindowBar windowBarApp;
         private OpenFileDialog openFileDialogBackgroud;
-        private Panel panelMain;
-        private MenuStrip menuStripMain;
-        private ToolStripMenuItem phooNtawvToolStripMenuItem;
-        private ToolStripMenuItem vajLusKubToolStripMenuItem;
-        private ToolStripMenuItem phooNkaujToolStripMenuItem;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem phooNtawToolStripMenuItem;
         private ToolStripMenuItem lusSibDhoToolStripMenuItem;
+        private ToolStripMenuItem phooNkaujToolStripMenuItem;
+        private ToolStripMenuItem vajLusKubToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem updateToolStripMenuItem;
-        private Panel panel1;
+        private ToolStripMenuItem updateToolStripMenuItem1;
+        private ToolStripMenuItem docToolStripMenuItem;
+        private Panel panelMain;
     }
 }

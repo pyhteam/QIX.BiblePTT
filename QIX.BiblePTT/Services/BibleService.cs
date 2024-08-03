@@ -29,10 +29,10 @@ namespace QIX.BiblePTT.Services
         public Task<List<Bible>> GetAll(string filter = null)
         {
             var data = Bibles
-                .Where(bible => filter == null ||
-                     bible.Code.Contains(filter)
-                    || bible.Name.Contains(filter)
-                    || bible.NameEn.Contains(filter))
+                .Where(bible => string.IsNullOrEmpty(filter) ||
+                    (!string.IsNullOrEmpty(bible.Code) && bible.Code.Contains(filter)) ||
+                    (!string.IsNullOrEmpty(bible.Name) && bible.Name.Contains(filter)) ||
+                    (!string.IsNullOrEmpty(bible.NameEn) && bible.NameEn.Contains(filter)))
                 .ToList();
             return Task.FromResult(data);
         }

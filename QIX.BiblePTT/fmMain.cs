@@ -7,19 +7,21 @@ namespace QIX.BiblePTT
     {
         private readonly IBibleService _bibleService;
         private readonly IBookService _bookService;
+        private readonly IVerseService _verseService;
 
-        public fmMain(IBibleService bibleService, IBookService bookService)
+        public fmMain(IBibleService bibleService, IBookService bookService, IVerseService verseService)
         {
             InitializeComponent();
             _bibleService = bibleService;
             _bookService = bookService;
+            _verseService = verseService;
         }
 
         private void fmMain_Load(object sender, EventArgs e)
         {
-            var bibleControlView = new BibleControlView(_bibleService,_bookService);
-            panelMain.Controls.Add(bibleControlView);
+            var bibleControlView = new BibleControlView(_bibleService, _bookService, _verseService);
             bibleControlView.Dock = DockStyle.Fill;
+            panelMain.Controls.Add(bibleControlView);
         }
     }
 }

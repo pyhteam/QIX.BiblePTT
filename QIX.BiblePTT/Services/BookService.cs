@@ -1,4 +1,5 @@
 
+using System.Text.RegularExpressions;
 using QIX.BiblePTT.Models;
 using QIX.BiblePTT.Services.Interface;
 
@@ -45,14 +46,23 @@ namespace QIX.BiblePTT.Services
             return Task.FromResult(book);
         }
 
-        public Task<List<Book>> GetAll(string bibleCode, string filter = null)
+        public Task<List<Book>> GetAll(string bibleCode, string? filter = null)
         {
-            var books = Books.Where(book => book.BibleCode == bibleCode
-            && (filter == null ||
-                    book.Code.Contains(filter)
-                || book.Name.Contains(filter)
-                || book.NameLong.Contains(filter)))
-            .ToList();
+            var books = Books.Where(book => book.BibleCode == bibleCode).ToList();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                var filters = new List<Book>();
+                foreach (var item in books)
+                {
+                    string regex = string.Format(".*{0}.*", filter);
+                    if (Regex.IsMatch(item.Name, regex, RegexOptions.IgnoreCase))
+                    {
+                        filters.Add(item);
+                    }
+                    
+                }
+                books = filters;
+            }
 
             return Task.FromResult(books);
         }

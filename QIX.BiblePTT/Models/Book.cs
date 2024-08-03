@@ -19,6 +19,7 @@ namespace QIX.BiblePTT.Models
         public string? NameShort { get; set; }
         [JsonPropertyName("name_long")]
         public string? NameLong { get; set; }
+
         [JsonPropertyName("name")]
         public string? Name { get; set; }
         [JsonPropertyName("chapters")]
