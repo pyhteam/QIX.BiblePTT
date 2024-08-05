@@ -1,4 +1,5 @@
 ﻿
+using System.IO;
 using QIX.BiblePTT.Common;
 using QIX.BiblePTT.Models;
 using QIX.BiblePTT.Services;
@@ -194,11 +195,48 @@ namespace QIX.BiblePTT.ControlViews
             richTextBoxContentSection.Text = $"{_book.Name}:{chapter.Id}  {verse.First().Label}-{verse.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verse.Select(x => x.Label + ". " + x.Content)));
             _chapter = chapter;
+            txtVerbFrom.Value = 1;
+            txtVerbTo.Value = verse.Count;
         }
 
-        private void btnShowPTT_Click(object sender, EventArgs e)
+        private async void btnShowPTT_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtVerbFrom.Text) || string.IsNullOrEmpty(txtVerbTo.Text))
+            {
+                MessageBox.Show("Yuav tsum sau nqi", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            int from = int.Parse(txtVerbFrom.Text);
+            int to = int.Parse(txtVerbTo.Text);
+            // temp path to save the powerpoint file
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "outputs", _bible.Code + "_" + _book.Code + "_" + _chapter.Code + $"-{from}-{to}_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".pptx");
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+            var config = new ConfigView
+            {
+                FontFamily = richTextBoxContentSection.Font.FontFamily.Name,
+                FontSize = richTextBoxContentSection.Font.Size,
+                FontStyle = UpdateFontStyle(),
+                Color = colorPickerTextColor.Value,
+                TextAlign = selectTextAlign.Text,
+                ImageBase64 = null
+            };
 
+            
+
+            var verses = await _verseService.GetFromTo(_chapter.BibleId.ToString(), _chapter.Code, from, to);
+            var showPTTX = new ShowPPTX
+            {
+                FilePath = path,
+                BibleName = _bible.Name,
+                BookName = _book.Name,
+                ChapterNumber = _chapter.Id,
+                Verses = verses,
+                Config = config
+            };
+            PowerPointHelper.CreatePresentation(showPTTX);
         }
 
         // load all font in the system
@@ -251,7 +289,20 @@ namespace QIX.BiblePTT.ControlViews
         private void txtFontSize_ValueChanged(object sender, decimal value)
         {
             float fontSize = float.Parse(txtFontSize.Value.ToString());
-            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 12 : fontSize);
+            if (richTextBoxContentSection.Font != null)
+            {
+                if (richTextBoxContentSection.InvokeRequired)
+                {
+                    richTextBoxContentSection.Invoke(new Action(() =>
+                    {
+                        richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize);
+                    }));
+                }
+                else
+                {
+                    richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize);
+                }
+            }
         }
 
         private void checkboxUnderline_CheckedChanged(object sender, bool value)
@@ -337,7 +388,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontSize = richTextBoxContentSection.Font.Size,
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
-                HorizontalAlignment = richTextBoxContentSection.SelectionAlignment,
+                TextAlign = selectTextAlign.Text,
                 ImageBase64 = imageBase64
             };
             var json = System.Text.Json.JsonSerializer.Serialize(config);
@@ -358,12 +409,25 @@ namespace QIX.BiblePTT.ControlViews
                 {
                     richTextBoxContentSection.Font = new Font(config.FontFamily, config.FontSize, config.FontStyle);
                     richTextBoxContentSection.ForeColor = config.Color;
-                    richTextBoxContentSection.SelectionAlignment = config.HorizontalAlignment;
+                    richTextBoxContentSection.SelectionAlignment = config.TextAlign switch
+                    {
+                        "Left" => HorizontalAlignment.Left,
+                        "Center" => HorizontalAlignment.Center,
+                        "Right" => HorizontalAlignment.Right,
+                        _ => HorizontalAlignment.Left,
+                    };
                     txtFontSize.Value = (decimal)config.FontSize;
-                    colorPickerTextColor.Value = config.Color;
-                    selectTextAlign.SelectedIndex = config.HorizontalAlignment == HorizontalAlignment.Left ? 0 : 
-                    config.HorizontalAlignment == HorizontalAlignment.Center ? 1 : 2;
-                    
+                    colorPickerTextColor.Text = config.Color.Name;
+                    colorPickerTextColor.Value = Color.FromArgb(config.Color.R, config.Color.G, config.Color.B);
+                    selectTextAlign.SelectedIndex = config.TextAlign switch
+                    {
+                        "Left" => 0,
+                        "Center" => 1,
+                        "Right" => 2,
+                        _ => 0,
+                    };
+                    selectFont.SelectedIndex = selectFont.Items.IndexOf(config.FontFamily);
+
                     // check bold, italic, underline
                     if (config.FontStyle.HasFlag(FontStyle.Bold))
                     {
