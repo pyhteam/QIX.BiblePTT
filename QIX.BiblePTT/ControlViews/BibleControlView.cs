@@ -1,4 +1,5 @@
 ﻿
+using QIX.BiblePTT.Common;
 using QIX.BiblePTT.Models;
 using QIX.BiblePTT.Services;
 using QIX.BiblePTT.Services.Interface;
@@ -51,7 +52,7 @@ namespace QIX.BiblePTT.ControlViews
                 MessageBox.Show("Nrhiav tsi pum", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            richTextBoxContentSection.Text = $"{_book.Name} {_chapter.Id}  {verses.First().Label}:{verses.Last().Label}\n";
+            richTextBoxContentSection.Text = $"{_book.Name}:{_chapter.Id}  {verses.First().Label}-{verses.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verses.Select(x => x.Label + ". " + x.Content)));
 
             // backColor to btn
@@ -111,6 +112,12 @@ namespace QIX.BiblePTT.ControlViews
                 }
             }
             this.LoadChapterContent(_book.Chapters.First());
+            this.LoadFont();
+            // load config
+            if (File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json")))
+            {
+                LoadConfig();
+            }
         }
 
         private void selectBible_MouseHover(object sender, EventArgs e)
@@ -155,8 +162,10 @@ namespace QIX.BiblePTT.ControlViews
         private void btnChapter_Click(object? sender, EventArgs e)
         {
             var btn = (Button)sender;
-            txtVerbFrom.Text = btn.TabIndex.ToString();
-            txtVerbTo.Text = (1 + btn.TabIndex).ToString();
+            txtVerbFrom.Text = "1";
+            txtVerbTo.Text = "2";
+            txtVerbFrom.Value = 1;
+            txtVerbTo.Value = 2;
             // find btn in panel
             foreach (var item in flowLayoutPanelSection.Controls)
             {
@@ -182,7 +191,7 @@ namespace QIX.BiblePTT.ControlViews
                 MessageBox.Show("Nrhiav tsi pum", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            richTextBoxContentSection.Text = $"{_book.Name} {chapter.Id}  {verse.First().Label}:{verse.Last().Label}\n";
+            richTextBoxContentSection.Text = $"{_book.Name}:{chapter.Id}  {verse.First().Label}-{verse.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verse.Select(x => x.Label + ". " + x.Content)));
             _chapter = chapter;
         }
@@ -190,6 +199,26 @@ namespace QIX.BiblePTT.ControlViews
         private void btnShowPTT_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // load all font in the system
+        private void LoadFont()
+        {
+            var fonts = FontFamily.Families;
+            selectFont.Items.Clear();
+            selectFont.ListAutoWidth = true;
+            foreach (var font in fonts)
+            {
+                selectFont.Items.Add(font.Name);
+            }
+            selectFont.SelectedIndex = 0;
+            // set default font
+            richTextBoxContentSection.Font = new Font("Arial", 12);
+
+            // FontSize
+            txtFontSize.Value = 12;
+            colorPickerTextColor.Value = Color.Black;
+            selectTextAlign.SelectedIndex = 0;
         }
 
         private void InitMenuBooks(List<Book> books)
@@ -210,6 +239,155 @@ namespace QIX.BiblePTT.ControlViews
             {
                 var books = await _bookService.GetAll(_bible.Code, filter);
                 InitMenuBooks(books);
+            }
+        }
+
+        private void selectFont_SelectedValueChanged(object sender, object value)
+        {
+            float fontSize = float.Parse(txtFontSize.Value.ToString());
+            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 12 : fontSize);
+        }
+
+        private void txtFontSize_ValueChanged(object sender, decimal value)
+        {
+            float fontSize = float.Parse(txtFontSize.Value.ToString());
+            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 12 : fontSize);
+        }
+
+        private void checkboxUnderline_CheckedChanged(object sender, bool value)
+        {
+            UpdateFontStyle();
+        }
+
+        private void checkboxItalic_CheckedChanged(object sender, bool value)
+        {
+            UpdateFontStyle();
+        }
+
+        private void checkboxBold_CheckedChanged(object sender, bool value)
+        {
+            UpdateFontStyle();
+        }
+
+        private FontStyle UpdateFontStyle()
+        {
+            FontStyle style = FontStyle.Regular;
+            if (checkboxUnderline.Checked)
+            {
+                style |= FontStyle.Underline;
+            }
+            if (checkboxItalic.Checked)
+            {
+                style |= FontStyle.Italic;
+            }
+            if (checkboxBold.Checked)
+            {
+                style |= FontStyle.Bold;
+            }
+            richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font, style);
+            return style;
+        }
+
+        private void colorPickerTextColor_ValueChanged(object sender, Color value)
+        {
+            richTextBoxContentSection.ForeColor = value;
+        }
+
+        private void selectTextAlign_SelectedIndexChanged(object sender, int value)
+        {
+            string align = selectTextAlign.Text;
+            richTextBoxContentSection.SelectionAlignment = align switch
+            {
+                "Left" => HorizontalAlignment.Left,
+                "Center" => HorizontalAlignment.Center,
+                "Right" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left,
+            };
+        }
+
+        private void linkLabelChooseImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var image = Image.FromFile(openFileDialog.FileName);
+                Clipboard.SetImage(image);
+                pictureBoxBackground.Image = image;
+                pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
+                linkLabelChooseImage.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void btnSaveConfig_Click(object sender, EventArgs e)
+        {
+            string imageBase64 = null;
+            if (linkLabelChooseImage.Text != "Choose Image")
+            {
+                using (var ms = new MemoryStream())
+                {
+                    pictureBoxBackground.Image.Save(ms, pictureBoxBackground.Image.RawFormat);
+                    imageBase64 = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+
+            var config = new ConfigView
+            {
+                FontFamily = richTextBoxContentSection.Font.FontFamily.Name,
+                FontSize = richTextBoxContentSection.Font.Size,
+                FontStyle = UpdateFontStyle(),
+                Color = colorPickerTextColor.Value,
+                HorizontalAlignment = richTextBoxContentSection.SelectionAlignment,
+                ImageBase64 = imageBase64
+            };
+            var json = System.Text.Json.JsonSerializer.Serialize(config);
+            // path to save config
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+            File.WriteAllText(path, json);
+            MessageBox.Show("Saved config successfully", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void LoadConfig()
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+            if (File.Exists(path))
+            {
+                var json = File.ReadAllText(path);
+                var config = System.Text.Json.JsonSerializer.Deserialize<ConfigView>(json);
+                if (config != null)
+                {
+                    richTextBoxContentSection.Font = new Font(config.FontFamily, config.FontSize, config.FontStyle);
+                    richTextBoxContentSection.ForeColor = config.Color;
+                    richTextBoxContentSection.SelectionAlignment = config.HorizontalAlignment;
+                    txtFontSize.Value = (decimal)config.FontSize;
+                    colorPickerTextColor.Value = config.Color;
+                    selectTextAlign.SelectedIndex = config.HorizontalAlignment == HorizontalAlignment.Left ? 0 : 
+                    config.HorizontalAlignment == HorizontalAlignment.Center ? 1 : 2;
+                    
+                    // check bold, italic, underline
+                    if (config.FontStyle.HasFlag(FontStyle.Bold))
+                    {
+                        checkboxBold.Checked = true;
+                    }
+                    if (config.FontStyle.HasFlag(FontStyle.Italic))
+                    {
+                        checkboxItalic.Checked = true;
+                    }
+                    if (config.FontStyle.HasFlag(FontStyle.Underline))
+                    {
+                        checkboxUnderline.Checked = true;
+                    }
+
+                    if (!string.IsNullOrEmpty(config.ImageBase64))
+                    {
+                        var imageBytes = Convert.FromBase64String(config.ImageBase64);
+                        using (var ms = new MemoryStream(imageBytes))
+                        {
+                            pictureBoxBackground.Image = Image.FromStream(ms);
+                            pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
+                        }
+                    }
+                }
             }
         }
     }

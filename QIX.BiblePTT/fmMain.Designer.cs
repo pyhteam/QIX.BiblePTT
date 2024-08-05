@@ -32,13 +32,13 @@
             openFileDialogBackgroud = new OpenFileDialog();
             menuStrip1 = new MenuStrip();
             phooNtawToolStripMenuItem = new ToolStripMenuItem();
-            vajLusKubToolStripMenuItem = new ToolStripMenuItem();
-            phooNkaujToolStripMenuItem = new ToolStripMenuItem();
             lusSibDhoToolStripMenuItem = new ToolStripMenuItem();
+            phooNkaujToolStripMenuItem = new ToolStripMenuItem();
+            vajLusKubToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             updateToolStripMenuItem = new ToolStripMenuItem();
-            updateToolStripMenuItem1 = new ToolStripMenuItem();
             docToolStripMenuItem = new ToolStripMenuItem();
+            updateToolStripMenuItem1 = new ToolStripMenuItem();
             panelMain = new Panel();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -52,7 +52,7 @@
             windowBarApp.Icon = Properties.Resources.open_book_icon_png;
             windowBarApp.Location = new Point(0, 0);
             windowBarApp.Name = "windowBarApp";
-            windowBarApp.Size = new Size(896, 39);
+            windowBarApp.Size = new Size(1000, 39);
             windowBarApp.TabIndex = 0;
             windowBarApp.Text = "Pawg Ntseeg Hmoob VN";
             // 
@@ -64,9 +64,9 @@
             // 
             menuStrip1.Dock = DockStyle.Bottom;
             menuStrip1.Items.AddRange(new ToolStripItem[] { phooNtawToolStripMenuItem, aboutToolStripMenuItem, updateToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 582);
+            menuStrip1.Location = new Point(0, 674);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(896, 24);
+            menuStrip1.Size = new Size(1000, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -77,23 +77,23 @@
             phooNtawToolStripMenuItem.Size = new Size(78, 20);
             phooNtawToolStripMenuItem.Text = "Phoo Ntaw";
             // 
-            // vajLusKubToolStripMenuItem
+            // lusSibDhoToolStripMenuItem
             // 
-            vajLusKubToolStripMenuItem.Name = "vajLusKubToolStripMenuItem";
-            vajLusKubToolStripMenuItem.Size = new Size(180, 22);
-            vajLusKubToolStripMenuItem.Text = "Vaj Lus Kub";
+            lusSibDhoToolStripMenuItem.Name = "lusSibDhoToolStripMenuItem";
+            lusSibDhoToolStripMenuItem.Size = new Size(136, 22);
+            lusSibDhoToolStripMenuItem.Text = "Lus Sib Dho";
             // 
             // phooNkaujToolStripMenuItem
             // 
             phooNkaujToolStripMenuItem.Name = "phooNkaujToolStripMenuItem";
-            phooNkaujToolStripMenuItem.Size = new Size(180, 22);
+            phooNkaujToolStripMenuItem.Size = new Size(136, 22);
             phooNkaujToolStripMenuItem.Text = "Phoo Nkauj";
             // 
-            // lusSibDhoToolStripMenuItem
+            // vajLusKubToolStripMenuItem
             // 
-            lusSibDhoToolStripMenuItem.Name = "lusSibDhoToolStripMenuItem";
-            lusSibDhoToolStripMenuItem.Size = new Size(180, 22);
-            lusSibDhoToolStripMenuItem.Text = "Lus Sib Dho";
+            vajLusKubToolStripMenuItem.Name = "vajLusKubToolStripMenuItem";
+            vajLusKubToolStripMenuItem.Size = new Size(136, 22);
+            vajLusKubToolStripMenuItem.Text = "Vaj Lus Kub";
             // 
             // aboutToolStripMenuItem
             // 
@@ -108,24 +108,24 @@
             updateToolStripMenuItem.Size = new Size(44, 20);
             updateToolStripMenuItem.Text = "Help";
             // 
-            // updateToolStripMenuItem1
-            // 
-            updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
-            updateToolStripMenuItem1.Size = new Size(180, 22);
-            updateToolStripMenuItem1.Text = "Update";
-            // 
             // docToolStripMenuItem
             // 
             docToolStripMenuItem.Name = "docToolStripMenuItem";
-            docToolStripMenuItem.Size = new Size(180, 22);
+            docToolStripMenuItem.Size = new Size(116, 22);
             docToolStripMenuItem.Text = "Qhia siv";
+            // 
+            // updateToolStripMenuItem1
+            // 
+            updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
+            updateToolStripMenuItem1.Size = new Size(116, 22);
+            updateToolStripMenuItem1.Text = "Update";
             // 
             // panelMain
             // 
             panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(0, 39);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(896, 543);
+            panelMain.Size = new Size(1000, 635);
             panelMain.TabIndex = 2;
             // 
             // fmMain
@@ -133,7 +133,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(207, 205, 212);
-            ClientSize = new Size(896, 606);
+            ClientSize = new Size(1000, 698);
             Controls.Add(panelMain);
             Controls.Add(windowBarApp);
             Controls.Add(menuStrip1);

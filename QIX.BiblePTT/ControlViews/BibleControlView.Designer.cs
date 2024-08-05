@@ -48,11 +48,11 @@
             panelConfigRight = new Panel();
             pictureBoxBackground = new PictureBox();
             panelConfigLeft = new Panel();
+            checkboxBold = new AntdUI.Checkbox();
+            checkboxItalic = new AntdUI.Checkbox();
+            checkboxUnderline = new AntdUI.Checkbox();
             linkLabelChooseImage = new LinkLabel();
             btnSaveConfig = new Button();
-            radioBold = new AntdUI.Radio();
-            radioItalic = new AntdUI.Radio();
-            radioUnderLine = new AntdUI.Radio();
             colorPickerTextColor = new AntdUI.ColorPicker();
             txtFontSize = new AntdUI.InputNumber();
             labelBackground = new AntdUI.Label();
@@ -136,11 +136,12 @@
             // 
             // richTextBoxContentSection
             // 
+            richTextBoxContentSection.AutoWordSelection = true;
             richTextBoxContentSection.BorderStyle = BorderStyle.None;
             richTextBoxContentSection.Dock = DockStyle.Fill;
-            richTextBoxContentSection.Location = new Point(212, 0);
+            richTextBoxContentSection.Location = new Point(245, 0);
             richTextBoxContentSection.Name = "richTextBoxContentSection";
-            richTextBoxContentSection.Size = new Size(497, 264);
+            richTextBoxContentSection.Size = new Size(464, 264);
             richTextBoxContentSection.TabIndex = 3;
             richTextBoxContentSection.Text = "";
             // 
@@ -148,7 +149,7 @@
             // 
             panelChooseSection.BackColor = Color.DimGray;
             panelChooseSection.Dock = DockStyle.Left;
-            panelChooseSection.Location = new Point(209, 0);
+            panelChooseSection.Location = new Point(242, 0);
             panelChooseSection.Name = "panelChooseSection";
             panelChooseSection.Size = new Size(3, 264);
             panelChooseSection.TabIndex = 1;
@@ -160,7 +161,7 @@
             flowLayoutPanelSection.Dock = DockStyle.Left;
             flowLayoutPanelSection.Location = new Point(0, 0);
             flowLayoutPanelSection.Name = "flowLayoutPanelSection";
-            flowLayoutPanelSection.Size = new Size(209, 264);
+            flowLayoutPanelSection.Size = new Size(242, 264);
             flowLayoutPanelSection.TabIndex = 0;
             // 
             // panelChooseVerb
@@ -283,11 +284,11 @@
             // 
             // panelConfigLeft
             // 
+            panelConfigLeft.Controls.Add(checkboxBold);
+            panelConfigLeft.Controls.Add(checkboxItalic);
+            panelConfigLeft.Controls.Add(checkboxUnderline);
             panelConfigLeft.Controls.Add(linkLabelChooseImage);
             panelConfigLeft.Controls.Add(btnSaveConfig);
-            panelConfigLeft.Controls.Add(radioBold);
-            panelConfigLeft.Controls.Add(radioItalic);
-            panelConfigLeft.Controls.Add(radioUnderLine);
             panelConfigLeft.Controls.Add(colorPickerTextColor);
             panelConfigLeft.Controls.Add(txtFontSize);
             panelConfigLeft.Controls.Add(labelBackground);
@@ -304,6 +305,39 @@
             panelConfigLeft.Size = new Size(319, 287);
             panelConfigLeft.TabIndex = 1;
             // 
+            // checkboxBold
+            // 
+            checkboxBold.AutoCheck = true;
+            checkboxBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            checkboxBold.Location = new Point(200, 167);
+            checkboxBold.Name = "checkboxBold";
+            checkboxBold.Size = new Size(42, 22);
+            checkboxBold.TabIndex = 16;
+            checkboxBold.Text = "U";
+            checkboxBold.CheckedChanged += checkboxBold_CheckedChanged;
+            // 
+            // checkboxItalic
+            // 
+            checkboxItalic.AutoCheck = true;
+            checkboxItalic.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
+            checkboxItalic.Location = new Point(158, 167);
+            checkboxItalic.Name = "checkboxItalic";
+            checkboxItalic.Size = new Size(36, 22);
+            checkboxItalic.TabIndex = 16;
+            checkboxItalic.Text = "I";
+            checkboxItalic.CheckedChanged += checkboxItalic_CheckedChanged;
+            // 
+            // checkboxUnderline
+            // 
+            checkboxUnderline.AutoCheck = true;
+            checkboxUnderline.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
+            checkboxUnderline.Location = new Point(116, 167);
+            checkboxUnderline.Name = "checkboxUnderline";
+            checkboxUnderline.Size = new Size(44, 22);
+            checkboxUnderline.TabIndex = 16;
+            checkboxUnderline.Text = "U";
+            checkboxUnderline.CheckedChanged += checkboxUnderline_CheckedChanged;
+            // 
             // linkLabelChooseImage
             // 
             linkLabelChooseImage.AutoSize = true;
@@ -313,45 +347,17 @@
             linkLabelChooseImage.TabIndex = 15;
             linkLabelChooseImage.TabStop = true;
             linkLabelChooseImage.Text = "Choose Image";
+            linkLabelChooseImage.LinkClicked += linkLabelChooseImage_LinkClicked;
             // 
             // btnSaveConfig
             // 
             btnSaveConfig.Location = new Point(123, 226);
             btnSaveConfig.Name = "btnSaveConfig";
-            btnSaveConfig.Size = new Size(71, 27);
+            btnSaveConfig.Size = new Size(90, 26);
             btnSaveConfig.TabIndex = 14;
-            btnSaveConfig.Text = "Save";
+            btnSaveConfig.Text = "Save Config";
             btnSaveConfig.UseVisualStyleBackColor = true;
-            // 
-            // radioBold
-            // 
-            radioBold.AutoCheck = true;
-            radioBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            radioBold.Location = new Point(219, 166);
-            radioBold.Name = "radioBold";
-            radioBold.Size = new Size(42, 23);
-            radioBold.TabIndex = 13;
-            radioBold.Text = "B";
-            // 
-            // radioItalic
-            // 
-            radioItalic.AutoCheck = true;
-            radioItalic.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
-            radioItalic.Location = new Point(171, 166);
-            radioItalic.Name = "radioItalic";
-            radioItalic.Size = new Size(42, 23);
-            radioItalic.TabIndex = 13;
-            radioItalic.Text = "I";
-            // 
-            // radioUnderLine
-            // 
-            radioUnderLine.AutoCheck = true;
-            radioUnderLine.Font = new Font("Segoe UI Semilight", 9F, FontStyle.Underline, GraphicsUnit.Point);
-            radioUnderLine.Location = new Point(123, 166);
-            radioUnderLine.Name = "radioUnderLine";
-            radioUnderLine.Size = new Size(42, 23);
-            radioUnderLine.TabIndex = 13;
-            radioUnderLine.Text = "U";
+            btnSaveConfig.Click += btnSaveConfig_Click;
             // 
             // colorPickerTextColor
             // 
@@ -361,6 +367,7 @@
             colorPickerTextColor.TabIndex = 11;
             colorPickerTextColor.Text = "colorPicker1";
             colorPickerTextColor.Value = Color.FromArgb(22, 119, 255);
+            colorPickerTextColor.ValueChanged += colorPickerTextColor_ValueChanged;
             // 
             // txtFontSize
             // 
@@ -368,7 +375,9 @@
             txtFontSize.Name = "txtFontSize";
             txtFontSize.Size = new Size(78, 34);
             txtFontSize.TabIndex = 10;
-            txtFontSize.Text = "0";
+            txtFontSize.Text = "12";
+            txtFontSize.Value = new decimal(new int[] { 12, 0, 0, 0 });
+            txtFontSize.ValueChanged += txtFontSize_ValueChanged;
             // 
             // labelBackground
             // 
@@ -425,6 +434,7 @@
             selectTextAlign.Name = "selectTextAlign";
             selectTextAlign.Size = new Size(193, 34);
             selectTextAlign.TabIndex = 4;
+            selectTextAlign.SelectedIndexChanged += selectTextAlign_SelectedIndexChanged;
             // 
             // selectFont
             // 
@@ -432,6 +442,7 @@
             selectFont.Name = "selectFont";
             selectFont.Size = new Size(193, 34);
             selectFont.TabIndex = 4;
+            selectFont.SelectedValueChanged += selectFont_SelectedValueChanged;
             // 
             // BibleControlView
             // 
@@ -478,9 +489,6 @@
         private Panel panelConfigLeft;
         private LinkLabel linkLabelChooseImage;
         private Button btnSaveConfig;
-        private AntdUI.Radio radioBold;
-        private AntdUI.Radio radioItalic;
-        private AntdUI.Radio radioUnderLine;
         private AntdUI.ColorPicker colorPickerTextColor;
         private AntdUI.InputNumber txtFontSize;
         private AntdUI.Label labelBackground;
@@ -492,5 +500,8 @@
         private AntdUI.Select selectTextAlign;
         private AntdUI.Select selectFont;
         private Button btnShowPTT;
+        private AntdUI.Checkbox checkboxBold;
+        private AntdUI.Checkbox checkboxItalic;
+        private AntdUI.Checkbox checkboxUnderline;
     }
 }
