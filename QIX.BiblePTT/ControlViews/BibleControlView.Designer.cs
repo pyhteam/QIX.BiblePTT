@@ -63,6 +63,7 @@
             labelFont = new AntdUI.Label();
             selectTextAlign = new AntdUI.Select();
             selectFont = new AntdUI.Select();
+            btnRemoveBackground = new Button();
             panelSilde.SuspendLayout();
             panelContentSection.SuspendLayout();
             panelChooseVerb.SuspendLayout();
@@ -234,7 +235,7 @@
             // labelChooseVerb
             // 
             labelChooseVerb.Dock = DockStyle.Left;
-            labelChooseVerb.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            labelChooseVerb.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
             labelChooseVerb.Location = new Point(0, 0);
             labelChooseVerb.Name = "labelChooseVerb";
             labelChooseVerb.Size = new Size(93, 32);
@@ -288,6 +289,7 @@
             panelConfigLeft.Controls.Add(checkboxItalic);
             panelConfigLeft.Controls.Add(checkboxUnderline);
             panelConfigLeft.Controls.Add(linkLabelChooseImage);
+            panelConfigLeft.Controls.Add(btnRemoveBackground);
             panelConfigLeft.Controls.Add(btnSaveConfig);
             panelConfigLeft.Controls.Add(colorPickerTextColor);
             panelConfigLeft.Controls.Add(txtFontSize);
@@ -308,7 +310,7 @@
             // checkboxBold
             // 
             checkboxBold.AutoCheck = true;
-            checkboxBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            checkboxBold.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             checkboxBold.Location = new Point(200, 167);
             checkboxBold.Name = "checkboxBold";
             checkboxBold.Size = new Size(42, 22);
@@ -319,7 +321,7 @@
             // checkboxItalic
             // 
             checkboxItalic.AutoCheck = true;
-            checkboxItalic.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point);
+            checkboxItalic.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
             checkboxItalic.Location = new Point(158, 167);
             checkboxItalic.Name = "checkboxItalic";
             checkboxItalic.Size = new Size(36, 22);
@@ -330,7 +332,7 @@
             // checkboxUnderline
             // 
             checkboxUnderline.AutoCheck = true;
-            checkboxUnderline.Font = new Font("Segoe UI", 9F, FontStyle.Underline, GraphicsUnit.Point);
+            checkboxUnderline.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
             checkboxUnderline.Location = new Point(116, 167);
             checkboxUnderline.Name = "checkboxUnderline";
             checkboxUnderline.Size = new Size(44, 22);
@@ -444,6 +446,16 @@
             selectFont.TabIndex = 4;
             selectFont.SelectedValueChanged += selectFont_SelectedValueChanged;
             // 
+            // btnRemoveBackground
+            // 
+            btnRemoveBackground.Location = new Point(219, 226);
+            btnRemoveBackground.Name = "btnRemoveBackground";
+            btnRemoveBackground.Size = new Size(65, 26);
+            btnRemoveBackground.TabIndex = 14;
+            btnRemoveBackground.Text = "Clear";
+            btnRemoveBackground.UseVisualStyleBackColor = true;
+            btnRemoveBackground.Click += btnRemoveBackground_Click;
+            // 
             // BibleControlView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -503,5 +515,6 @@
         private AntdUI.Checkbox checkboxBold;
         private AntdUI.Checkbox checkboxItalic;
         private AntdUI.Checkbox checkboxUnderline;
+        private Button btnRemoveBackground;
     }
 }

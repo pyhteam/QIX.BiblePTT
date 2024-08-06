@@ -1,91 +1,204 @@
 namespace QIX.BiblePTT.Common;
 
-using QIX.BiblePTT.Models;
-using Spire.Presentation;
-using Spire.Presentation.Drawing;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Presentation;
+using QIX.BiblePTT.Models;
+using A = DocumentFormat.OpenXml.Drawing;
+using P = DocumentFormat.OpenXml.Presentation;
 
 public static class PowerPointHelper
 {
-    public static void CreatePresentation(ShowPPTX showPTTX)
+    public static void CreatePresentation(ShowPPTX showPPTX)
     {
-        Presentation presentation = new Presentation();
+        if (showPPTX == null || showPPTX.Verses == null || showPPTX.Verses.Count == 0)
+            throw new ArgumentNullException(nameof(showPPTX), "ShowPPTX or its Verses cannot be null or empty.");
 
-        foreach (var verse in showPTTX.Verses)
+        using (PresentationDocument presentationDocument = PresentationDocument.Create(showPPTX.FilePath ?? "presentation.pptx", PresentationDocumentType.Presentation))
         {
-            AddSlide(presentation, showPTTX.Config, showPTTX.BookName, showPTTX.ChapterNumber, verse, showPTTX.Verses.Count);
-        }
+            // Create the presentation part
+            PresentationPart presentationPart = presentationDocument.AddPresentationPart();
+            presentationPart.Presentation = new P.Presentation();
 
-        presentation.SaveToFile(showPTTX.FilePath, FileFormat.Pptx2013);
-        presentation.Dispose();
+            // Create the slide master part
+            SlideMasterPart slideMasterPart = presentationPart.AddNewPart<SlideMasterPart>();
+            slideMasterPart.SlideMaster = new P.SlideMaster(new P.CommonSlideData(new P.ShapeTree()));
 
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-        {
-            FileName = showPTTX.FilePath,
-            UseShellExecute = true
-        });
-    }
+            // Create the slide layout part
+            SlideLayoutPart slideLayoutPart = slideMasterPart.AddNewPart<SlideLayoutPart>();
+            slideLayoutPart.SlideLayout = new P.SlideLayout(new P.CommonSlideData(new P.ShapeTree()));
 
-  private static void AddSlide(Presentation presentation, ConfigView config, string bookName, int chapterNumber, Verse verse, int verseCount)
-{
-    ISlide slide = presentation.Slides.Append();
+            // Create the slide part for each verse
+            int slideIndex = 1;
+            foreach (var verse in showPPTX.Verses)
+            {
+                CreateSlide(presentationPart, slideLayoutPart, slideIndex++, verse, showPPTX);
+            }
 
-    if (string.IsNullOrEmpty(config?.ImageBase64))
-    {
-        slide.SlideBackground.Fill.FillType = FillFormatType.Solid;
-        slide.SlideBackground.Fill.SolidColor.Color = Color.Black;
-        // set background color
-        slide.DisplaySlideBackground.Fill.FillType = FillFormatType.Gradient;
-    }
-    else
-    {
-        byte[] imageBytes = Convert.FromBase64String(config.ImageBase64);
-        using (MemoryStream ms = new MemoryStream(imageBytes))
-        {
-            IImageData image = presentation.Images.Append(ms);
-            slide.SlideBackground.Fill.FillType = FillFormatType.Picture;
-            slide.SlideBackground.Fill.PictureFill.Picture.EmbedImage = image;
+            // Save the presentation
+            presentationPart.Presentation.Save();
         }
     }
 
-    AddTitle(slide, bookName, chapterNumber, verse, verseCount);
+    private static void CreateSlide(PresentationPart presentationPart, SlideLayoutPart slideLayoutPart, int slideIndex, Verse verse, ShowPPTX showPPTX)
+    {
+        SlidePart slidePart = presentationPart.AddNewPart<SlidePart>($"rId{slideIndex}");
+        slidePart.Slide = new P.Slide(new P.CommonSlideData(new P.ShapeTree()));
 
-    if (config != null)
-    {
-        AddVerseContent(slide, verse, config);
+        // Set slide background
+        SetSlideBackground(slidePart, showPPTX.Config?.ImagePath);
+
+        // Create the title shape
+        CreateTitleShape(slidePart, showPPTX.BookName, showPPTX.ChapterNumber, showPPTX.Verses, showPPTX.Config?.FontFamily, showPPTX.Config?.FontSize ?? 40);
+
+        // Create the content shape for the verse
+        CreateContentShape(slidePart, verse, showPPTX.Config);
+
+        slidePart.AddPart(slideLayoutPart);
     }
-    else
+
+    private static void SetSlideBackground(SlidePart slidePart, string? imagePath)
     {
-        // Handle the case where config is null, if necessary
-        // For example, you could log a warning or use default values
+        P.Background background = new P.Background();
+        P.BackgroundProperties backgroundProperties = new P.BackgroundProperties();
+
+        if (string.IsNullOrEmpty(imagePath))
+        {
+            A.SolidFill solidFill = new A.SolidFill();
+            A.RgbColorModelHex rgbColorModelHex = new A.RgbColorModelHex() { Val = "000000" }; // Black background
+            solidFill.Append(rgbColorModelHex);
+            backgroundProperties.Append(solidFill);
+        }
+        else
+        {
+            // Add image background if imagePath is provided
+            A.BlipFill blipFill = new A.BlipFill();
+            A.Blip blip = new A.Blip() { Embed = slidePart.GetIdOfPart(slidePart.AddImagePart(ImagePartType.Jpeg)) };
+            blipFill.Append(blip);
+            backgroundProperties.Append(blipFill);
+        }
+
+        background.Append(backgroundProperties);
+        slidePart.Slide.CommonSlideData.Append(background);
+    }
+
+    private static void CreateTitleShape(SlidePart slidePart, string? bookName, int chapterNumber, List<Verse> verses, string? fontFamily, float fontSize)
+    {
+        P.Shape titleShape = new P.Shape();
+        P.NonVisualShapeProperties nonVisualShapeProperties = new P.NonVisualShapeProperties(
+            new P.NonVisualDrawingProperties() { Id = 1, Name = "Title" },
+            new P.NonVisualShapeDrawingProperties(new A.ShapeLocks() { NoGrouping = true }),
+            new P.ApplicationNonVisualDrawingProperties(new P.PlaceholderShape() { Type = P.PlaceholderValues.Title }));
+
+        P.ShapeProperties shapeProperties = new P.ShapeProperties();
+        P.TextBody textBody = new P.TextBody(new A.BodyProperties(), new A.ListStyle());
+
+        A.Paragraph paragraph = new A.Paragraph();
+        A.Run run = new A.Run();
+        A.Text text = new A.Text();
+
+        if (verses.Count > 1)
+        {
+            text.Text = $"{bookName} {chapterNumber}:{verses[0].Label}-{verses[^1].Label}";
+        }
+        else
+        {
+            text.Text = $"{bookName} {chapterNumber} {verses[0].Label}";
+        }
+
+        run.Append(text);
+        paragraph.Append(run);
+        textBody.Append(paragraph);
+
+        A.ParagraphProperties paragraphProperties = new A.ParagraphProperties();
+        paragraphProperties.Append(new A.SolidFill(new A.RgbColorModelHex() { Val = "0000FF" })); // Blue color
+        textBody.Append(paragraphProperties);
+
+        titleShape.Append(nonVisualShapeProperties);
+        titleShape.Append(shapeProperties);
+        titleShape.Append(textBody);
+
+        slidePart.Slide.CommonSlideData.ShapeTree.Append(titleShape);
+    }
+
+    private static void CreateContentShape(SlidePart slidePart, Verse verse, ConfigView? config)
+    {
+        P.Shape contentShape = new P.Shape();
+        P.NonVisualShapeProperties nonVisualShapeProperties = new P.NonVisualShapeProperties(
+            new P.NonVisualDrawingProperties() { Id = 2, Name = "Content" },
+            new P.NonVisualShapeDrawingProperties(new A.ShapeLocks() { NoGrouping = true }),
+            new P.ApplicationNonVisualDrawingProperties());
+
+        P.ShapeProperties shapeProperties = new P.ShapeProperties();
+        P.TextBody textBody = new P.TextBody(new A.BodyProperties(), new A.ListStyle());
+
+        A.Paragraph paragraph = new A.Paragraph();
+        A.Run labelRun = new A.Run();
+        A.Text labelText = new A.Text() { Text = verse.Label };
+        labelRun.Append(labelText);
+
+        // Set label color to blue
+        A.ParagraphProperties labelParagraphProperties = new A.ParagraphProperties();
+        labelParagraphProperties.Append(new A.SolidFill(new A.RgbColorModelHex() { Val = "0000FF" })); // Blue color
+        paragraph.Append(labelParagraphProperties);
+        paragraph.Append(labelRun);
+
+        // Append content
+        A.Run contentRun = new A.Run();
+        A.Text contentText = new A.Text() { Text = verse.Content };
+        contentRun.Append(contentText);
+
+        // Set content formatting
+        A.ParagraphProperties contentParagraphProperties = new A.ParagraphProperties();
+        if (config != null)
+        {
+            contentRun.RunProperties = new A.RunProperties()
+            {
+                //FontFamily = config.FontFamily,
+                FontSize = (int)(config.FontSize * 100), // FontSize in EMU
+                Bold = (config.FontStyle & FontStyle.Bold) != 0,
+                Italic = (config.FontStyle & FontStyle.Italic) != 0,
+                Underline = (config.FontStyle & FontStyle.Underline) != 0 ? A.TextUnderlineValues.Single : A.TextUnderlineValues.None,
+                //Color = new A.SolidFill(new A.RgbColorModelHex() { Val = ColorTranslator.ToHtml(config.Color).Replace("#", "") })
+            };
+
+            switch (config.TextAlign?.ToLower())
+            {
+                case "center":
+                    contentParagraphProperties.Alignment = A.TextAlignmentTypeValues.Center;
+                    break;
+                case "right":
+                    contentParagraphProperties.Alignment = A.TextAlignmentTypeValues.Right;
+                    break;
+                default:
+                    contentParagraphProperties.Alignment = A.TextAlignmentTypeValues.Left;
+                    break;
+            }
+        }
+        else
+        {
+            // Default content formatting
+            contentRun.RunProperties = new A.RunProperties()
+            {
+               // FontFamily = "Arial",
+                FontSize = 40 * 100, // 40pt
+               // Color = new A.SolidFill(new A.RgbColorModelHex() { Val = "FFFFFF" }) // White color
+            };
+            contentParagraphProperties.Alignment = A.TextAlignmentTypeValues.Left;
+        }
+
+        paragraph.Append(contentParagraphProperties);
+        paragraph.Append(contentRun);
+        textBody.Append(paragraph);
+
+        contentShape.Append(nonVisualShapeProperties);
+        contentShape.Append(shapeProperties);
+        contentShape.Append(textBody);
+
+        slidePart.Slide.CommonSlideData.ShapeTree.Append(contentShape);
     }
 }
-    private static void AddTitle(ISlide slide, string bookName, int chapterNumber, Verse verse, int verseCount)
-    {
-        string titleText;
-        titleText = $"{bookName} {chapterNumber}:{verse.Label}";
-        
 
-        IAutoShape titleShape = slide.Shapes.AppendShape(ShapeType.Rectangle, new RectangleF(10, 10, 700, 50));
-        titleShape.Fill.FillType = FillFormatType.None;
-        titleShape.TextFrame.Text = titleText;
-        titleShape.TextFrame.TextRange.Fill.FillType = FillFormatType.Solid;
-        titleShape.TextFrame.TextRange.Fill.SolidColor.Color = Color.Blue;
-        titleShape.TextFrame.TextRange.FontHeight = 20;
-        titleShape.TextFrame.TextRange.LatinFont = new TextFont("Arial");
-    }
-
-    private static void AddVerseContent(ISlide slide, Verse verse, ConfigView config)
-    {
-        // Verse Content
-        IAutoShape contentShape = slide.Shapes.AppendShape(ShapeType.Rectangle, new RectangleF(10, 60, 700, 440));
-        contentShape.Fill.FillType = FillFormatType.None;
-        contentShape.TextFrame.Text = verse.Content;
-        contentShape.TextFrame.TextRange.Fill.FillType = FillFormatType.Solid;
-        contentShape.TextFrame.TextRange.Fill.SolidColor.Color = config?.Color ?? Color.White;
-        contentShape.TextFrame.TextRange.FontHeight = config?.FontSize ?? 40;
-        contentShape.TextFrame.TextRange.LatinFont = new TextFont(config?.FontFamily ?? "Arial");
-    }
-}

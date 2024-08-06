@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics;
 using System.IO;
 using QIX.BiblePTT.Common;
 using QIX.BiblePTT.Models;
@@ -56,19 +57,6 @@ namespace QIX.BiblePTT.ControlViews
             richTextBoxContentSection.Text = $"{_book.Name}:{_chapter.Id}  {verses.First().Label}-{verses.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verses.Select(x => x.Label + ". " + x.Content)));
 
-            // backColor to btn
-            foreach (var item in flowLayoutPanelSection.Controls)
-            {
-                if (item is Button button && button.TabIndex >= from && button.TabIndex <= to)
-                {
-                    button.BackColor = Color.LightBlue;
-                }
-                else if (item is Button otherButton)
-                {
-                    otherButton.BackColor = Color.White;
-                }
-
-            }
         }
 
         private async void LoadBiBle(string filter)
@@ -221,12 +209,44 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImageBase64 = null
+                ImagePath = linkLabelChooseImage.Text,
             };
 
-            
+
 
             var verses = await _verseService.GetFromTo(_chapter.BibleId.ToString(), _chapter.Code, from, to);
+            foreach (var verse in verses.ToList())
+            {
+                verse.Content = verse.Content.Replace("\n", " ");
+                verse.Content = verse.Content.Replace("\t", " ");
+                // check Content.Length  to slip smart
+                if (verse.Content.Length > 190)
+                {
+                    var splitContents = StringHelper.SmartSplit(verse.Content, 190);
+                    for (int i = 0; i < splitContents.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            verse.Content = splitContents[i];
+                        }
+                        else
+                        {
+                            verses.Add(new Verse
+                            {
+                                Content = splitContents[i],
+                                BibleId = verse.BibleId,
+                                Label = verse.Label,
+                                ChapterCode = verse.ChapterCode,
+                                VerseCode = verse.VerseCode
+                            }
+                            );
+                        }
+                    }
+                }
+            }
+            // sort by label
+            verses.Sort((a, b) => a.Label.CompareTo(b.Label));
+
             var showPTTX = new ShowPPTX
             {
                 FilePath = path,
@@ -236,8 +256,33 @@ namespace QIX.BiblePTT.ControlViews
                 Verses = verses,
                 Config = config
             };
-            PowerPointHelper.CreatePresentation(showPTTX);
+            //PowerPointHelper.CreatePresentation(showPTTX);
+            string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
+            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "create_pptx.exe");
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = path_create_pptx,
+                    RedirectStandardInput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            process.Start();
+            using (var writer = process.StandardInput)
+            {
+                if (writer.BaseStream.CanWrite)
+                {
+                    await writer.WriteLineAsync(jsonData);
+                }
+            }
+
+            process.WaitForExit();
         }
+
+
 
         // load all font in the system
         private void LoadFont()
@@ -372,16 +417,6 @@ namespace QIX.BiblePTT.ControlViews
 
         private void btnSaveConfig_Click(object sender, EventArgs e)
         {
-            string imageBase64 = null;
-            if (linkLabelChooseImage.Text != "Choose Image")
-            {
-                using (var ms = new MemoryStream())
-                {
-                    pictureBoxBackground.Image.Save(ms, pictureBoxBackground.Image.RawFormat);
-                    imageBase64 = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-
             var config = new ConfigView
             {
                 FontFamily = richTextBoxContentSection.Font.FontFamily.Name,
@@ -389,7 +424,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImageBase64 = imageBase64
+                ImagePath = linkLabelChooseImage.Text
             };
             var json = System.Text.Json.JsonSerializer.Serialize(config);
             // path to save config
@@ -407,7 +442,7 @@ namespace QIX.BiblePTT.ControlViews
                 var config = System.Text.Json.JsonSerializer.Deserialize<ConfigView>(json);
                 if (config != null)
                 {
-                    richTextBoxContentSection.Font = new Font(config.FontFamily, config.FontSize, config.FontStyle);
+                    richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle);
                     richTextBoxContentSection.ForeColor = config.Color;
                     richTextBoxContentSection.SelectionAlignment = config.TextAlign switch
                     {
@@ -416,7 +451,7 @@ namespace QIX.BiblePTT.ControlViews
                         "Right" => HorizontalAlignment.Right,
                         _ => HorizontalAlignment.Left,
                     };
-                    txtFontSize.Value = (decimal)config.FontSize;
+                    txtFontSize.Value = (decimal)(config.FontSize ?? 12);
                     colorPickerTextColor.Text = config.Color.Name;
                     colorPickerTextColor.Value = Color.FromArgb(config.Color.R, config.Color.G, config.Color.B);
                     selectTextAlign.SelectedIndex = config.TextAlign switch
@@ -442,17 +477,20 @@ namespace QIX.BiblePTT.ControlViews
                         checkboxUnderline.Checked = true;
                     }
 
-                    if (!string.IsNullOrEmpty(config.ImageBase64))
+                    if (!string.IsNullOrEmpty(config.ImagePath) && File.Exists(config.ImagePath))
                     {
-                        var imageBytes = Convert.FromBase64String(config.ImageBase64);
-                        using (var ms = new MemoryStream(imageBytes))
-                        {
-                            pictureBoxBackground.Image = Image.FromStream(ms);
-                            pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
-                        }
+                        linkLabelChooseImage.Text = config.ImagePath;
+                        pictureBoxBackground.Image = Image.FromFile(config.ImagePath);
+                        pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
                 }
             }
+        }
+
+        private void btnRemoveBackground_Click(object sender, EventArgs e)
+        {
+            linkLabelChooseImage.Text = "Choose Image";
+            pictureBoxBackground.Image = null;
         }
     }
 }

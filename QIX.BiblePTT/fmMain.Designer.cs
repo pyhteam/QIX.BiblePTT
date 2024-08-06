@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             windowBarApp = new AntdUI.WindowBar();
-            openFileDialogBackgroud = new OpenFileDialog();
             menuStrip1 = new MenuStrip();
             phooNtawToolStripMenuItem = new ToolStripMenuItem();
             lusSibDhoToolStripMenuItem = new ToolStripMenuItem();
@@ -55,10 +54,6 @@
             windowBarApp.Size = new Size(1000, 39);
             windowBarApp.TabIndex = 0;
             windowBarApp.Text = "Pawg Ntseeg Hmoob VN";
-            // 
-            // openFileDialogBackgroud
-            // 
-            openFileDialogBackgroud.FileName = "openFileDialog1";
             // 
             // menuStrip1
             // 
@@ -151,7 +146,6 @@
         #endregion
 
         private AntdUI.WindowBar windowBarApp;
-        private OpenFileDialog openFileDialogBackgroud;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem phooNtawToolStripMenuItem;
         private ToolStripMenuItem lusSibDhoToolStripMenuItem;
