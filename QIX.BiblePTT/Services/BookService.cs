@@ -13,7 +13,7 @@ namespace QIX.BiblePTT.Services
         {
             Books = new List<Book>();
             // get path Resource from Src.Resources
-            dataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Resources", "Data", "Books");
+            dataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Books");
             // Load books from JSON files
             var files = Directory.GetFiles(dataFolder, "*.json");
             if (files.Length == 0)

@@ -13,7 +13,7 @@ namespace QIX.BiblePTT.Services
         {
             Verses = new List<Verse>();
             // get path Resource from Src.Resources
-            dataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Resources", "Data", "Verses");
+            dataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Verses");
             string[] files;
             // forech all folders in the directory
             foreach (var dir in Directory.GetDirectories(dataFolder))

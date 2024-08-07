@@ -219,33 +219,7 @@ namespace QIX.BiblePTT.ControlViews
             {
                 verse.Content = verse.Content.Replace("\n", " ");
                 verse.Content = verse.Content.Replace("\t", " ");
-                // check Content.Length  to slip smart
-                if (verse.Content.Length > 190)
-                {
-                    var splitContents = StringHelper.SmartSplit(verse.Content, 190);
-                    for (int i = 0; i < splitContents.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            verse.Content = splitContents[i];
-                        }
-                        else
-                        {
-                            verses.Add(new Verse
-                            {
-                                Content = splitContents[i],
-                                BibleId = verse.BibleId,
-                                Label = verse.Label,
-                                ChapterCode = verse.ChapterCode,
-                                VerseCode = verse.VerseCode
-                            }
-                            );
-                        }
-                    }
-                }
             }
-            // sort by label
-            verses.Sort((a, b) => a.Label.CompareTo(b.Label));
 
             var showPTTX = new ShowPPTX
             {
