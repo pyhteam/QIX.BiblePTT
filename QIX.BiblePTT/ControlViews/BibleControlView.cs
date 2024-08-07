@@ -54,7 +54,7 @@ namespace QIX.BiblePTT.ControlViews
                 MessageBox.Show("Nrhiav tsi pum", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            richTextBoxContentSection.Text = $"{_book.Name}:{_chapter.Id}  {verses.First().Label}-{verses.Last().Label}\n";
+            richTextBoxContentSection.Text = $"{_book.Name} {_chapter.Id}:{verses.First().Label}-{verses.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verses.Select(x => x.Label + ". " + x.Content)));
 
         }
@@ -120,13 +120,13 @@ namespace QIX.BiblePTT.ControlViews
         {
 
             var book = System.Text.Json.JsonSerializer.Deserialize<Book>(item.Tag.ToString());
+            _book = book;
             if (book != null)
             {
                 LoadChapter(book);
                 // load all verses for the first chapter
-                LoadChapterContent(book.Chapters.First());
+                richTextBoxContentSection.Text = "";
             }
-            _book = book;
         }
 
         private void LoadChapter(Book book)
@@ -180,7 +180,7 @@ namespace QIX.BiblePTT.ControlViews
                 MessageBox.Show("Nrhiav tsi pum", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            richTextBoxContentSection.Text = $"{_book.Name}:{chapter.Id}  {verse.First().Label}-{verse.Last().Label}\n";
+            richTextBoxContentSection.Text = $"{_book.Name} {chapter.Id}:{verse.First().Label}-{verse.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verse.Select(x => x.Label + ". " + x.Content)));
             _chapter = chapter;
             txtVerbFrom.Value = 1;
@@ -465,6 +465,21 @@ namespace QIX.BiblePTT.ControlViews
         {
             linkLabelChooseImage.Text = "Choose Image";
             pictureBoxBackground.Image = null;
+            selectFont.SelectedValue = "Arial";
+            selectTextAlign.SelectedValue = "Left";
+            checkboxBold.Checked = false;
+            checkboxItalic.Checked = false;
+            checkboxUnderline.Checked = false;
+            colorPickerTextColor.Value = Color.Black;
+            richTextBoxContentSection.Font = new Font("Arial", 20);
+            txtFontSize.Value = 20;
+            // remove file config
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            MessageBox.Show("Reset config successfully", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fmMain));
             windowBarApp = new AntdUI.WindowBar();
             menuStrip1 = new MenuStrip();
             phooNtawToolStripMenuItem = new ToolStripMenuItem();
@@ -48,7 +49,9 @@
             windowBarApp.BadgeBack = SystemColors.ActiveBorder;
             windowBarApp.BadgeMode = true;
             windowBarApp.Dock = DockStyle.Top;
-            windowBarApp.Icon = Properties.Resources.open_book_icon_png;
+            windowBarApp.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            windowBarApp.ForeColor = SystemColors.ButtonHighlight;
+            windowBarApp.Icon = (Image)resources.GetObject("windowBarApp.Icon");
             windowBarApp.Location = new Point(0, 0);
             windowBarApp.Name = "windowBarApp";
             windowBarApp.Size = new Size(1000, 39);
@@ -133,6 +136,7 @@
             Controls.Add(windowBarApp);
             Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "fmMain";
             Opacity = 0.97D;
             Text = "Bible To PPT";

@@ -347,7 +347,7 @@
             labelColor.Name = "labelColor";
             labelColor.Size = new Size(70, 23);
             labelColor.TabIndex = 7;
-            labelColor.Text = "Color";
+            labelColor.Text = "Text Color";
             // 
             // selectFont
             // 
@@ -411,7 +411,7 @@
             btnRemoveBackground.Name = "btnRemoveBackground";
             btnRemoveBackground.Size = new Size(65, 26);
             btnRemoveBackground.TabIndex = 14;
-            btnRemoveBackground.Text = "Clear";
+            btnRemoveBackground.Text = "Reset";
             btnRemoveBackground.UseVisualStyleBackColor = true;
             btnRemoveBackground.Click += btnRemoveBackground_Click;
             // 
