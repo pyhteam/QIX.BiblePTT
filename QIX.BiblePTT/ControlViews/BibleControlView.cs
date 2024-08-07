@@ -233,6 +233,12 @@ namespace QIX.BiblePTT.ControlViews
             //PowerPointHelper.CreatePresentation(showPTTX);
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
             string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "create_pptx.exe");
+            // check exe file exists
+            if (!File.Exists(path_create_pptx))
+            {
+                MessageBox.Show("Tsis muaj create_pptx.exe", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             var process = new Process
             {
                 StartInfo = new ProcessStartInfo
