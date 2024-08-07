@@ -23,5 +23,13 @@ namespace QIX.BiblePTT
             bibleControlView.Dock = DockStyle.Fill;
             panelMain.Controls.Add(bibleControlView);
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fmAbout = new fmAbout();
+            fmAbout.ShowDialog();
+            // dispose about form when closed
+            fmAbout.Dispose();
+        }
     }
 }

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fmMain));
             windowBarApp = new AntdUI.WindowBar();
-            menuStrip1 = new MenuStrip();
+            menuStripMain = new MenuStrip();
             phooNtawToolStripMenuItem = new ToolStripMenuItem();
             lusSibDhoToolStripMenuItem = new ToolStripMenuItem();
             phooNkaujToolStripMenuItem = new ToolStripMenuItem();
@@ -40,7 +40,7 @@
             docToolStripMenuItem = new ToolStripMenuItem();
             updateToolStripMenuItem1 = new ToolStripMenuItem();
             panelMain = new Panel();
-            menuStrip1.SuspendLayout();
+            menuStripMain.SuspendLayout();
             SuspendLayout();
             // 
             // windowBarApp
@@ -58,15 +58,15 @@
             windowBarApp.TabIndex = 0;
             windowBarApp.Text = "Pawg Ntseeg Hmoob VN";
             // 
-            // menuStrip1
+            // menuStripMain
             // 
-            menuStrip1.Dock = DockStyle.Bottom;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { phooNtawToolStripMenuItem, aboutToolStripMenuItem, updateToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 674);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1000, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
+            menuStripMain.Dock = DockStyle.Bottom;
+            menuStripMain.Items.AddRange(new ToolStripItem[] { phooNtawToolStripMenuItem, aboutToolStripMenuItem, updateToolStripMenuItem });
+            menuStripMain.Location = new Point(0, 674);
+            menuStripMain.Name = "menuStripMain";
+            menuStripMain.Size = new Size(1000, 24);
+            menuStripMain.TabIndex = 1;
+            menuStripMain.Text = "menuStrip1";
             // 
             // phooNtawToolStripMenuItem
             // 
@@ -98,6 +98,7 @@
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(52, 20);
             aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // updateToolStripMenuItem
             // 
@@ -134,15 +135,15 @@
             ClientSize = new Size(1000, 698);
             Controls.Add(panelMain);
             Controls.Add(windowBarApp);
-            Controls.Add(menuStrip1);
+            Controls.Add(menuStripMain);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "fmMain";
             Opacity = 0.97D;
             Text = "Bible To PPT";
             Load += fmMain_Load;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            menuStripMain.ResumeLayout(false);
+            menuStripMain.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,7 +151,7 @@
         #endregion
 
         private AntdUI.WindowBar windowBarApp;
-        private MenuStrip menuStrip1;
+        private MenuStrip menuStripMain;
         private ToolStripMenuItem phooNtawToolStripMenuItem;
         private ToolStripMenuItem lusSibDhoToolStripMenuItem;
         private ToolStripMenuItem phooNkaujToolStripMenuItem;
