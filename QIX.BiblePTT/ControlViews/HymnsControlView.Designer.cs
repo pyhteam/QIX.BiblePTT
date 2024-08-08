@@ -29,17 +29,7 @@
         private void InitializeComponent()
         {
             panelContent = new Panel();
-            panelSilde = new Panel();
-            menuHymns = new AntdUI.Menu();
-            txtSearchHymn = new AntdUI.Input();
-            selectHymn = new AntdUI.Select();
-            panelChooseVerb = new Panel();
-            btnShowPTT = new Button();
-            btnFilterVerb = new Button();
-            txtVerbTo = new AntdUI.InputNumber();
-            labelToVerb = new AntdUI.Label();
-            txtVerbFrom = new AntdUI.InputNumber();
-            labelChooseVerb = new AntdUI.Label();
+            richTextBoxContentSection = new RichTextBox();
             panelConfig = new Panel();
             panelConfigRight = new Panel();
             panelImage = new Panel();
@@ -61,18 +51,30 @@
             selectTextAlign = new AntdUI.Select();
             btnSaveConfig = new Button();
             btnRemoveBackground = new Button();
+            panelChooseVerb = new Panel();
+            btnShowPTT = new Button();
+            btnFilterVerb = new Button();
+            txtVerbTo = new AntdUI.InputNumber();
+            labelToVerb = new AntdUI.Label();
+            txtVerbFrom = new AntdUI.InputNumber();
+            labelChooseVerb = new AntdUI.Label();
+            panelSilde = new Panel();
+            menuHymns = new AntdUI.Menu();
+            txtSearchHymn = new AntdUI.Input();
+            selectHymn = new AntdUI.Select();
             panelContent.SuspendLayout();
-            panelSilde.SuspendLayout();
-            panelChooseVerb.SuspendLayout();
             panelConfig.SuspendLayout();
             panelConfigRight.SuspendLayout();
             panelImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxBackground).BeginInit();
             panel1.SuspendLayout();
+            panelChooseVerb.SuspendLayout();
+            panelSilde.SuspendLayout();
             SuspendLayout();
             // 
             // panelContent
             // 
+            panelContent.Controls.Add(richTextBoxContentSection);
             panelContent.Controls.Add(panelConfig);
             panelContent.Controls.Add(panelChooseVerb);
             panelContent.Dock = DockStyle.Fill;
@@ -81,125 +83,16 @@
             panelContent.Size = new Size(583, 491);
             panelContent.TabIndex = 13;
             // 
-            // panelSilde
+            // richTextBoxContentSection
             // 
-            panelSilde.BackColor = Color.White;
-            panelSilde.BorderStyle = BorderStyle.FixedSingle;
-            panelSilde.Controls.Add(menuHymns);
-            panelSilde.Controls.Add(txtSearchHymn);
-            panelSilde.Controls.Add(selectHymn);
-            panelSilde.Dock = DockStyle.Left;
-            panelSilde.Location = new Point(0, 0);
-            panelSilde.Name = "panelSilde";
-            panelSilde.Size = new Size(196, 491);
-            panelSilde.TabIndex = 10;
-            // 
-            // menuHymns
-            // 
-            menuHymns.BackActive = SystemColors.ActiveCaption;
-            menuHymns.BackColor = Color.White;
-            menuHymns.Dock = DockStyle.Fill;
-            menuHymns.Location = new Point(0, 71);
-            menuHymns.Name = "menuHymns";
-            menuHymns.Size = new Size(194, 418);
-            menuHymns.TabIndex = 2;
-            menuHymns.Text = "menuBook";
-            // 
-            // txtSearchHymn
-            // 
-            txtSearchHymn.Dock = DockStyle.Top;
-            txtSearchHymn.IconRatio = 0.5F;
-            txtSearchHymn.Location = new Point(0, 36);
-            txtSearchHymn.Name = "txtSearchHymn";
-            txtSearchHymn.Size = new Size(194, 35);
-            txtSearchHymn.TabIndex = 3;
-            // 
-            // selectHymn
-            // 
-            selectHymn.Dock = DockStyle.Top;
-            selectHymn.List = true;
-            selectHymn.ListAutoWidth = true;
-            selectHymn.Location = new Point(0, 0);
-            selectHymn.Multiline = true;
-            selectHymn.Name = "selectHymn";
-            selectHymn.Size = new Size(194, 36);
-            selectHymn.TabIndex = 2;
-            selectHymn.Text = "Choose Phoo Nkauj";
-            // 
-            // panelChooseVerb
-            // 
-            panelChooseVerb.BackColor = Color.White;
-            panelChooseVerb.BorderStyle = BorderStyle.FixedSingle;
-            panelChooseVerb.Controls.Add(btnShowPTT);
-            panelChooseVerb.Controls.Add(btnFilterVerb);
-            panelChooseVerb.Controls.Add(txtVerbTo);
-            panelChooseVerb.Controls.Add(labelToVerb);
-            panelChooseVerb.Controls.Add(txtVerbFrom);
-            panelChooseVerb.Controls.Add(labelChooseVerb);
-            panelChooseVerb.Dock = DockStyle.Top;
-            panelChooseVerb.Location = new Point(0, 0);
-            panelChooseVerb.Name = "panelChooseVerb";
-            panelChooseVerb.Size = new Size(583, 34);
-            panelChooseVerb.TabIndex = 5;
-            // 
-            // btnShowPTT
-            // 
-            btnShowPTT.Dock = DockStyle.Left;
-            btnShowPTT.Location = new Point(373, 0);
-            btnShowPTT.Name = "btnShowPTT";
-            btnShowPTT.Size = new Size(130, 32);
-            btnShowPTT.TabIndex = 5;
-            btnShowPTT.Text = "Qhib PowerPoint";
-            btnShowPTT.UseVisualStyleBackColor = true;
-            // 
-            // btnFilterVerb
-            // 
-            btnFilterVerb.Dock = DockStyle.Left;
-            btnFilterVerb.Location = new Point(298, 0);
-            btnFilterVerb.Name = "btnFilterVerb";
-            btnFilterVerb.Size = new Size(75, 32);
-            btnFilterVerb.TabIndex = 4;
-            btnFilterVerb.Text = "Nrhiav";
-            btnFilterVerb.UseVisualStyleBackColor = true;
-            // 
-            // txtVerbTo
-            // 
-            txtVerbTo.Dock = DockStyle.Left;
-            txtVerbTo.Location = new Point(213, 0);
-            txtVerbTo.Name = "txtVerbTo";
-            txtVerbTo.Size = new Size(85, 32);
-            txtVerbTo.TabIndex = 3;
-            txtVerbTo.Text = "0";
-            txtVerbTo.TextAlign = HorizontalAlignment.Center;
-            // 
-            // labelToVerb
-            // 
-            labelToVerb.Dock = DockStyle.Left;
-            labelToVerb.Location = new Point(180, 0);
-            labelToVerb.Name = "labelToVerb";
-            labelToVerb.Size = new Size(33, 32);
-            labelToVerb.TabIndex = 2;
-            labelToVerb.Text = "Txog";
-            // 
-            // txtVerbFrom
-            // 
-            txtVerbFrom.Dock = DockStyle.Left;
-            txtVerbFrom.Location = new Point(93, 0);
-            txtVerbFrom.Name = "txtVerbFrom";
-            txtVerbFrom.Size = new Size(87, 32);
-            txtVerbFrom.TabIndex = 1;
-            txtVerbFrom.Text = "0";
-            txtVerbFrom.TextAlign = HorizontalAlignment.Center;
-            // 
-            // labelChooseVerb
-            // 
-            labelChooseVerb.Dock = DockStyle.Left;
-            labelChooseVerb.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
-            labelChooseVerb.Location = new Point(0, 0);
-            labelChooseVerb.Name = "labelChooseVerb";
-            labelChooseVerb.Size = new Size(93, 32);
-            labelChooseVerb.TabIndex = 0;
-            labelChooseVerb.Text = "Nrhiav Nqi";
+            richTextBoxContentSection.AutoWordSelection = true;
+            richTextBoxContentSection.BorderStyle = BorderStyle.None;
+            richTextBoxContentSection.Dock = DockStyle.Fill;
+            richTextBoxContentSection.Location = new Point(0, 302);
+            richTextBoxContentSection.Name = "richTextBoxContentSection";
+            richTextBoxContentSection.Size = new Size(583, 189);
+            richTextBoxContentSection.TabIndex = 10;
+            richTextBoxContentSection.Text = "";
             // 
             // panelConfig
             // 
@@ -234,7 +127,7 @@
             // 
             // pictureBoxBackground
             // 
-            pictureBoxBackground.Dock = DockStyle.Fill;
+            pictureBoxBackground.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBoxBackground.Location = new Point(0, 0);
             pictureBoxBackground.Name = "pictureBoxBackground";
             pictureBoxBackground.Size = new Size(282, 264);
@@ -282,6 +175,7 @@
             checkboxBold.Size = new Size(42, 22);
             checkboxBold.TabIndex = 16;
             checkboxBold.Text = "U";
+            checkboxBold.CheckedChanged += checkboxBold_CheckedChanged;
             // 
             // labelTextType
             // 
@@ -300,6 +194,7 @@
             checkboxItalic.Size = new Size(36, 22);
             checkboxItalic.TabIndex = 16;
             checkboxItalic.Text = "I";
+            checkboxItalic.CheckedChanged += checkboxItalic_CheckedChanged;
             // 
             // labelBackground
             // 
@@ -317,6 +212,7 @@
             txtFontSize.TabIndex = 10;
             txtFontSize.Text = "12";
             txtFontSize.Value = new decimal(new int[] { 12, 0, 0, 0 });
+            txtFontSize.ValueChanged += txtFontSize_ValueChanged;
             // 
             // labelTextAlign
             // 
@@ -335,6 +231,7 @@
             checkboxUnderline.Size = new Size(44, 22);
             checkboxUnderline.TabIndex = 16;
             checkboxUnderline.Text = "U";
+            checkboxUnderline.CheckedChanged += checkboxUnderline_CheckedChanged;
             // 
             // labelColor
             // 
@@ -350,6 +247,7 @@
             selectFont.Name = "selectFont";
             selectFont.Size = new Size(197, 34);
             selectFont.TabIndex = 4;
+            selectFont.SelectedValueChanged += selectFont_SelectedValueChanged;
             // 
             // colorPickerTextColor
             // 
@@ -358,7 +256,8 @@
             colorPickerTextColor.Size = new Size(197, 31);
             colorPickerTextColor.TabIndex = 11;
             colorPickerTextColor.Text = "colorPicker1";
-            colorPickerTextColor.Value = Color.FromArgb(22, 119, 255);
+            colorPickerTextColor.Value = Color.Black;
+            colorPickerTextColor.ValueChanged += colorPickerTextColor_ValueChanged;
             // 
             // linkLabelChooseImage
             // 
@@ -369,6 +268,7 @@
             linkLabelChooseImage.TabIndex = 15;
             linkLabelChooseImage.TabStop = true;
             linkLabelChooseImage.Text = "Choose Image";
+            linkLabelChooseImage.Click += linkLabelChooseImage_Click;
             // 
             // labelFontSize
             // 
@@ -385,6 +285,7 @@
             selectTextAlign.Name = "selectTextAlign";
             selectTextAlign.Size = new Size(197, 34);
             selectTextAlign.TabIndex = 4;
+            selectTextAlign.SelectedValueChanged += selectTextAlign_SelectedValueChanged;
             // 
             // btnSaveConfig
             // 
@@ -394,6 +295,7 @@
             btnSaveConfig.TabIndex = 14;
             btnSaveConfig.Text = "Save Config";
             btnSaveConfig.UseVisualStyleBackColor = true;
+            btnSaveConfig.Click += btnSaveConfig_Click;
             // 
             // btnRemoveBackground
             // 
@@ -403,6 +305,132 @@
             btnRemoveBackground.TabIndex = 14;
             btnRemoveBackground.Text = "Reset";
             btnRemoveBackground.UseVisualStyleBackColor = true;
+            btnRemoveBackground.Click += btnRemoveBackground_Click;
+            // 
+            // panelChooseVerb
+            // 
+            panelChooseVerb.BackColor = Color.White;
+            panelChooseVerb.BorderStyle = BorderStyle.FixedSingle;
+            panelChooseVerb.Controls.Add(btnShowPTT);
+            panelChooseVerb.Controls.Add(btnFilterVerb);
+            panelChooseVerb.Controls.Add(txtVerbTo);
+            panelChooseVerb.Controls.Add(labelToVerb);
+            panelChooseVerb.Controls.Add(txtVerbFrom);
+            panelChooseVerb.Controls.Add(labelChooseVerb);
+            panelChooseVerb.Dock = DockStyle.Top;
+            panelChooseVerb.Location = new Point(0, 0);
+            panelChooseVerb.Name = "panelChooseVerb";
+            panelChooseVerb.Size = new Size(583, 34);
+            panelChooseVerb.TabIndex = 5;
+            // 
+            // btnShowPTT
+            // 
+            btnShowPTT.Dock = DockStyle.Left;
+            btnShowPTT.Location = new Point(373, 0);
+            btnShowPTT.Name = "btnShowPTT";
+            btnShowPTT.Size = new Size(130, 32);
+            btnShowPTT.TabIndex = 5;
+            btnShowPTT.Text = "Qhib PowerPoint";
+            btnShowPTT.UseVisualStyleBackColor = true;
+            btnShowPTT.Click += btnShowPTT_Click;
+            // 
+            // btnFilterVerb
+            // 
+            btnFilterVerb.Dock = DockStyle.Left;
+            btnFilterVerb.Location = new Point(298, 0);
+            btnFilterVerb.Name = "btnFilterVerb";
+            btnFilterVerb.Size = new Size(75, 32);
+            btnFilterVerb.TabIndex = 4;
+            btnFilterVerb.Text = "Nrhiav";
+            btnFilterVerb.UseVisualStyleBackColor = true;
+            btnFilterVerb.Click += btnFilterVerb_Click;
+            // 
+            // txtVerbTo
+            // 
+            txtVerbTo.Dock = DockStyle.Left;
+            txtVerbTo.Location = new Point(213, 0);
+            txtVerbTo.Name = "txtVerbTo";
+            txtVerbTo.Size = new Size(85, 32);
+            txtVerbTo.TabIndex = 3;
+            txtVerbTo.Text = "0";
+            txtVerbTo.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelToVerb
+            // 
+            labelToVerb.Dock = DockStyle.Left;
+            labelToVerb.Location = new Point(180, 0);
+            labelToVerb.Name = "labelToVerb";
+            labelToVerb.Size = new Size(33, 32);
+            labelToVerb.TabIndex = 2;
+            labelToVerb.Text = "Txog";
+            // 
+            // txtVerbFrom
+            // 
+            txtVerbFrom.Dock = DockStyle.Left;
+            txtVerbFrom.Location = new Point(93, 0);
+            txtVerbFrom.Name = "txtVerbFrom";
+            txtVerbFrom.Size = new Size(87, 32);
+            txtVerbFrom.TabIndex = 1;
+            txtVerbFrom.Text = "0";
+            txtVerbFrom.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelChooseVerb
+            // 
+            labelChooseVerb.Dock = DockStyle.Left;
+            labelChooseVerb.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            labelChooseVerb.Location = new Point(0, 0);
+            labelChooseVerb.Name = "labelChooseVerb";
+            labelChooseVerb.Size = new Size(93, 32);
+            labelChooseVerb.TabIndex = 0;
+            labelChooseVerb.Text = "Nrhiav Nqi";
+            // 
+            // panelSilde
+            // 
+            panelSilde.BackColor = Color.White;
+            panelSilde.BorderStyle = BorderStyle.FixedSingle;
+            panelSilde.Controls.Add(menuHymns);
+            panelSilde.Controls.Add(txtSearchHymn);
+            panelSilde.Controls.Add(selectHymn);
+            panelSilde.Dock = DockStyle.Left;
+            panelSilde.Location = new Point(0, 0);
+            panelSilde.Name = "panelSilde";
+            panelSilde.Size = new Size(196, 491);
+            panelSilde.TabIndex = 10;
+            // 
+            // menuHymns
+            // 
+            menuHymns.BackActive = SystemColors.ActiveCaption;
+            menuHymns.BackColor = Color.White;
+            menuHymns.Dock = DockStyle.Fill;
+            menuHymns.Location = new Point(0, 71);
+            menuHymns.Name = "menuHymns";
+            menuHymns.Size = new Size(194, 418);
+            menuHymns.TabIndex = 2;
+            menuHymns.Text = "menuBook";
+            menuHymns.SelectChanged += menuHymns_SelectChanged;
+            // 
+            // txtSearchHymn
+            // 
+            txtSearchHymn.Dock = DockStyle.Top;
+            txtSearchHymn.IconRatio = 0.5F;
+            txtSearchHymn.Location = new Point(0, 36);
+            txtSearchHymn.Name = "txtSearchHymn";
+            txtSearchHymn.Size = new Size(194, 35);
+            txtSearchHymn.TabIndex = 3;
+            txtSearchHymn.KeyPress += txtSearchHymn_KeyPress;
+            // 
+            // selectHymn
+            // 
+            selectHymn.Dock = DockStyle.Top;
+            selectHymn.List = true;
+            selectHymn.ListAutoWidth = true;
+            selectHymn.Location = new Point(0, 0);
+            selectHymn.Multiline = true;
+            selectHymn.Name = "selectHymn";
+            selectHymn.Size = new Size(194, 36);
+            selectHymn.TabIndex = 2;
+            selectHymn.Text = "Choose Phoo Nkauj";
+            selectHymn.SelectedValueChanged += selectHymn_SelectedValueChanged;
             // 
             // HymnsControlView
             // 
@@ -414,14 +442,14 @@
             Size = new Size(779, 491);
             Load += HymnsControlView_Load;
             panelContent.ResumeLayout(false);
-            panelSilde.ResumeLayout(false);
-            panelChooseVerb.ResumeLayout(false);
             panelConfig.ResumeLayout(false);
             panelConfigRight.ResumeLayout(false);
             panelImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxBackground).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panelChooseVerb.ResumeLayout(false);
+            panelSilde.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -460,5 +488,6 @@
         private AntdUI.Select selectTextAlign;
         private Button btnSaveConfig;
         private Button btnRemoveBackground;
+        private RichTextBox richTextBoxContentSection;
     }
 }

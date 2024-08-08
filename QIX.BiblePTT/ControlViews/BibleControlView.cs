@@ -210,6 +210,7 @@ namespace QIX.BiblePTT.ControlViews
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
                 ImagePath = linkLabelChooseImage.Text,
+                TypeShow = 0
             };
 
 
@@ -372,6 +373,7 @@ namespace QIX.BiblePTT.ControlViews
         private void selectTextAlign_SelectedIndexChanged(object sender, int value)
         {
             string align = selectTextAlign.Text;
+            richTextBoxContentSection.SelectAll();
             richTextBoxContentSection.SelectionAlignment = align switch
             {
                 "Left" => HorizontalAlignment.Left,
@@ -424,6 +426,7 @@ namespace QIX.BiblePTT.ControlViews
                 {
                     richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle);
                     richTextBoxContentSection.ForeColor = config.Color;
+                    richTextBoxContentSection.SelectAll();
                     richTextBoxContentSection.SelectionAlignment = config.TextAlign switch
                     {
                         "Left" => HorizontalAlignment.Left,

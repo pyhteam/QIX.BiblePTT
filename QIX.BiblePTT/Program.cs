@@ -36,8 +36,10 @@ namespace QIX.BiblePTT
                     services.AddTransient<IBibleService, BibleService>(); 
                     services.AddTransient<IBookService, BookService>(); 
                     services.AddTransient<IVerseService, VerseService>();
+                    services.AddTransient<IHymnBookService, HymnBookService>();
                     services.AddSingleton<fmMain>();
                     services.AddSingleton<BibleControlView>(); 
+                    services.AddSingleton<HymnsControlView>();
                 });
         }
     }

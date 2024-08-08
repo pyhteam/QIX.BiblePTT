@@ -8,13 +8,15 @@ namespace QIX.BiblePTT
         private readonly IBibleService _bibleService;
         private readonly IBookService _bookService;
         private readonly IVerseService _verseService;
+        private readonly IHymnBookService _hymnBookService;
 
-        public fmMain(IBibleService bibleService, IBookService bookService, IVerseService verseService)
+        public fmMain(IBibleService bibleService, IBookService bookService, IVerseService verseService,IHymnBookService hymnBookService)
         {
             InitializeComponent();
             _bibleService = bibleService;
             _bookService = bookService;
             _verseService = verseService;
+            _hymnBookService = hymnBookService;
         }
 
         private void fmMain_Load(object sender, EventArgs e)
@@ -44,7 +46,11 @@ namespace QIX.BiblePTT
 
         private void phooNkaujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            panelMain.Controls.Clear();
+            var hymnsControlView = new HymnsControlView(_hymnBookService);
+            hymnsControlView.Dock = DockStyle.Fill;
+            panelMain.Controls.Add(hymnsControlView);
+            
         }
 
         private void lusSibDhoToolStripMenuItem_Click(object sender, EventArgs e)

@@ -10,5 +10,6 @@ namespace QIX.BiblePTT.Common
         public Color Color { get; set; }
         public string? TextAlign { get; set; }
         public string? ImagePath { get; set; }
+         public int TypeShow { get; set; } = 0; // 0: Bible, 1: Hymn
     }
 }
