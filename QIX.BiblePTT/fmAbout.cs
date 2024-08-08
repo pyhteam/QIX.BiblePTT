@@ -75,12 +75,15 @@ namespace QIX.BiblePTT
 
         private void label5_Click(object sender, EventArgs e)
         {
-             OpenLink(label6.Text);
+            OpenLink(label6.Text);
         }
 
         private void OpenLink(string url)
         {
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            if (url.StartsWith("www."))
+            {
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            }
         }
     }
 }

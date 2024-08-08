@@ -36,6 +36,7 @@ namespace QIX.BiblePTT.ControlViews
             HymnBooks = await _hymnBookService.GetAll();
             var dataSelect = HymnBooks.Select(x => x.Id + " - " + x.Name).ToArray();
             selectHymn.Items.AddRange(dataSelect);
+            selectHymn.SelectedIndex = 0;
         }
 
         private void LoadMenuHymn(List<Hymn> hymns)
@@ -189,9 +190,24 @@ namespace QIX.BiblePTT.ControlViews
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                var search = txtSearchHymn.Text;
-                var hymns = Hymns.Where(x => x.Name?.ToLower().Contains(search.ToLower()) == true).ToList();
-                LoadMenuHymn(hymns);
+                // check txtSearchHymn.Text not is number
+                if (!int.TryParse(txtSearchHymn.Text, out _) && !string.IsNullOrEmpty(txtSearchHymn.Text))
+                {
+                    MessageBox.Show("Sau zaj nkauj lub xub xwb.", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                // search by id hymn in list hymns and load menu hymn
+                if (!string.IsNullOrEmpty(txtSearchHymn.Text))
+                {
+
+                    var search = int.Parse(txtSearchHymn.Text);
+                    var hymns = Hymns.Where(x => x.Id == search).ToList();
+                    LoadMenuHymn(hymns);
+                }
+                else
+                {
+                    LoadMenuHymn(Hymns);
+                }
             }
         }
 

@@ -277,10 +277,10 @@ namespace QIX.BiblePTT.ControlViews
             }
             selectFont.SelectedIndex = 0;
             // set default font
-            richTextBoxContentSection.Font = new Font("Arial", 12);
+            richTextBoxContentSection.Font = new Font("Arial", 30);
 
             // FontSize
-            txtFontSize.Value = 12;
+            txtFontSize.Value = 30;
             colorPickerTextColor.Value = Color.Black;
             selectTextAlign.SelectedIndex = 0;
         }
@@ -309,7 +309,7 @@ namespace QIX.BiblePTT.ControlViews
         private void selectFont_SelectedValueChanged(object sender, object value)
         {
             float fontSize = float.Parse(txtFontSize.Value.ToString());
-            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 12 : fontSize);
+            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 30 : fontSize,UpdateFontStyle());
         }
 
         private void txtFontSize_ValueChanged(object sender, decimal value)
@@ -321,12 +321,12 @@ namespace QIX.BiblePTT.ControlViews
                 {
                     richTextBoxContentSection.Invoke(new Action(() =>
                     {
-                        richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize);
+                        richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize,UpdateFontStyle());
                     }));
                 }
                 else
                 {
-                    richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize);
+                    richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize,UpdateFontStyle());
                 }
             }
         }
