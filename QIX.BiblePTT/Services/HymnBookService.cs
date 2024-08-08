@@ -9,7 +9,6 @@ namespace QIX.BiblePTT.Services
     {
         private string dataFolder;
         private List<HymnBook> HymnBooks { get; set; }
-        private List<Hymn> Hymns { get; set; }
         public HymnBookService()
         {
             HymnBooks = new List<HymnBook>();
