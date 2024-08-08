@@ -1,3 +1,5 @@
+using System.IO;
+using System.Net;
 using QIX.BiblePTT.ControlViews;
 using QIX.BiblePTT.Services.Interface;
 
@@ -19,11 +21,11 @@ namespace QIX.BiblePTT
 
         private void fmMain_Load(object sender, EventArgs e)
         {
+           
             var bibleControlView = new BibleControlView(_bibleService, _bookService, _verseService);
             bibleControlView.Dock = DockStyle.Fill;
             panelMain.Controls.Add(bibleControlView);
         }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fmAbout = new fmAbout();

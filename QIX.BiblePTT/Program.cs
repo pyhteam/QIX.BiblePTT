@@ -25,6 +25,8 @@ namespace QIX.BiblePTT
             Application.Run(ServiceProvider.GetRequiredService<fmMain>());
         }
 
+        
+
         static IHostBuilder CreateHostBuilder()
         {
            return Host.CreateDefaultBuilder()

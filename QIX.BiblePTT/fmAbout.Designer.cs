@@ -40,6 +40,9 @@
             label7 = new AntdUI.Label();
             label6 = new AntdUI.Label();
             label5 = new AntdUI.Label();
+            label9 = new AntdUI.Label();
+            label10 = new AntdUI.Label();
+            label11 = new AntdUI.Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -55,7 +58,7 @@
             windowBarApp.Icon = (Image)resources.GetObject("windowBarApp.Icon");
             windowBarApp.Location = new Point(0, 0);
             windowBarApp.Name = "windowBarApp";
-            windowBarApp.Size = new Size(583, 39);
+            windowBarApp.Size = new Size(501, 39);
             windowBarApp.TabIndex = 1;
             windowBarApp.Text = "About";
             // 
@@ -69,7 +72,7 @@
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 39);
             panel1.Name = "panel1";
-            panel1.Size = new Size(96, 257);
+            panel1.Size = new Size(96, 224);
             panel1.TabIndex = 3;
             // 
             // label4
@@ -119,10 +122,10 @@
             panel2.Controls.Add(label7);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(label5);
-            panel2.Dock = DockStyle.Fill;
+            panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(96, 39);
             panel2.Name = "panel2";
-            panel2.Size = new Size(487, 257);
+            panel2.Size = new Size(405, 144);
             panel2.TabIndex = 4;
             // 
             // label8
@@ -132,9 +135,10 @@
             label8.Font = new Font("Segoe UI", 12F);
             label8.Location = new Point(0, 102);
             label8.Name = "label8";
-            label8.Size = new Size(485, 34);
+            label8.Size = new Size(403, 34);
             label8.TabIndex = 4;
             label8.Text = "senms9x@gmail.com";
+            label8.Click += label8_Click;
             label8.MouseLeave += label8_MouseLeave;
             label8.MouseHover += label8_MouseHover;
             // 
@@ -145,9 +149,10 @@
             label7.Font = new Font("Segoe UI", 12F);
             label7.Location = new Point(0, 68);
             label7.Name = "label7";
-            label7.Size = new Size(485, 34);
+            label7.Size = new Size(403, 34);
             label7.TabIndex = 3;
-            label7.Text = "https://github.com/pyhteam";
+            label7.Text = "www.github.com/pyhteam";
+            label7.Click += label7_Click;
             label7.MouseLeave += label7_MouseLeave;
             label7.MouseHover += label7_MouseHover;
             // 
@@ -159,9 +164,10 @@
             label6.Font = new Font("Segoe UI", 12F);
             label6.Location = new Point(0, 34);
             label6.Name = "label6";
-            label6.Size = new Size(485, 34);
+            label6.Size = new Size(403, 34);
             label6.TabIndex = 2;
             label6.Text = "www.facebook.com/senms9x";
+            label6.Click += label6_Click;
             label6.MouseLeave += label6_MouseLeave;
             label6.MouseHover += label6_MouseHover;
             // 
@@ -171,17 +177,46 @@
             label5.Font = new Font("Segoe UI", 12F);
             label5.Location = new Point(0, 0);
             label5.Name = "label5";
-            label5.Size = new Size(485, 34);
+            label5.Size = new Size(403, 34);
             label5.TabIndex = 1;
             label5.Text = "Ma Seo Sen";
+            label5.Click += label5_Click;
             label5.MouseLeave += label5_MouseLeave;
             label5.MouseHover += label5_MouseHover;
+            // 
+            // label9
+            // 
+            label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(102, 189);
+            label9.Name = "label9";
+            label9.Size = new Size(167, 23);
+            label9.TabIndex = 5;
+            label9.Text = "Pab txhawb zog (Donate)";
+            // 
+            // label10
+            // 
+            label10.Location = new Point(102, 207);
+            label10.Name = "label10";
+            label10.Size = new Size(182, 25);
+            label10.TabIndex = 5;
+            label10.Text = "Vietcombank: 0061001134560";
+            // 
+            // label11
+            // 
+            label11.Location = new Point(102, 226);
+            label11.Name = "label11";
+            label11.Size = new Size(182, 22);
+            label11.TabIndex = 6;
+            label11.Text = "Paypal: ihmong@outlook.com";
             // 
             // fmAbout
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(583, 296);
+            ClientSize = new Size(501, 263);
+            Controls.Add(label11);
+            Controls.Add(label10);
+            Controls.Add(label9);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(windowBarApp);
@@ -206,5 +241,8 @@
         private AntdUI.Label label7;
         private AntdUI.Label label6;
         private AntdUI.Label label5;
+        private AntdUI.Label label9;
+        private AntdUI.Label label10;
+        private AntdUI.Label label11;
     }
 }

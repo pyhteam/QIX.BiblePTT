@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,31 @@ namespace QIX.BiblePTT
         private void label8_MouseLeave(object sender, EventArgs e)
         {
             label8.BackColor = Color.Transparent;
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            OpenLink(label6.Text);
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            OpenLink(label7.Text);
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            OpenLink(label8.Text);
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+             OpenLink(label6.Text);
+        }
+
+        private void OpenLink(string url)
+        {
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
     }
 }

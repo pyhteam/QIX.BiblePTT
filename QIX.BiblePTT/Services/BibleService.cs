@@ -31,8 +31,8 @@ namespace QIX.BiblePTT.Services
             var data = Bibles
                 .Where(bible => string.IsNullOrEmpty(filter) ||
                     (!string.IsNullOrEmpty(bible.Code) && bible.Code.Contains(filter)) ||
-                    (!string.IsNullOrEmpty(bible.Name) && bible.Name.Contains(filter)) ||
-                    (!string.IsNullOrEmpty(bible.NameEn) && bible.NameEn.Contains(filter)))
+                    (!string.IsNullOrEmpty(bible.Name) && bible.Name.Contains(filter)) || 
+                    (!string.IsNullOrEmpty(bible.NameEn) && bible.NameEn.Contains(filter))) 
                 .ToList();
             return Task.FromResult(data);
         }
