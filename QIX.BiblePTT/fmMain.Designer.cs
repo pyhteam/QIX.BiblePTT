@@ -78,20 +78,23 @@
             // lusSibDhoToolStripMenuItem
             // 
             lusSibDhoToolStripMenuItem.Name = "lusSibDhoToolStripMenuItem";
-            lusSibDhoToolStripMenuItem.Size = new Size(136, 22);
+            lusSibDhoToolStripMenuItem.Size = new Size(180, 22);
             lusSibDhoToolStripMenuItem.Text = "Lus Sib Dho";
+            lusSibDhoToolStripMenuItem.Click += lusSibDhoToolStripMenuItem_Click;
             // 
             // phooNkaujToolStripMenuItem
             // 
             phooNkaujToolStripMenuItem.Name = "phooNkaujToolStripMenuItem";
-            phooNkaujToolStripMenuItem.Size = new Size(136, 22);
+            phooNkaujToolStripMenuItem.Size = new Size(180, 22);
             phooNkaujToolStripMenuItem.Text = "Phoo Nkauj";
+            phooNkaujToolStripMenuItem.Click += phooNkaujToolStripMenuItem_Click;
             // 
             // vajLusKubToolStripMenuItem
             // 
             vajLusKubToolStripMenuItem.Name = "vajLusKubToolStripMenuItem";
-            vajLusKubToolStripMenuItem.Size = new Size(136, 22);
+            vajLusKubToolStripMenuItem.Size = new Size(180, 22);
             vajLusKubToolStripMenuItem.Text = "Vaj Lus Kub";
+            vajLusKubToolStripMenuItem.Click += vajLusKubToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 
