@@ -60,7 +60,7 @@ namespace QIX.BiblePTT
 
         private void lusSibDhoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This feature is not yet implemented. (Coming soon!)", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Qhov no tseem tshim tshiab (Coming soon!)", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private async void updateToolStripMenuItemCheckUpdate_Click(object sender, EventArgs e)
@@ -75,6 +75,14 @@ namespace QIX.BiblePTT
 
         private async void CheckUpdate()
         {
+            // check connect internet
+            if (!Helper.IsConnectedToInternet())
+            {
+                MessageBox.Show("Koj lub PC tsi muaj internet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // download the version.json file from GitHub API
             // get the current version
             var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             using (var httpClient = new HttpClient())
@@ -87,17 +95,16 @@ namespace QIX.BiblePTT
                     var latestVersion = appVersions.OrderByDescending(x => x.Id).FirstOrDefault();
                     if (currentVersion != latestVersion.Version)
                     {
-                        var result = MessageBox.Show("There is a new version available. Please download the latest version from the website.", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        var result = MessageBox.Show("Muaj lwm lub Phầm mềm tshiab! Koj puas xav download", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (result == DialogResult.Yes && latestVersion?.Url != null)
                         {
                             Process.Start(new ProcessStartInfo(latestVersion.Url) { UseShellExecute = true });
-                            // close the application
                             Application.Exit();
                         }
                     }
                     else
                     {
-                        MessageBox.Show("You are using the latest version.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Tsi muaj tshiab", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
