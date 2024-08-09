@@ -1,4 +1,6 @@
 using System.Reflection;
+using Newtonsoft.Json;
+using QIX.BiblePTT.Common;
 using QIX.BiblePTT.ControlViews;
 using QIX.BiblePTT.Services.Interface;
 
@@ -59,18 +61,18 @@ namespace QIX.BiblePTT
             MessageBox.Show("This feature is not yet implemented. (Coming soon!)", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void updateToolStripMenuItemCheckUpdate_Click(object sender, EventArgs e)
+        private async void updateToolStripMenuItemCheckUpdate_Click(object sender, EventArgs e)
         {
             // get the current version
-            var currentVersion =  Assembly.GetExecutingAssembly().GetName().Version;
-            // get the latest version in the server
+            var currentVersion =  Assembly.GetAssembly(typeof(fmMain)).GetName().Version.ToString();
             using( var httpClient = new HttpClient())
             {
-                var response = httpClient.GetAsync("https://raw.githubusercontent.com/qixdev/BiblePTT/master/version.txt").Result;
+                var response = await httpClient.GetAsync("https://raw.githubusercontent.com/pyhteam/QIX.BiblePTT/master/version.json");
                 if(response.IsSuccessStatusCode)
                 {
-                    var latestVersion = new Version(response.Content.ReadAsStringAsync().Result);
-                    if(latestVersion > currentVersion)
+                    var content = await response.Content.ReadAsStringAsync();
+                    var latestVersion = JsonConvert.DeserializeObject<List<AppVersion>>(content);
+                    if(currentVersion != latestVersion.OrderByDescending(x => x.Id).FirstOrDefault().Version)
                     {
                         MessageBox.Show("There is a new version available. Please download the latest version from the website.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -78,6 +80,7 @@ namespace QIX.BiblePTT
                     {
                         MessageBox.Show("You are using the latest version.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    
                 }
             }
         }
