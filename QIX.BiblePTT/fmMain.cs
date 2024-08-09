@@ -25,8 +25,8 @@ namespace QIX.BiblePTT
 
         private void fmMain_Load(object sender, EventArgs e)
         {
-            CheckUpdate();
-            
+            CheckUpdate(false);
+
             var bibleControlView = new BibleControlView(_bibleService, _bookService, _verseService);
             bibleControlView.Dock = DockStyle.Fill;
             panelMain.Controls.Add(bibleControlView);
@@ -65,7 +65,7 @@ namespace QIX.BiblePTT
 
         private async void updateToolStripMenuItemCheckUpdate_Click(object sender, EventArgs e)
         {
-            CheckUpdate();
+            CheckUpdate(true);
         }
 
         private void docToolStripMenuItemTutorial_Click(object sender, EventArgs e)
@@ -73,7 +73,7 @@ namespace QIX.BiblePTT
             MessageBox.Show("Sau ntawb facebook mus rau: facebook.com/senms9x", "Ua tsaug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private async void CheckUpdate()
+        private async void CheckUpdate(bool isClick = false)
         {
             // check connect internet
             if (!Helper.IsConnectedToInternet())
@@ -102,7 +102,7 @@ namespace QIX.BiblePTT
                             Application.Exit();
                         }
                     }
-                    else
+                    if (isClick)
                     {
                         MessageBox.Show("Tsi muaj tshiab", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
