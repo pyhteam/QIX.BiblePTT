@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
 using QIX.BiblePTT.Common;
@@ -24,7 +25,8 @@ namespace QIX.BiblePTT
 
         private void fmMain_Load(object sender, EventArgs e)
         {
-
+            CheckUpdate();
+            
             var bibleControlView = new BibleControlView(_bibleService, _bookService, _verseService);
             bibleControlView.Dock = DockStyle.Fill;
             panelMain.Controls.Add(bibleControlView);
@@ -63,31 +65,43 @@ namespace QIX.BiblePTT
 
         private async void updateToolStripMenuItemCheckUpdate_Click(object sender, EventArgs e)
         {
+            CheckUpdate();
+        }
+
+        private void docToolStripMenuItemTutorial_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Sau ntawb facebook mus rau: facebook.com/senms9x", "Ua tsaug!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private async void CheckUpdate()
+        {
             // get the current version
-            var currentVersion =  Assembly.GetAssembly(typeof(fmMain)).GetName().Version.ToString();
-            using( var httpClient = new HttpClient())
+            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            using (var httpClient = new HttpClient())
             {
                 var response = await httpClient.GetAsync("https://raw.githubusercontent.com/pyhteam/QIX.BiblePTT/master/version.json");
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var latestVersion = JsonConvert.DeserializeObject<List<AppVersion>>(content);
-                    if(currentVersion != latestVersion.OrderByDescending(x => x.Id).FirstOrDefault().Version)
+                    var appVersions = JsonConvert.DeserializeObject<List<AppVersion>>(content);
+                    var latestVersion = appVersions.OrderByDescending(x => x.Id).FirstOrDefault();
+                    if (currentVersion != latestVersion.Version)
                     {
-                        MessageBox.Show("There is a new version available. Please download the latest version from the website.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        var result = MessageBox.Show("There is a new version available. Please download the latest version from the website.", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes && latestVersion?.Url != null)
+                        {
+                            Process.Start(new ProcessStartInfo(latestVersion.Url) { UseShellExecute = true });
+                            // close the application
+                            Application.Exit();
+                        }
                     }
                     else
                     {
                         MessageBox.Show("You are using the latest version.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    
+
                 }
             }
-        }
-
-        private void docToolStripMenuItemTutorial_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
