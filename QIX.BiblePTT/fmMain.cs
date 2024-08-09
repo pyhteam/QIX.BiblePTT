@@ -63,6 +63,23 @@ namespace QIX.BiblePTT
         {
             // get the current version
             var currentVersion =  Assembly.GetExecutingAssembly().GetName().Version;
+            // get the latest version in the server
+            using( var httpClient = new HttpClient())
+            {
+                var response = httpClient.GetAsync("https://raw.githubusercontent.com/qixdev/BiblePTT/master/version.txt").Result;
+                if(response.IsSuccessStatusCode)
+                {
+                    var latestVersion = new Version(response.Content.ReadAsStringAsync().Result);
+                    if(latestVersion > currentVersion)
+                    {
+                        MessageBox.Show("There is a new version available. Please download the latest version from the website.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("You are using the latest version.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
         }
 
         private void docToolStripMenuItemTutorial_Click(object sender, EventArgs e)

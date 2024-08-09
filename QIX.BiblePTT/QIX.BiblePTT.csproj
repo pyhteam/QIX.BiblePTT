@@ -18,6 +18,9 @@
     <Description>Open Source</Description>
     <RepositoryUrl>https://github.com/pyhteam/QIX.BiblePTT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.1.0</FileVersion>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +41,6 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.7" />
-    <PackageReference Include="wix" Version="3.14.1" />
   </ItemGroup>
 
   <ItemGroup>
