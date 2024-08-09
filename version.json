@@ -1,4 +1,7 @@
-{
-  "version": "2.0.2",
-  "url": ""
-}
+[
+  {
+    "id": 1,
+    "version": "2.0.2",
+    "url": "https://github.com/pyhteam/QIX.BiblePTT/blob/dev/hmoongzoo_presentation_v1.zip"
+  }
+]
