@@ -20,62 +20,62 @@ namespace QIX.BiblePTT
 
         private void label5_MouseHover(object sender, EventArgs e)
         {
-            label5.BackColor = Color.FromArgb(111, 188, 173);
+            labelName.BackColor = Color.FromArgb(111, 188, 173);
         }
 
         private void label5_MouseLeave(object sender, EventArgs e)
         {
-            label5.BackColor = Color.Transparent;
+            labelName.BackColor = Color.Transparent;
         }
 
         private void label6_MouseHover(object sender, EventArgs e)
         {
-            label6.BackColor = Color.FromArgb(111, 188, 173);
+            lbFacebook.BackColor = Color.FromArgb(111, 188, 173);
         }
 
         private void label6_MouseLeave(object sender, EventArgs e)
         {
-            label6.BackColor = Color.Transparent;
+            lbFacebook.BackColor = Color.Transparent;
         }
 
         private void label7_MouseHover(object sender, EventArgs e)
         {
-            label7.BackColor = Color.FromArgb(111, 188, 173);
+            lbGithub.BackColor = Color.FromArgb(111, 188, 173);
         }
 
         private void label7_MouseLeave(object sender, EventArgs e)
         {
-            label7.BackColor = Color.Transparent;
+            lbGithub.BackColor = Color.Transparent;
         }
 
         private void label8_MouseHover(object sender, EventArgs e)
         {
-            label8.BackColor = Color.FromArgb(111, 188, 173);
+            lbEmail.BackColor = Color.FromArgb(111, 188, 173);
         }
 
         private void label8_MouseLeave(object sender, EventArgs e)
         {
-            label8.BackColor = Color.Transparent;
+            lbEmail.BackColor = Color.Transparent;
         }
 
         private void label6_Click(object sender, EventArgs e)
         {
-            OpenLink(label6.Text);
+            OpenLink(lbFacebook.Text);
         }
 
         private void label7_Click(object sender, EventArgs e)
         {
-            OpenLink(label7.Text);
+            OpenLink(lbGithub.Text);
         }
 
         private void label8_Click(object sender, EventArgs e)
         {
-            OpenLink(label8.Text);
+            OpenLink(lbEmail.Text);
         }
 
         private void label5_Click(object sender, EventArgs e)
         {
-            OpenLink(label6.Text);
+            OpenLink(lbFacebook.Text);
         }
 
         private void OpenLink(string url)
@@ -84,6 +84,21 @@ namespace QIX.BiblePTT
             {
                 Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
             }
+        }
+
+        private void lbWebsite_MouseHover(object sender, EventArgs e)
+        {
+            lbGithub.BackColor = Color.FromArgb(111, 188, 173);
+        }
+
+        private void lbWebsite_MouseClick(object sender, MouseEventArgs e)
+        {
+            OpenLink(lbWebsite.Text);
+        }
+
+        private void lbWebsite_MouseLeave(object sender, EventArgs e)
+        {
+            lbEmail.BackColor = Color.Transparent;
         }
     }
 }

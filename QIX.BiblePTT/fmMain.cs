@@ -1,3 +1,4 @@
+using System.Reflection;
 using QIX.BiblePTT.ControlViews;
 using QIX.BiblePTT.Services.Interface;
 
@@ -10,7 +11,7 @@ namespace QIX.BiblePTT
         private readonly IVerseService _verseService;
         private readonly IHymnBookService _hymnBookService;
 
-        public fmMain(IBibleService bibleService, IBookService bookService, IVerseService verseService,IHymnBookService hymnBookService)
+        public fmMain(IBibleService bibleService, IBookService bookService, IVerseService verseService, IHymnBookService hymnBookService)
         {
             InitializeComponent();
             _bibleService = bibleService;
@@ -35,7 +36,7 @@ namespace QIX.BiblePTT
         }
 
         private void vajLusKubToolStripMenuItem_Click(object sender, EventArgs e)
-        {   
+        {
             // clear panelMain
             panelMain.Controls.Clear();
             // load new BibleControlView
@@ -50,12 +51,23 @@ namespace QIX.BiblePTT
             var hymnsControlView = new HymnsControlView(_hymnBookService);
             hymnsControlView.Dock = DockStyle.Fill;
             panelMain.Controls.Add(hymnsControlView);
-            
+
         }
 
         private void lusSibDhoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This feature is not yet implemented. (Coming soon!)", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void updateToolStripMenuItemCheckUpdate_Click(object sender, EventArgs e)
+        {
+            // get the current version
+            var currentVersion =  Assembly.GetExecutingAssembly().GetName().Version;
+        }
+
+        private void docToolStripMenuItemTutorial_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

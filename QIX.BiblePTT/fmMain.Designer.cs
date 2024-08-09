@@ -37,8 +37,8 @@
             vajLusKubToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             updateToolStripMenuItem = new ToolStripMenuItem();
-            docToolStripMenuItem = new ToolStripMenuItem();
-            updateToolStripMenuItem1 = new ToolStripMenuItem();
+            docToolStripMenuItemTutorial = new ToolStripMenuItem();
+            updateToolStripMenuItemCheckUpdate = new ToolStripMenuItem();
             panelMain = new Panel();
             menuStripMain.SuspendLayout();
             SuspendLayout();
@@ -78,21 +78,21 @@
             // lusSibDhoToolStripMenuItem
             // 
             lusSibDhoToolStripMenuItem.Name = "lusSibDhoToolStripMenuItem";
-            lusSibDhoToolStripMenuItem.Size = new Size(180, 22);
+            lusSibDhoToolStripMenuItem.Size = new Size(136, 22);
             lusSibDhoToolStripMenuItem.Text = "Lus Sib Dho";
             lusSibDhoToolStripMenuItem.Click += lusSibDhoToolStripMenuItem_Click;
             // 
             // phooNkaujToolStripMenuItem
             // 
             phooNkaujToolStripMenuItem.Name = "phooNkaujToolStripMenuItem";
-            phooNkaujToolStripMenuItem.Size = new Size(180, 22);
+            phooNkaujToolStripMenuItem.Size = new Size(136, 22);
             phooNkaujToolStripMenuItem.Text = "Phoo Nkauj";
             phooNkaujToolStripMenuItem.Click += phooNkaujToolStripMenuItem_Click;
             // 
             // vajLusKubToolStripMenuItem
             // 
             vajLusKubToolStripMenuItem.Name = "vajLusKubToolStripMenuItem";
-            vajLusKubToolStripMenuItem.Size = new Size(180, 22);
+            vajLusKubToolStripMenuItem.Size = new Size(136, 22);
             vajLusKubToolStripMenuItem.Text = "Vaj Lus Kub";
             vajLusKubToolStripMenuItem.Click += vajLusKubToolStripMenuItem_Click;
             // 
@@ -105,22 +105,24 @@
             // 
             // updateToolStripMenuItem
             // 
-            updateToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { docToolStripMenuItem, updateToolStripMenuItem1 });
+            updateToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { docToolStripMenuItemTutorial, updateToolStripMenuItemCheckUpdate });
             updateToolStripMenuItem.Name = "updateToolStripMenuItem";
             updateToolStripMenuItem.Size = new Size(44, 20);
             updateToolStripMenuItem.Text = "Help";
             // 
-            // docToolStripMenuItem
+            // docToolStripMenuItemTutorial
             // 
-            docToolStripMenuItem.Name = "docToolStripMenuItem";
-            docToolStripMenuItem.Size = new Size(116, 22);
-            docToolStripMenuItem.Text = "Qhia siv";
+            docToolStripMenuItemTutorial.Name = "docToolStripMenuItemTutorial";
+            docToolStripMenuItemTutorial.Size = new Size(180, 22);
+            docToolStripMenuItemTutorial.Text = "Qhia siv";
+            docToolStripMenuItemTutorial.Click += docToolStripMenuItemTutorial_Click;
             // 
-            // updateToolStripMenuItem1
+            // updateToolStripMenuItemCheckUpdate
             // 
-            updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
-            updateToolStripMenuItem1.Size = new Size(116, 22);
-            updateToolStripMenuItem1.Text = "Update";
+            updateToolStripMenuItemCheckUpdate.Name = "updateToolStripMenuItemCheckUpdate";
+            updateToolStripMenuItemCheckUpdate.Size = new Size(180, 22);
+            updateToolStripMenuItemCheckUpdate.Text = "Update";
+            updateToolStripMenuItemCheckUpdate.Click += updateToolStripMenuItemCheckUpdate_Click;
             // 
             // panelMain
             // 
@@ -161,8 +163,8 @@
         private ToolStripMenuItem vajLusKubToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem updateToolStripMenuItem;
-        private ToolStripMenuItem updateToolStripMenuItem1;
-        private ToolStripMenuItem docToolStripMenuItem;
+        private ToolStripMenuItem updateToolStripMenuItemCheckUpdate;
+        private ToolStripMenuItem docToolStripMenuItemTutorial;
         private Panel panelMain;
     }
 }

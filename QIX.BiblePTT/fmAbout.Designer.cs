@@ -31,15 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fmAbout));
             windowBarApp = new AntdUI.WindowBar();
             panel1 = new Panel();
+            label12 = new AntdUI.Label();
             label4 = new AntdUI.Label();
             label3 = new AntdUI.Label();
             label2 = new AntdUI.Label();
             label1 = new AntdUI.Label();
             panel2 = new Panel();
-            label8 = new AntdUI.Label();
-            label7 = new AntdUI.Label();
-            label6 = new AntdUI.Label();
-            label5 = new AntdUI.Label();
+            lbWebsite = new AntdUI.Label();
+            lbEmail = new AntdUI.Label();
+            lbGithub = new AntdUI.Label();
+            lbFacebook = new AntdUI.Label();
+            labelName = new AntdUI.Label();
             label9 = new AntdUI.Label();
             label10 = new AntdUI.Label();
             label11 = new AntdUI.Label();
@@ -58,13 +60,14 @@
             windowBarApp.Icon = (Image)resources.GetObject("windowBarApp.Icon");
             windowBarApp.Location = new Point(0, 0);
             windowBarApp.Name = "windowBarApp";
-            windowBarApp.Size = new Size(501, 39);
+            windowBarApp.Size = new Size(445, 39);
             windowBarApp.TabIndex = 1;
             windowBarApp.Text = "About";
             // 
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label12);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
@@ -72,8 +75,18 @@
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 39);
             panel1.Name = "panel1";
-            panel1.Size = new Size(96, 224);
+            panel1.Size = new Size(96, 241);
             panel1.TabIndex = 3;
+            // 
+            // label12
+            // 
+            label12.Dock = DockStyle.Top;
+            label12.Font = new Font("Segoe UI", 12F);
+            label12.Location = new Point(0, 136);
+            label12.Name = "label12";
+            label12.Size = new Size(94, 34);
+            label12.TabIndex = 4;
+            label12.Text = "Website";
             // 
             // label4
             // 
@@ -118,76 +131,91 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label8);
-            panel2.Controls.Add(label7);
-            panel2.Controls.Add(label6);
-            panel2.Controls.Add(label5);
+            panel2.Controls.Add(lbWebsite);
+            panel2.Controls.Add(lbEmail);
+            panel2.Controls.Add(lbGithub);
+            panel2.Controls.Add(lbFacebook);
+            panel2.Controls.Add(labelName);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(96, 39);
             panel2.Name = "panel2";
-            panel2.Size = new Size(405, 144);
+            panel2.Size = new Size(349, 171);
             panel2.TabIndex = 4;
             // 
-            // label8
+            // lbWebsite
             // 
-            label8.Cursor = Cursors.Hand;
-            label8.Dock = DockStyle.Top;
-            label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(0, 102);
-            label8.Name = "label8";
-            label8.Size = new Size(403, 34);
-            label8.TabIndex = 4;
-            label8.Text = "senms9x@gmail.com";
-            label8.Click += label8_Click;
-            label8.MouseLeave += label8_MouseLeave;
-            label8.MouseHover += label8_MouseHover;
+            lbWebsite.Cursor = Cursors.Hand;
+            lbWebsite.Dock = DockStyle.Top;
+            lbWebsite.Font = new Font("Segoe UI", 12F);
+            lbWebsite.Location = new Point(0, 136);
+            lbWebsite.Name = "lbWebsite";
+            lbWebsite.Size = new Size(347, 34);
+            lbWebsite.TabIndex = 5;
+            lbWebsite.Text = "www.hmoozoo.com";
+            lbWebsite.MouseClick += lbWebsite_MouseClick;
+            lbWebsite.MouseLeave += lbWebsite_MouseLeave;
+            lbWebsite.MouseHover += lbWebsite_MouseHover;
             // 
-            // label7
+            // lbEmail
             // 
-            label7.Cursor = Cursors.Hand;
-            label7.Dock = DockStyle.Top;
-            label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(0, 68);
-            label7.Name = "label7";
-            label7.Size = new Size(403, 34);
-            label7.TabIndex = 3;
-            label7.Text = "www.github.com/pyhteam";
-            label7.Click += label7_Click;
-            label7.MouseLeave += label7_MouseLeave;
-            label7.MouseHover += label7_MouseHover;
+            lbEmail.Cursor = Cursors.Hand;
+            lbEmail.Dock = DockStyle.Top;
+            lbEmail.Font = new Font("Segoe UI", 12F);
+            lbEmail.Location = new Point(0, 102);
+            lbEmail.Name = "lbEmail";
+            lbEmail.Size = new Size(347, 34);
+            lbEmail.TabIndex = 4;
+            lbEmail.Text = "senms9x@gmail.com";
+            lbEmail.Click += label8_Click;
+            lbEmail.MouseLeave += label8_MouseLeave;
+            lbEmail.MouseHover += label8_MouseHover;
             // 
-            // label6
+            // lbGithub
             // 
-            label6.BackColor = Color.Transparent;
-            label6.Cursor = Cursors.Hand;
-            label6.Dock = DockStyle.Top;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(0, 34);
-            label6.Name = "label6";
-            label6.Size = new Size(403, 34);
-            label6.TabIndex = 2;
-            label6.Text = "www.facebook.com/senms9x";
-            label6.Click += label6_Click;
-            label6.MouseLeave += label6_MouseLeave;
-            label6.MouseHover += label6_MouseHover;
+            lbGithub.Cursor = Cursors.Hand;
+            lbGithub.Dock = DockStyle.Top;
+            lbGithub.Font = new Font("Segoe UI", 12F);
+            lbGithub.Location = new Point(0, 68);
+            lbGithub.Name = "lbGithub";
+            lbGithub.Size = new Size(347, 34);
+            lbGithub.TabIndex = 3;
+            lbGithub.Text = "www.github.com/pyhteam";
+            lbGithub.Click += label7_Click;
+            lbGithub.MouseLeave += label7_MouseLeave;
+            lbGithub.MouseHover += label7_MouseHover;
             // 
-            // label5
+            // lbFacebook
             // 
-            label5.Dock = DockStyle.Top;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(0, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(403, 34);
-            label5.TabIndex = 1;
-            label5.Text = "Ma Seo Sen";
-            label5.Click += label5_Click;
-            label5.MouseLeave += label5_MouseLeave;
-            label5.MouseHover += label5_MouseHover;
+            lbFacebook.BackColor = Color.Transparent;
+            lbFacebook.Cursor = Cursors.Hand;
+            lbFacebook.Dock = DockStyle.Top;
+            lbFacebook.Font = new Font("Segoe UI", 12F);
+            lbFacebook.Location = new Point(0, 34);
+            lbFacebook.Name = "lbFacebook";
+            lbFacebook.Size = new Size(347, 34);
+            lbFacebook.TabIndex = 2;
+            lbFacebook.Text = "www.facebook.com/senms9x";
+            lbFacebook.Click += label6_Click;
+            lbFacebook.MouseLeave += label6_MouseLeave;
+            lbFacebook.MouseHover += label6_MouseHover;
+            // 
+            // labelName
+            // 
+            labelName.Dock = DockStyle.Top;
+            labelName.Font = new Font("Segoe UI", 12F);
+            labelName.Location = new Point(0, 0);
+            labelName.Name = "labelName";
+            labelName.Size = new Size(347, 34);
+            labelName.TabIndex = 1;
+            labelName.Text = "Ma Seo Sen";
+            labelName.Click += label5_Click;
+            labelName.MouseLeave += label5_MouseLeave;
+            labelName.MouseHover += label5_MouseHover;
             // 
             // label9
             // 
             label9.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(102, 189);
+            label9.Location = new Point(102, 216);
             label9.Name = "label9";
             label9.Size = new Size(167, 23);
             label9.TabIndex = 5;
@@ -195,7 +223,7 @@
             // 
             // label10
             // 
-            label10.Location = new Point(102, 207);
+            label10.Location = new Point(102, 234);
             label10.Name = "label10";
             label10.Size = new Size(182, 25);
             label10.TabIndex = 5;
@@ -203,7 +231,7 @@
             // 
             // label11
             // 
-            label11.Location = new Point(102, 226);
+            label11.Location = new Point(102, 253);
             label11.Name = "label11";
             label11.Size = new Size(182, 22);
             label11.TabIndex = 6;
@@ -213,7 +241,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(501, 263);
+            ClientSize = new Size(445, 280);
             Controls.Add(label11);
             Controls.Add(label10);
             Controls.Add(label9);
@@ -237,12 +265,14 @@
         private AntdUI.Label label1;
         private Panel panel2;
         private AntdUI.Label label4;
-        private AntdUI.Label label8;
-        private AntdUI.Label label7;
-        private AntdUI.Label label6;
-        private AntdUI.Label label5;
+        private AntdUI.Label lbEmail;
+        private AntdUI.Label lbGithub;
+        private AntdUI.Label lbFacebook;
+        private AntdUI.Label labelName;
         private AntdUI.Label label9;
         private AntdUI.Label label10;
         private AntdUI.Label label11;
+        private AntdUI.Label label12;
+        private AntdUI.Label lbWebsite;
     }
 }
