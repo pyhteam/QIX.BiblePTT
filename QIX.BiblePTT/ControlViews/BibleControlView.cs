@@ -1,9 +1,7 @@
 ﻿
 using System.Diagnostics;
-using System.IO;
 using QIX.BiblePTT.Common;
 using QIX.BiblePTT.Models;
-using QIX.BiblePTT.Services;
 using QIX.BiblePTT.Services.Interface;
 
 namespace QIX.BiblePTT.ControlViews
@@ -209,7 +207,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImagePath = linkLabelChooseImage.Text,
+                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
                 TypeShow = 0
             };
 
@@ -231,39 +229,15 @@ namespace QIX.BiblePTT.ControlViews
                 Verses = verses,
                 Config = config
             };
-            //PowerPointHelper.CreatePresentation(showPTTX);
-            string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "create_pptx.exe");
-            // check exe file exists
-            if (!File.Exists(path_create_pptx))
-            {
-                MessageBox.Show("Tsis muaj create_pptx.exe", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = path_create_pptx,
-                    RedirectStandardInput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
-            };
 
-            process.Start();
-            using (var writer = process.StandardInput)
+            PowerPointHelper powerPointHelper = new PowerPointHelper(showPTTX);
+            powerPointHelper.CreatePresentation();
+            if (File.Exists(path))
             {
-                if (writer.BaseStream.CanWrite)
-                {
-                    await writer.WriteLineAsync(jsonData);
-                }
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
             }
 
-            process.WaitForExit();
         }
-
-
 
         // load all font in the system
         private void LoadFont()
@@ -309,7 +283,7 @@ namespace QIX.BiblePTT.ControlViews
         private void selectFont_SelectedValueChanged(object sender, object value)
         {
             float fontSize = float.Parse(txtFontSize.Value.ToString());
-            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 30 : fontSize,UpdateFontStyle());
+            richTextBoxContentSection.Font = new Font(selectFont.SelectedValue.ToString(), fontSize == 0 ? 30 : fontSize, UpdateFontStyle());
         }
 
         private void txtFontSize_ValueChanged(object sender, decimal value)
@@ -321,12 +295,12 @@ namespace QIX.BiblePTT.ControlViews
                 {
                     richTextBoxContentSection.Invoke(new Action(() =>
                     {
-                        richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize,UpdateFontStyle());
+                        richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize, UpdateFontStyle());
                     }));
                 }
                 else
                 {
-                    richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize,UpdateFontStyle());
+                    richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, fontSize, UpdateFontStyle());
                 }
             }
         }
@@ -406,7 +380,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImagePath = linkLabelChooseImage.Text
+                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
             };
             var json = System.Text.Json.JsonSerializer.Serialize(config);
             // path to save config
@@ -424,8 +398,8 @@ namespace QIX.BiblePTT.ControlViews
                 var config = System.Text.Json.JsonSerializer.Deserialize<ConfigView>(json);
                 if (config != null)
                 {
-                    richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle);
-                    richTextBoxContentSection.ForeColor = config.Color;
+                    richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle.Value);
+                    richTextBoxContentSection.ForeColor = config.Color.Value;
                     richTextBoxContentSection.SelectAll();
                     richTextBoxContentSection.SelectionAlignment = config.TextAlign switch
                     {
@@ -435,8 +409,8 @@ namespace QIX.BiblePTT.ControlViews
                         _ => HorizontalAlignment.Left,
                     };
                     txtFontSize.Value = (decimal)(config.FontSize ?? 12);
-                    colorPickerTextColor.Text = config.Color.Name;
-                    colorPickerTextColor.Value = Color.FromArgb(config.Color.R, config.Color.G, config.Color.B);
+                    colorPickerTextColor.Text = config.Color.Value.Name;
+                    colorPickerTextColor.Value = Color.FromArgb(config.Color.Value.R, config.Color.Value.G, config.Color.Value.B);
                     selectTextAlign.SelectedIndex = config.TextAlign switch
                     {
                         "Left" => 0,
@@ -447,23 +421,23 @@ namespace QIX.BiblePTT.ControlViews
                     selectFont.SelectedIndex = selectFont.Items.IndexOf(config.FontFamily);
 
                     // check bold, italic, underline
-                    if (config.FontStyle.HasFlag(FontStyle.Bold))
+                    if (config.FontStyle.Value.HasFlag(FontStyle.Bold))
                     {
                         checkboxBold.Checked = true;
                     }
-                    if (config.FontStyle.HasFlag(FontStyle.Italic))
+                    if (config.FontStyle.Value.HasFlag(FontStyle.Italic))
                     {
                         checkboxItalic.Checked = true;
                     }
-                    if (config.FontStyle.HasFlag(FontStyle.Underline))
+                    if (config.FontStyle.Value.HasFlag(FontStyle.Underline))
                     {
                         checkboxUnderline.Checked = true;
                     }
 
-                    if (!string.IsNullOrEmpty(config.ImagePath) && File.Exists(config.ImagePath))
+                    if (!string.IsNullOrEmpty(config.ImageBase64))
                     {
-                        linkLabelChooseImage.Text = config.ImagePath;
-                        pictureBoxBackground.Image = Image.FromFile(config.ImagePath);
+                        linkLabelChooseImage.Text = config.ImageBase64;
+                        pictureBoxBackground.Image = Image.FromStream(new MemoryStream(Convert.FromBase64String(config.ImageBase64)));
                         pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
                 }

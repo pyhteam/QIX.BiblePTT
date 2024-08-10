@@ -114,8 +114,8 @@ namespace QIX.BiblePTT.ControlViews
                 var config = System.Text.Json.JsonSerializer.Deserialize<ConfigView>(json);
                 if (config != null)
                 {
-                    richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle);
-                    richTextBoxContentSection.ForeColor = config.Color;
+                    richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle.Value);
+                    richTextBoxContentSection.ForeColor = config.Color.Value;
                     richTextBoxContentSection.SelectAll();
                     richTextBoxContentSection.SelectionAlignment = config.TextAlign switch
                     {
@@ -125,8 +125,8 @@ namespace QIX.BiblePTT.ControlViews
                         _ => HorizontalAlignment.Left,
                     };
                     txtFontSize.Value = (decimal)(config.FontSize ?? 12);
-                    colorPickerTextColor.Text = config.Color.Name;
-                    colorPickerTextColor.Value = Color.FromArgb(config.Color.R, config.Color.G, config.Color.B);
+                    colorPickerTextColor.Text = config.Color.Value.Name;
+                    colorPickerTextColor.Value = Color.FromArgb(config.Color.Value.R, config.Color.Value.G, config.Color.Value.B);
                     selectTextAlign.SelectedIndex = config.TextAlign switch
                     {
                         "Left" => 0,
@@ -137,23 +137,23 @@ namespace QIX.BiblePTT.ControlViews
                     selectFont.SelectedIndex = selectFont.Items.IndexOf(config.FontFamily);
 
                     // check bold, italic, underline
-                    if (config.FontStyle.HasFlag(FontStyle.Bold))
+                    if (config.FontStyle.Value.HasFlag(FontStyle.Bold))
                     {
                         checkboxBold.Checked = true;
                     }
-                    if (config.FontStyle.HasFlag(FontStyle.Italic))
+                    if (config.FontStyle.Value.HasFlag(FontStyle.Italic))
                     {
                         checkboxItalic.Checked = true;
                     }
-                    if (config.FontStyle.HasFlag(FontStyle.Underline))
+                    if (config.FontStyle.Value.HasFlag(FontStyle.Underline))
                     {
                         checkboxUnderline.Checked = true;
                     }
 
-                    if (!string.IsNullOrEmpty(config.ImagePath) && File.Exists(config.ImagePath))
+                    if (!string.IsNullOrEmpty(config.ImageBase64))
                     {
-                        linkLabelChooseImage.Text = config.ImagePath;
-                        pictureBoxBackground.Image = Image.FromFile(config.ImagePath);
+                        linkLabelChooseImage.Text = config.ImageBase64;
+                        pictureBoxBackground.Image = Image.FromStream(new MemoryStream(Convert.FromBase64String(config.ImageBase64)));
                         pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
                 }
@@ -220,7 +220,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImagePath = linkLabelChooseImage.Text
+                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
             };
             var json = System.Text.Json.JsonSerializer.Serialize(config);
             // path to save config
@@ -361,7 +361,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImagePath = linkLabelChooseImage.Text,
+                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
                 TypeShow = 1
             };
 
