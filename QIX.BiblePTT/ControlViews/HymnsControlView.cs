@@ -50,6 +50,20 @@ namespace QIX.BiblePTT.ControlViews
             }
         }
 
+        private void ChangeStyleRichTextBox()
+        {
+            richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, richTextBoxContentSection.Font.Size, UpdateFontStyle());
+            richTextBoxContentSection.ForeColor = colorPickerTextColor.Value;
+            richTextBoxContentSection.SelectAll();
+            richTextBoxContentSection.SelectionAlignment = selectTextAlign.Text switch
+            {
+                "Left" => HorizontalAlignment.Left,
+                "Center" => HorizontalAlignment.Center,
+                "Right" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left,
+            };
+        }
+
         private void LoadHymnVerses(Hymn? hymn)
         {
             if (hymn != null)
@@ -64,16 +78,7 @@ namespace QIX.BiblePTT.ControlViews
             txtVerbTo.Value = hymn.Verses.Last().Id;
             Hymn = hymn;
             
-            richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, richTextBoxContentSection.Font.Size, UpdateFontStyle());
-            richTextBoxContentSection.ForeColor = colorPickerTextColor.Value;
-            richTextBoxContentSection.SelectAll();
-            richTextBoxContentSection.SelectionAlignment = selectTextAlign.Text switch
-            {
-                "Left" => HorizontalAlignment.Left,
-                "Center" => HorizontalAlignment.Center,
-                "Right" => HorizontalAlignment.Right,
-                _ => HorizontalAlignment.Left,
-            };
+            ChangeStyleRichTextBox();
         }
 
 

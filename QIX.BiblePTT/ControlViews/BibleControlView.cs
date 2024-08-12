@@ -54,7 +54,23 @@ namespace QIX.BiblePTT.ControlViews
             }
             richTextBoxContentSection.Text = $"{_book.Name} {_chapter.Id}:{verses.First().Label}-{verses.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verses.Select(x => x.Label + ". " + x.Content)));
+            ChangeStyleRichTextBox();
 
+
+        }
+
+        private void ChangeStyleRichTextBox()
+        {
+            richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, richTextBoxContentSection.Font.Size, UpdateFontStyle());
+            richTextBoxContentSection.ForeColor = colorPickerTextColor.Value;
+            richTextBoxContentSection.SelectAll();
+            richTextBoxContentSection.SelectionAlignment = selectTextAlign.Text switch
+            {
+                "Left" => HorizontalAlignment.Left,
+                "Center" => HorizontalAlignment.Center,
+                "Right" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left,
+            };
         }
 
         private async void LoadBiBle(string filter)
@@ -178,22 +194,15 @@ namespace QIX.BiblePTT.ControlViews
                 MessageBox.Show("Nrhiav tsi pum", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, richTextBoxContentSection.Font.Size, UpdateFontStyle());
-            richTextBoxContentSection.ForeColor = colorPickerTextColor.Value;
-            richTextBoxContentSection.SelectAll();
-            richTextBoxContentSection.SelectionAlignment = selectTextAlign.Text switch
-            {
-                "Left" => HorizontalAlignment.Left,
-                "Center" => HorizontalAlignment.Center,
-                "Right" => HorizontalAlignment.Right,
-                _ => HorizontalAlignment.Left,
-            };
 
             richTextBoxContentSection.Text = $"{_book.Name} {chapter.Id}:{verse.First().Label}-{verse.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verse.Select(x => x.Label + ". " + x.Content)));
             _chapter = chapter;
             txtVerbFrom.Value = 1;
             txtVerbTo.Value = verse.Count;
+            
+            ChangeStyleRichTextBox();
+
         }
 
         private async void btnShowPTT_Click(object sender, EventArgs e)
