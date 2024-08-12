@@ -178,6 +178,17 @@ namespace QIX.BiblePTT.ControlViews
                 MessageBox.Show("Nrhiav tsi pum", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            richTextBoxContentSection.Font = new Font(richTextBoxContentSection.Font.FontFamily, richTextBoxContentSection.Font.Size, UpdateFontStyle());
+            richTextBoxContentSection.ForeColor = colorPickerTextColor.Value;
+            richTextBoxContentSection.SelectAll();
+            richTextBoxContentSection.SelectionAlignment = selectTextAlign.Text switch
+            {
+                "Left" => HorizontalAlignment.Left,
+                "Center" => HorizontalAlignment.Center,
+                "Right" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left,
+            };
+
             richTextBoxContentSection.Text = $"{_book.Name} {chapter.Id}:{verse.First().Label}-{verse.Last().Label}\n";
             richTextBoxContentSection.AppendText(string.Join("\n", verse.Select(x => x.Label + ". " + x.Content)));
             _chapter = chapter;
@@ -231,34 +242,43 @@ namespace QIX.BiblePTT.ControlViews
             };
 
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"libs", "create_pptx.exe");
-            // check exe file exists
+            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs", "create_pptx.exe");
+
+            // Check if the executable file exists
             if (!File.Exists(path_create_pptx))
             {
                 MessageBox.Show("Tsis muaj create_pptx.exe", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = path_create_pptx,
-                    RedirectStandardInput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
-            };
 
-            process.Start();
-            using (var writer = process.StandardInput)
+            try
             {
-                if (writer.BaseStream.CanWrite)
+                var process = new Process
                 {
-                    await writer.WriteLineAsync(jsonData);
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = path_create_pptx,
+                        RedirectStandardInput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    }
+                };
+
+                process.Start();
+                using (var writer = process.StandardInput)
+                {
+                    if (writer.BaseStream.CanWrite)
+                    {
+                        await writer.WriteLineAsync(jsonData);
+                    }
                 }
+
+                process.WaitForExit();
             }
-
-            process.WaitForExit();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
         }
