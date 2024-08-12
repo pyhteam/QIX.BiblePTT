@@ -385,9 +385,9 @@ namespace QIX.BiblePTT.ControlViews
                 Verses = verses,
                 Config = config,
             };
-            //PowerPointHelper.CreatePresentation(showPTTX);
+
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "create_pptx.exe");
+            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"libs", "create_pptx.exe");
             // check exe file exists
             if (!File.Exists(path_create_pptx))
             {

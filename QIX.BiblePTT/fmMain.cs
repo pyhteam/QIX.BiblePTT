@@ -25,7 +25,6 @@ namespace QIX.BiblePTT
 
         private void fmMain_Load(object sender, EventArgs e)
         {
-            CheckUpdate(false);
 
             var bibleControlView = new BibleControlView(_bibleService, _bookService, _verseService);
             bibleControlView.Dock = DockStyle.Fill;
@@ -75,15 +74,7 @@ namespace QIX.BiblePTT
 
         private async void CheckUpdate(bool isClick = false)
         {
-            // check connect internet
-            if (!Helper.IsConnectedToInternet())
-            {
-                MessageBox.Show("Koj lub PC tsi muaj internet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            // download the version.json file from GitHub API
-            // get the current version
             var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             using (var httpClient = new HttpClient())
             {
@@ -106,7 +97,6 @@ namespace QIX.BiblePTT
                     {
                         MessageBox.Show("Tsi muaj tshiab", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-
                 }
             }
         }

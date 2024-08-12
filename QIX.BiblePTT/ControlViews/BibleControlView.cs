@@ -230,12 +230,36 @@ namespace QIX.BiblePTT.ControlViews
                 Config = config
             };
 
-            PowerPointHelper powerPointHelper = new PowerPointHelper(showPTTX);
-            powerPointHelper.CreatePresentation();
-            if (File.Exists(path))
+            string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
+            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"libs", "create_pptx.exe");
+            // check exe file exists
+            if (!File.Exists(path_create_pptx))
             {
-                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+                MessageBox.Show("Tsis muaj create_pptx.exe", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = path_create_pptx,
+                    RedirectStandardInput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+
+            process.Start();
+            using (var writer = process.StandardInput)
+            {
+                if (writer.BaseStream.CanWrite)
+                {
+                    await writer.WriteLineAsync(jsonData);
+                }
+            }
+
+            process.WaitForExit();
+
 
         }
 
