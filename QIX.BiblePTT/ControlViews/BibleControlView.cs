@@ -1,5 +1,4 @@
 ﻿
-using System.Diagnostics;
 using QIX.BiblePTT.Common;
 using QIX.BiblePTT.Models;
 using QIX.BiblePTT.Services.Interface;
@@ -200,7 +199,7 @@ namespace QIX.BiblePTT.ControlViews
             _chapter = chapter;
             txtVerbFrom.Value = 1;
             txtVerbTo.Value = verse.Count;
-            
+
             ChangeStyleRichTextBox();
 
         }
@@ -251,45 +250,7 @@ namespace QIX.BiblePTT.ControlViews
             };
 
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            string path_create_pptx = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs", "create_pptx.exe");
-
-            // Check if the executable file exists
-            if (!File.Exists(path_create_pptx))
-            {
-                MessageBox.Show("Tsis muaj create_pptx.exe", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            try
-            {
-                var process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = path_create_pptx,
-                        RedirectStandardInput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    }
-                };
-
-                process.Start();
-                using (var writer = process.StandardInput)
-                {
-                    if (writer.BaseStream.CanWrite)
-                    {
-                        await writer.WriteLineAsync(jsonData);
-                    }
-                }
-
-                process.WaitForExit();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
+            PowerPointHelper.ExportPPT(jsonData);
         }
 
         // load all font in the system
