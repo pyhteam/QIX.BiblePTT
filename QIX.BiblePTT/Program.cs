@@ -27,13 +27,13 @@ namespace QIX.BiblePTT
 
                 Application.Run(ServiceProvider.GetRequiredService<fmMain>());
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //write log here
                 // TODO: log error to a file or server
-                string fileName = "error.log";
+                string fileName = Path.Combine(Environment.CurrentDirectory, "error.log");
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter(fileName, true))
                 {
                     sw.WriteLine($"{DateTime.Now.ToString()} - {ex.Message}");
