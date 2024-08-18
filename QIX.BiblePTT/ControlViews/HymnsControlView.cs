@@ -400,7 +400,8 @@ namespace QIX.BiblePTT.ControlViews
                 Config = config,
             };
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            PowerPointHelper.ExportPPT(jsonData);
+            // PowerPointHelper.ExportPPT(jsonData);
+            PowerPointHelper.ExportWithApplication(jsonData);
         }
     }
 }
