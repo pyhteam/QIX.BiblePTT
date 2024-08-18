@@ -250,7 +250,8 @@ namespace QIX.BiblePTT.ControlViews
             };
 
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            PowerPointHelper.ExportPPT(jsonData);
+            // PowerPointHelper.ExportPPT(jsonData);
+            PowerPointHelper.ExportWithApplication(jsonData);
         }
 
         // load all font in the system
