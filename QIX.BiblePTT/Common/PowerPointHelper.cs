@@ -62,25 +62,20 @@ namespace QIX.BiblePTT.Common
                 MessageBox.Show("Tsis muaj buid_to_exe", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            // save to temp file
+            string tempFile = Path.Combine(Path.GetTempPath(), "show_pptx.json");
+            File.WriteAllText(tempFile, showPTTX);
+
+            // start process net core
             var process = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = path_create_pptx,
-                    RedirectStandardInput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
+                    UseShellExecute = false
                 }
             };
             process.Start();
-            using (var writer = process.StandardInput)
-            {
-                if (writer.BaseStream.CanWrite)
-                {
-                    await writer.WriteLineAsync(showPTTX);
-                }
-            }
-            process.WaitForExit();
         }
     }
 }
