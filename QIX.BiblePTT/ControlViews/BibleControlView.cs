@@ -101,7 +101,7 @@ namespace QIX.BiblePTT.ControlViews
         private void LoadDefault()
         {
             this.LoadBiBle(txtSearchBook.Text);
-            selectBible.SelectedIndex = 0;
+            selectBible.SelectedIndex = 1;
             this.LoadBooks(_bible.Code);
             this.menuBooks.SelectIndex(0);
             this.LoadChapter(_book);
@@ -397,7 +397,7 @@ namespace QIX.BiblePTT.ControlViews
                 TextAlign = selectTextAlign.Text,
                 ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
             };
-            var json = System.Text.Json.JsonSerializer.Serialize(config);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(config);
             // path to save config
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
             File.WriteAllText(path, json);
@@ -410,7 +410,7 @@ namespace QIX.BiblePTT.ControlViews
             if (File.Exists(path))
             {
                 var json = File.ReadAllText(path);
-                var config = System.Text.Json.JsonSerializer.Deserialize<ConfigView>(json);
+                var config = Newtonsoft.Json.JsonConvert.DeserializeObject<ConfigView>(json);
                 if (config != null)
                 {
                     richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle.Value);
@@ -425,7 +425,7 @@ namespace QIX.BiblePTT.ControlViews
                     };
                     txtFontSize.Value = (decimal)(config.FontSize ?? 12);
                     colorPickerTextColor.Text = config.Color.Value.Name;
-                    colorPickerTextColor.Value = Color.FromArgb(config.Color.Value.R, config.Color.Value.G, config.Color.Value.B);
+                    colorPickerTextColor.Value = config.Color.Value;
                     selectTextAlign.SelectedIndex = config.TextAlign switch
                     {
                         "Left" => 0,

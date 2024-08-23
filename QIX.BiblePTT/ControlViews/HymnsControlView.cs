@@ -98,7 +98,6 @@ namespace QIX.BiblePTT.ControlViews
             selectTextAlign.SelectedIndex = 0;
             // display
             richTextBoxContentSection.Font = new Font(selectFont.Text, 20);
-            richTextBoxContentSection.SelectionAlignment = HorizontalAlignment.Left;
         }
 
         private FontStyle UpdateFontStyle()
@@ -125,7 +124,7 @@ namespace QIX.BiblePTT.ControlViews
             if (File.Exists(PathConfig))
             {
                 var json = File.ReadAllText(PathConfig);
-                var config = System.Text.Json.JsonSerializer.Deserialize<ConfigView>(json);
+                var config = Newtonsoft.Json.JsonConvert.DeserializeObject<ConfigView>(json);
                 if (config != null)
                 {
                     richTextBoxContentSection.Font = new Font(new FontFamily(config.FontFamily), config.FontSize ?? 20, config.FontStyle.Value);
@@ -140,7 +139,7 @@ namespace QIX.BiblePTT.ControlViews
                     };
                     txtFontSize.Value = (decimal)(config.FontSize ?? 12);
                     colorPickerTextColor.Text = config.Color.Value.Name;
-                    colorPickerTextColor.Value = Color.FromArgb(config.Color.Value.R, config.Color.Value.G, config.Color.Value.B);
+                    colorPickerTextColor.Value = config.Color.Value;
                     selectTextAlign.SelectedIndex = config.TextAlign switch
                     {
                         "Left" => 0,
@@ -236,7 +235,7 @@ namespace QIX.BiblePTT.ControlViews
                 TextAlign = selectTextAlign.Text,
                 ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
             };
-            var json = System.Text.Json.JsonSerializer.Serialize(config);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(config);
             // path to save config
             File.WriteAllText(PathConfig, json);
             MessageBox.Show("Saved config successfully", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -399,7 +398,7 @@ namespace QIX.BiblePTT.ControlViews
                 Verses = verses,
                 Config = config,
             };
-            string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
+            string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(showPTTX);
             // PowerPointHelper.ExportPPT(jsonData);
             PowerPointHelper.ExportWithApplication(jsonData);
         }
