@@ -162,7 +162,7 @@ namespace QIX.BiblePTT.ControlViews
                     {
                         checkboxUnderline.Checked = true;
                     }
-
+                    // check image
                     if (!string.IsNullOrEmpty(config.ImageBase64))
                     {
                         linkLabelChooseImage.Text = config.ImageBase64;

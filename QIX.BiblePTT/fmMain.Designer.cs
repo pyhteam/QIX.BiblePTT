@@ -113,14 +113,14 @@
             // docToolStripMenuItemTutorial
             // 
             docToolStripMenuItemTutorial.Name = "docToolStripMenuItemTutorial";
-            docToolStripMenuItemTutorial.Size = new Size(180, 22);
+            docToolStripMenuItemTutorial.Size = new Size(116, 22);
             docToolStripMenuItemTutorial.Text = "Qhia siv";
             docToolStripMenuItemTutorial.Click += docToolStripMenuItemTutorial_Click;
             // 
             // updateToolStripMenuItemCheckUpdate
             // 
             updateToolStripMenuItemCheckUpdate.Name = "updateToolStripMenuItemCheckUpdate";
-            updateToolStripMenuItemCheckUpdate.Size = new Size(180, 22);
+            updateToolStripMenuItemCheckUpdate.Size = new Size(116, 22);
             updateToolStripMenuItemCheckUpdate.Text = "Update";
             updateToolStripMenuItemCheckUpdate.Click += updateToolStripMenuItemCheckUpdate_Click;
             // 
@@ -141,6 +141,7 @@
             Controls.Add(panelMain);
             Controls.Add(windowBarApp);
             Controls.Add(menuStripMain);
+            ForeColor = SystemColors.ActiveCaptionText;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "fmMain";

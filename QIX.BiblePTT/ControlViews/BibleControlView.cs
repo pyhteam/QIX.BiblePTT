@@ -156,6 +156,7 @@ namespace QIX.BiblePTT.ControlViews
                 btn.Click += btnChapter_Click;
                 btn.Location = new Point(3, 3);
                 btn.Size = new Size(35, 33);
+                btn.ForeColor = Color.Black;
                 flowLayoutPanelSection.Controls.Add(btn);
                 position += 3;
             }
