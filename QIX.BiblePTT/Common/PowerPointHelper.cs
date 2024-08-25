@@ -63,7 +63,11 @@ namespace QIX.BiblePTT.Common
                 return;
             }
             // save to temp file
-            string tempFile = Path.Combine(Path.GetTempPath(), "show_pptx.json");
+            string tempFile = Path.Combine(Path.GetTempPath(),"HMZPresentation", "show_pptx.json");
+            if (!Directory.Exists(Path.GetDirectoryName(tempFile)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(tempFile));
+            }
             File.WriteAllText(tempFile, showPTTX);
 
             // start process net core

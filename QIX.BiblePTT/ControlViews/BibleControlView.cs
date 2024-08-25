@@ -1,4 +1,5 @@
 ﻿
+using System.Drawing.Imaging;
 using QIX.BiblePTT.Common;
 using QIX.BiblePTT.Models;
 using QIX.BiblePTT.Services.Interface;
@@ -227,7 +228,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
+                ImagePath = GetImageSave(),
                 TypeShow = 0
             };
 
@@ -251,8 +252,27 @@ namespace QIX.BiblePTT.ControlViews
             };
 
             string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
-            // PowerPointHelper.ExportPPT(jsonData);
             PowerPointHelper.ExportWithApplication(jsonData);
+        }
+
+        private string GetImageSave()
+        {
+            if (pictureBoxBackground.Image != null)
+            {
+                // temp path to save the image
+                var path = Path.Combine(Path.GetTempPath(), "HMZPresentation", "background_bible.Jpeg");
+                var directory = Path.GetDirectoryName(path);
+
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                    pictureBoxBackground.Image.Save(path, ImageFormat.Jpeg);
+                    linkLabelChooseImage.Text = path;
+                }
+
+                return path;
+            }
+            return "";
         }
 
         // load all font in the system
@@ -396,7 +416,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
+                ImagePath = GetImageSave(),
             };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(config);
             // path to save config
@@ -450,10 +470,10 @@ namespace QIX.BiblePTT.ControlViews
                         checkboxUnderline.Checked = true;
                     }
 
-                    if (!string.IsNullOrEmpty(config.ImageBase64))
+                    if (!string.IsNullOrEmpty(config.ImagePath))
                     {
-                        linkLabelChooseImage.Text = config.ImageBase64;
-                        pictureBoxBackground.Image = Image.FromStream(new MemoryStream(Convert.FromBase64String(config.ImageBase64)));
+                        linkLabelChooseImage.Text = config.ImagePath;
+                        pictureBoxBackground.Image = Image.FromFile(config.ImagePath);
                         pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
                 }

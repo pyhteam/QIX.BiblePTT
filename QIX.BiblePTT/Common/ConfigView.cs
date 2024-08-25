@@ -9,7 +9,7 @@ namespace QIX.BiblePTT.Common
         public FontStyle? FontStyle { get; set; }
         public Color? Color { get; set; }
         public string? TextAlign { get; set; }
-        public string? ImageBase64 { get; set; }
+        public string? ImagePath { get; set; }
         public int? TypeShow { get; set; } = 0; // 0: Bible, 1: Hymn
     }
 }

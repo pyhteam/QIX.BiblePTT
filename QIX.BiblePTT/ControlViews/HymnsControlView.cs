@@ -1,5 +1,6 @@
 ﻿
 using System.Data;
+using System.Drawing.Imaging;
 using AntdUI;
 using Newtonsoft.Json;
 using QIX.BiblePTT.Common;
@@ -163,10 +164,10 @@ namespace QIX.BiblePTT.ControlViews
                         checkboxUnderline.Checked = true;
                     }
                     // check image
-                    if (!string.IsNullOrEmpty(config.ImageBase64))
+                    if (!string.IsNullOrEmpty(config.ImagePath))
                     {
-                        linkLabelChooseImage.Text = config.ImageBase64;
-                        pictureBoxBackground.Image = Image.FromStream(new MemoryStream(Convert.FromBase64String(config.ImageBase64)));
+                        linkLabelChooseImage.Text = config.ImagePath;
+                        pictureBoxBackground.Image = Image.FromFile(config.ImagePath);
                         pictureBoxBackground.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
                 }
@@ -233,7 +234,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
+                ImagePath = GetImageSave(),
             };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(config);
             // path to save config
@@ -350,11 +351,20 @@ namespace QIX.BiblePTT.ControlViews
             }
             richTextBoxContentSection.Text = $"{Hymn.Id} {Hymn.Name}\n \n";
             richTextBoxContentSection.AppendText(string.Join("\n \n", verses.Select(x => x.Content)));
+            richTextBoxContentSection.SelectAll();
+            richTextBoxContentSection.SelectionAlignment = selectTextAlign.Text switch
+            {
+                "Left" => HorizontalAlignment.Left,
+                "Center" => HorizontalAlignment.Center,
+                "Right" => HorizontalAlignment.Right,
+                _ => HorizontalAlignment.Left,
+            };
+            
         }
 
         private async void btnShowPTT_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtVerbFrom.Text) || string.IsNullOrEmpty(txtVerbTo.Text))
+            if (string.IsNullOrEmpty(txtVerbFrom.Text) || string.IsNullOrEmpty(txtVerbTo.Text) || string.IsNullOrEmpty(richTextBoxContentSection.Text))
             {
                 MessageBox.Show("Yuav tsum sau nqi", "Thoob Pom", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -374,7 +384,7 @@ namespace QIX.BiblePTT.ControlViews
                 FontStyle = UpdateFontStyle(),
                 Color = colorPickerTextColor.Value,
                 TextAlign = selectTextAlign.Text,
-                ImageBase64 = Convert.ToBase64String((byte[])new ImageConverter().ConvertTo(pictureBoxBackground.Image, typeof(byte[]))),
+                ImagePath = linkLabelChooseImage.Text,
                 TypeShow = 1
             };
 
@@ -398,9 +408,27 @@ namespace QIX.BiblePTT.ControlViews
                 Verses = verses,
                 Config = config,
             };
-            string jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(showPTTX);
-            // PowerPointHelper.ExportPPT(jsonData);
+            string jsonData = System.Text.Json.JsonSerializer.Serialize(showPTTX);
             PowerPointHelper.ExportWithApplication(jsonData);
+        }
+
+        private string GetImageSave()
+        {
+            if (pictureBoxBackground.Image != null)
+            {
+                // temp path to save the image
+                var path = Path.Combine(Path.GetTempPath(), "HMZPresentation", "background_hymn.jpg");
+                var directory = Path.GetDirectoryName(path);
+
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                pictureBoxBackground.Image.Save(path, ImageFormat.Jpeg);
+                return path;
+            }
+            return "";
         }
     }
 }
